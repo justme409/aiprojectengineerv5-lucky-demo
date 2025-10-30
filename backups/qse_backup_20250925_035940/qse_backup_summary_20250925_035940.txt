@@ -1,0 +1,64 @@
+QSE Documents Backup Summary
+========================================
+
+Backup created: 2025-09-25T03:59:40.951262
+Total QSE documents: 44
+
+Document types found:
+  - document: 9
+  - form: 1
+  - plan: 2
+  - policy: 1
+  - procedure: 20
+  - record: 11
+
+Document numbers:
+  - QSE-1-MAN-01: QSE-1-MAN-01 - Integrated Management System (IMS) Manual
+  - QSE-10.2-PROC-01: QSE-10.2-PROC-01 - Procedure for Nonconformity, Incident & Corrective Action
+  - QSE-10.2-REG-01: QSE-10.2-REG-01 - NCR and Corrective Action Register
+  - QSE-10.3-PROC-01: QSE-10.3-PROC-01 - Procedure for Continual Improvement
+  - QSE-10.3-REG-01: QSE-10.3-REG-01 - Continual Improvement Opportunities Register
+  - QSE-4.1-PROC-01: QSE-4.1-PROC-01 - Procedure for Determining Context and Interested Parties
+  - QSE-4.1-REG-01: QSE-4.1-REG-01 - Register of Internal & External Issues
+  - QSE-4.2-REG-01: QSE-4.2-REG-01 - Register of Interested Parties & Requirements
+  - QSE-4.3-STMT-01: QSE-4.3-STMT-01 - IMS Scope Statement
+  - QSE-5.2-POL-01: QSE-5.2-POL-01 - QSE Policy Statement
+  - QSE-5.3-REG-01: QSE-5.3-REG-01 - Roles, Responsibilities & Authorities Matrix
+  - QSE-5.4-FORM-01: QSE-5.4-FORM-01 - Health & Safety Committee Meeting Minutes Template
+  - QSE-5.4-PROC-01: QSE-5.4-PROC-01 - Procedure for Consultation & Participation
+  - QSE-6.1-PROC-01: QSE-6.1-PROC-01 - Procedure for Risk & Opportunity Management
+  - QSE-6.1-PROC-02: QSE-6.1-PROC-02 - Procedure for Identifying Compliance Obligations
+  - QSE-6.1-REG-01: QSE-6.1-REG-01 - Corporate Risk Register
+  - QSE-6.1-REG-02: QSE-6.1-REG-02 - Corporate Opportunity Register
+  - QSE-6.1-REG-03: QSE-6.1-REG-03 - Compliance Obligations Register
+  - QSE-6.2-PLN-01: QSE-6.2-PLN-01 - Annual QSE Objectives & Targets Plan
+  - QSE-6.2-PROC-01: QSE-6.2-PROC-01 - Procedure for Setting QSE Objectives
+  - QSE-7.2-PROC-01: QSE-7.2-PROC-01 - Procedure for Training, Competence & Awareness
+  - QSE-7.2-REG-01: QSE-7.2-REG-01 - Training Needs Analysis & Competency Matrix
+  - QSE-7.4-PROC-01: QSE-7.4-PROC-01 - Procedure for Internal & External Communication
+  - QSE-7.4-REG-01: QSE-7.4-REG-01 - Communication Matrix
+  - QSE-7.5-PROC-01: QSE-7.5-PROC-01 - Procedure for Control of Documented Information
+  - QSE-7.5-REG-01: QSE-7.5-REG-01 - Master Document & Records Register
+  - QSE-8.1-PROC-01: QSE-8.1-PROC-01 - Project Management Procedure
+  - QSE-8.1-PROC-02: QSE-8.1-PROC-02 - Incident Reporting & Investigation Procedure
+  - QSE-8.1-PROC-03: QSE-8.1-PROC-03 - WHS Management Procedure
+  - QSE-8.1-PROC-04: QSE-8.1-PROC-04 - Environmental Management Procedure
+  - QSE-8.1-PROC-05: QSE-8.1-PROC-05 - Construction & Operational Control Procedure
+  - QSE-8.1-PROC-06: QSE-8.1-PROC-06 - Design & Development Control Procedure
+  - QSE-8.1-PROC-07: QSE-8.1-PROC-07 - Procurement & Supplier Management Procedure
+  - QSE-8.1-TEMP-PQP: QSE-8.1-TEMP-PQP - Project Quality Plan (PQP) Template
+  - QSE-9.1-PROC-01: QSE-9.1-PROC-01 - Procedure for Monitoring, Measurement, and Analysis
+  - QSE-9.2-PROC-01: QSE-9.2-PROC-01 - Internal Audit Procedure
+  - QSE-9.2-SCHED-01: QSE-9.2-SCHED-01 - Annual Internal Audit Schedule
+  - QSE-9.3-PROC-01: QSE-9.3-PROC-01 - Procedure for Management Review
+  - QSE-CORP-IMPROVEMENT-0001: QSE-CORP-IMPROVEMENT-0001 - 10.0 Improvement
+  - QSE-CORP-LEADERSHIP-0001: QSE-CORP-LEADERSHIP-0001 - 5.0 Leadership
+  - QSE-CORP-OPERATION-0001: QSE-CORP-OPERATION-0001 - 8.0 Operation
+  - QSE-CORP-PERFORMANCE-0001: QSE-CORP-PERFORMANCE-0001 - 9.0 Performance Evaluation
+  - QSE-CORP-PLANNING-0001: QSE-CORP-PLANNING-0001 - 6.0 Planning
+  - QSE-CORP-SUPPORT-0001: QSE-CORP-SUPPORT-0001 - 7.0 Support
+
+Files created:
+  - qse_docs_backup_20250925_035940.json
+  - qse_docs_backup_20250925_035940.csv
+  - qse_docs_backup_20250925_035940.sql

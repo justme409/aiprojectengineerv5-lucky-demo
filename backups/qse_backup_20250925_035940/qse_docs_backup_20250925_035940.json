@@ -1,0 +1,1102 @@
+[
+  {
+    "id": "58087d0b-7832-4f54-94a6-df5547e96912",
+    "asset_uid": "1b826d65-7ba9-4cbc-8e6b-e98da24de785",
+    "version": 1,
+    "is_current": true,
+    "type": "procedure",
+    "name": "QSE-10.2-PROC-01 - Procedure for Nonconformity, Incident & Corrective Action",
+    "project_id": null,
+    "document_number": "QSE-10.2-PROC-01",
+    "revision_code": null,
+    "metadata": {
+      "title": "Procedure for Nonconformity, Incident & Corrective Action",
+      "qse_doc": {
+        "code": "QSE-10.2-PROC-01",
+        "category": "procedure"
+      },
+      "category": "qse",
+      "document_number": "QSE-10.2-PROC-01"
+    },
+    "content": {
+      "html": "<h3>1.0 Purpose</h3><p>To establish a systematic digital process for identifying, reporting, investigating, and resolving nonconformities and incidents, and for implementing effective corrective actions to prevent their recurrence. The process is fully integrated with the QSE Management System for automated tracking, analytics, and dashboard monitoring.</p><h3>2.0 Process</h3><h4>2.1 Digital Identification & Automated Reporting</h4><p>Any employee or subcontractor can report a nonconformity or incident through the digital NCR reporting module with mobile app capability. Reports automatically notify supervisors and are formally logged in the Nonconformity & Corrective Action Register (QSE-10.2-REG-01) with timestamps, GPS location, photo evidence, and immediate supervisor assignment. Integration with project systems auto-links NCRs to specific Lot Register IDs and ITP references.</p><h4>2.2 Real-Time Containment & Immediate Correction</h4><p>The supervisor receives automatic notifications and is responsible for taking immediate action to contain the issue (e.g., quarantining nonconforming product, making a hazard safe). Containment actions are digitally recorded with photo evidence and automatically update the project dashboard for real-time visibility.</p><h4>2.3 Digital Investigation & Automated Root Cause Analysis</h4><p>The severity of the issue (auto-assigned by system risk algorithms) dictates the level of investigation required. A formal root cause analysis is conducted using digital investigation tools (5 Whys, Fishbone diagram templates) integrated within the system. Historical data analytics assist in identifying patterns and underlying causes.</p><h4>2.4 Automated Corrective Action Planning</h4><p>Based on the root cause analysis, a corrective action plan is developed using system templates to eliminate the cause and prevent recurrence. Actions are automatically assigned to responsible persons with due dates, progress tracking, and automated reminder notifications. All actions are cross-referenced with the Continual Improvement Register (QSE-10.3-REG-01).</p><h4>2.5 Digital Verification & Effectiveness Monitoring</h4><p>After implementation, the effectiveness of corrective actions is verified through digital evidence collection and automated monitoring of performance data from the dashboard analytics (<code>/dashboard</code>). The system tracks recurrence patterns and triggers alerts for ineffective corrective actions, automatically escalating to management review if required.</p>"
+    },
+    "created_at": "2025-09-24 08:37:51.926146+00:00",
+    "updated_at": "2025-09-24 20:53:44.324958+00:00"
+  },
+  {
+    "id": "5dd81bd7-6b3c-47a7-913a-871ecc573518",
+    "asset_uid": "2c587ac3-c861-4e26-8df7-dd74b2725405",
+    "version": 1,
+    "is_current": true,
+    "type": "record",
+    "name": "QSE-10.2-REG-01 - NCR and Corrective Action Register",
+    "project_id": null,
+    "document_number": "QSE-10.2-REG-01",
+    "revision_code": null,
+    "metadata": {
+      "title": "NCR and Corrective Action Register",
+      "qse_doc": {
+        "code": "QSE-10.2-REG-01",
+        "category": "register"
+      },
+      "category": "qse",
+      "document_number": "QSE-10.2-REG-01"
+    },
+    "content": {
+      "html": "<h3>Nonconformity & Corrective Action Register</h3><div class=\"overflow-x-auto\"><table class=\"min-w-full border\"><thead><tr class=\"bg-gray-50\"><th class=\"border p-2\">NCR ID</th><th class=\"border p-2\">Date</th><th class=\"border p-2\">Description</th><th class=\"border p-2\">Corrective Action</th><th class=\"border p-2\">Status</th><th class=\"border p-2\">Responsible</th><th class=\"border p-2\">Due Date</th><th class=\"border p-2\">Project/Lot Link</th><th class=\"border p-2\">Improvement ID</th></tr></thead><tbody><tr><td class=\"border p-2\">[Auto-generated NCR ID]</td><td class=\"border p-2\">[Auto-populated Date/Time]</td><td class=\"border p-2\">[Enter Nonconformity Description]</td><td class=\"border p-2\">[Enter Corrective Action Plan]</td><td class=\"border p-2\">[Auto-tracked: Open/In Progress/Closed]</td><td class=\"border p-2\">[Auto-assigned Responsible Person]</td><td class=\"border p-2\">[Enter/Auto-calculated Due Date]</td><td class=\"border p-2\">[Auto-linked to Project/Lot ID]</td><td class=\"border p-2\">[Auto-linked to QSE-10.3-REG-01]</td></tr></tbody></table></div><h3>NCR Analytics & Trend Analysis Template</h3><div class=\"overflow-x-auto mb-8\"><table class=\"min-w-full border border-gray-300 text-sm\"><thead class=\"bg-gray-50\"><tr><th class=\"border p-2 text-left\">Analysis Period</th><th class=\"border p-2 text-left\">NCR Category</th><th class=\"border p-2 text-left\">Total Count</th><th class=\"border p-2 text-left\">Recurring Issues</th><th class=\"border p-2 text-left\">Avg Resolution Time</th><th class=\"border p-2 text-left\">Effectiveness Rate</th><th class=\"border p-2 text-left\">Dashboard Link</th><th class=\"border p-2 text-left\">Improvement Actions</th></tr></thead><tbody><tr><td class=\"border p-2\">[Enter Analysis Period]</td><td class=\"border p-2\">[Quality/Safety/Environmental]</td><td class=\"border p-2\">[Auto-calculated Count]</td><td class=\"border p-2\">[Auto-identified Patterns]</td><td class=\"border p-2\">[Auto-calculated Average Days]</td><td class=\"border p-2\">[Auto-calculated % Effective]</td><td class=\"border p-2\"><a href=\"/dashboard\">Link to Analytics Dashboard</a></td><td class=\"border p-2\">Link to QSE-10.3-REG-01</td></tr></tbody></table></div><div><p><strong>Real-Time Monitoring:</strong> All NCR data is automatically analyzed for trends and patterns through the system dashboard. Recurring issues and ineffective corrective actions trigger automatic alerts and management notifications for prompt action.</p></div><div><p><strong>System Integration:</strong> NCRs are automatically linked to project activities (Lot Register IDs), personnel training records (QSE-7.2-REG-01), and continual improvement initiatives (QSE-10.3-REG-01) for comprehensive impact analysis and prevention strategies.</p></div>"
+    },
+    "created_at": "2025-09-24 08:37:51.926146+00:00",
+    "updated_at": "2025-09-24 20:53:44.324958+00:00"
+  },
+  {
+    "id": "0d637b2b-2eaf-42b7-b695-6086e3146ca0",
+    "asset_uid": "15cc8134-7964-4001-8063-cee040a2507c",
+    "version": 1,
+    "is_current": true,
+    "type": "procedure",
+    "name": "QSE-10.3-PROC-01 - Procedure for Continual Improvement",
+    "project_id": null,
+    "document_number": "QSE-10.3-PROC-01",
+    "revision_code": null,
+    "metadata": {
+      "title": "Procedure for Continual Improvement",
+      "qse_doc": {
+        "code": "QSE-10.3-PROC-01",
+        "category": "procedure"
+      },
+      "category": "qse",
+      "document_number": "QSE-10.3-PROC-01"
+    },
+    "content": {
+      "html": "<h3>1.0 Purpose</h3><p>To establish a proactive and systematic digital approach to continual improvement, ensuring the QSE Integrated Management System (IMS) evolves to enhance performance, adapt to changing contexts, and deliver increasing value to stakeholders. The process is fully integrated with system analytics to automatically identify improvement opportunities and track implementation effectiveness through real-time dashboard monitoring.</p><h3>2.0 Automated Sources of Improvement</h3><p>Improvement opportunities are automatically identified and actively sought from integrated system sources, including:</p><ul><li><strong>Automated Data Analysis:</strong> Real-time review of performance data, audit results, and NCR trends from dashboard analytics (<code>/dashboard</code>) with AI-powered pattern recognition.</li><li><strong>Digital Stakeholder Feedback:</strong> Integrated suggestion system from employees, clients, and suppliers with automatic categorization and priority assignment.</li><li><strong>Project-Based Lessons Learned:</strong> Automated extraction of lessons learned from completed projects and incidents via project management modules and NCR analytics.</li><li><strong>Management Review Actions:</strong> Automatic import of improvement actions from Management Review outputs (QSE-9.3-REG-01) with progress tracking.</li><li><strong>System Performance Analytics:</strong> Automated identification of inefficiencies through system usage analytics and process optimization algorithms.</li><li><strong>Cross-Reference Integration:</strong> Automatic linking with Risk Register (QSE-6.1-REG-01), Audit findings (QSE-9.2-REG-01), and NCR patterns (QSE-10.2-REG-01).</li></ul><h3>3.0 Digital Workflow Process</h3><p>All identified opportunities are automatically logged in the Continual Improvement Opportunities Register (QSE-10.3-REG-01) with unique tracking IDs. Each opportunity is then digitally evaluated using integrated assessment tools based on potential benefit, cost, and alignment with strategic objectives. Approved initiatives are planned and managed as formal projects with clear deliverables, timelines, automated progress tracking, and real-time dashboard monitoring. The system automatically generates status reports, sends reminder notifications, and tracks ROI for completed improvements.</p>"
+    },
+    "created_at": "2025-09-24 08:37:51.926146+00:00",
+    "updated_at": "2025-09-24 20:53:44.324958+00:00"
+  },
+  {
+    "id": "d6888778-321b-4141-bbc4-337dd68452c5",
+    "asset_uid": "5115bb3b-405b-41c6-b3ad-c2c4877b2da8",
+    "version": 1,
+    "is_current": true,
+    "type": "record",
+    "name": "QSE-10.3-REG-01 - Continual Improvement Opportunities Register",
+    "project_id": null,
+    "document_number": "QSE-10.3-REG-01",
+    "revision_code": null,
+    "metadata": {
+      "title": "Continual Improvement Opportunities Register",
+      "qse_doc": {
+        "code": "QSE-10.3-REG-01",
+        "category": "register"
+      },
+      "category": "qse",
+      "document_number": "QSE-10.3-REG-01"
+    },
+    "content": {
+      "html": "<p>A live register capturing opportunities for improvement identified from audits, reviews, suggestions, and organizational learning initiatives.</p><h3>Continual Improvement Opportunities Register</h3><div class=\"overflow-x-auto\"><table class=\"min-w-full border\"><thead><tr class=\"bg-gray-50\"><th class=\"border p-2\">ID</th><th class=\"border p-2\">Opportunity</th><th class=\"border p-2\">Source</th><th class=\"border p-2\">Status</th><th class=\"border p-2\">Priority</th><th class=\"border p-2\">Responsible</th><th class=\"border p-2\">Target Date</th><th class=\"border p-2\">Source Reference</th><th class=\"border p-2\">ROI/Benefits</th><th class=\"border p-2\">Dashboard Link</th></tr></thead><tbody><tr><td class=\"border p-2\">[Auto-generated CI-ID]</td><td class=\"border p-2\">[Enter Improvement Opportunity Description]</td><td class=\"border p-2\">[Auto-categorized Source Type]</td><td class=\"border p-2\">[Auto-tracked: Identified/Under Review/Approved/In Progress/Implemented/Closed]</td><td class=\"border p-2\">[Auto-assigned: High/Medium/Low]</td><td class=\"border p-2\">[Auto-assigned Responsible Person]</td><td class=\"border p-2\">[Enter/Auto-calculated Target Date]</td><td class=\"border p-2\">[Auto-linked Source: NCR/Audit/Risk/Review ID]</td><td class=\"border p-2\">[Enter Expected ROI/Benefits]</td><td class=\"border p-2\">[Auto-linked to /dashboard Analytics]</td></tr></tbody></table></div><h3>Improvement Analytics &amp; ROI Tracking Template</h3><div class=\"overflow-x-auto mb-8\"><table class=\"min-w-full border border-gray-300 text-sm\"><thead class=\"bg-gray-50\"><tr><th class=\"border p-2 text-left\">Improvement Category</th><th class=\"border p-2 text-left\">Total Opportunities</th><th class=\"border p-2 text-left\">Implemented</th><th class=\"border p-2 text-left\">Success Rate</th><th class=\"border p-2 text-left\">Avg Implementation Time</th><th class=\"border p-2 text-left\">Total ROI</th><th class=\"border p-2 text-left\">Cost Savings</th><th class=\"border p-2 text-left\">Dashboard Trend</th></tr></thead><tbody><tr><td class=\"border p-2\">[Quality/Safety/Environmental/Process]</td><td class=\"border p-2\">[Auto-calculated Count]</td><td class=\"border p-2\">[Auto-calculated Implemented]</td><td class=\"border p-2\">[Auto-calculated % Success]</td><td class=\"border p-2\">[Auto-calculated Avg Days]</td><td class=\"border p-2\">[Auto-calculated Total ROI]</td><td class=\"border p-2\">[Auto-calculated Cost Savings]</td><td class=\"border p-2\">[Link to /dashboard Trend Analysis]</td></tr></tbody></table></div><h3>System Integration Summary</h3><div class=\"grid md:grid-cols-2 gap-6 mt-6\"><div class=\"bg-green-50 p-6 rounded-lg\"><h4 class=\"text-xl font-semibold text-green-900 mb-3\">Automated Opportunity Identification</h4><ul class=\"text-green-800 space-y-2\"><li>• Real-time analytics from dashboard performance data</li><li>• NCR pattern analysis with automatic suggestions</li><li>• Risk register correlation for proactive improvements</li><li>• Management review action automatic import</li></ul></div><div class=\"bg-blue-50 p-6 rounded-lg\"><h4 class=\"text-xl font-semibold text-blue-900 mb-3\">Digital Workflow Management</h4><ul class=\"text-blue-800 space-y-2\"><li>• Automated progress tracking and notifications</li><li>• ROI calculation and cost-benefit analysis</li><li>• Cross-system integration and impact assessment</li><li>• Real-time dashboard monitoring and reporting</li></ul></div></div><div class=\"mt-6 p-4 bg-green-50 border-l-4 border-green-400\"><p class=\"text-green-800\"><strong>Critical System Role:</strong> The Continual Improvement Register (QSE-10.3-REG-01) serves as the central hub for all improvement activities across the QSE Management System. It automatically receives inputs from NCR corrective actions, audit findings, management review decisions, risk assessments, and system performance analytics, ensuring comprehensive organizational learning and development.</p></div><div class=\"mt-4 p-4 bg-purple-50 border-l-4 border-purple-400\"><p class=\"text-purple-800\"><strong>Data-Driven Excellence:</strong> All improvement opportunities are prioritized using AI-powered analytics that consider impact, effort, strategic alignment, and resource availability. The system automatically tracks implementation success rates and ROI to optimize future improvement decisions and resource allocation.</p></div>"
+    },
+    "created_at": "2025-09-24 20:53:44.324958+00:00",
+    "updated_at": "2025-09-24 20:53:44.324958+00:00"
+  },
+  {
+    "id": "6ebade19-4bc1-4755-a741-4a0f1a7e4f01",
+    "asset_uid": "67411efd-11e6-417b-acc3-c7ab8de64b51",
+    "version": 1,
+    "is_current": true,
+    "type": "document",
+    "name": "QSE-1-MAN-01 - Integrated Management System (IMS) Manual",
+    "project_id": null,
+    "document_number": "QSE-1-MAN-01",
+    "revision_code": null,
+    "metadata": {
+      "title": "Integrated Management System (IMS) Manual",
+      "qse_doc": {
+        "code": "QSE-1-MAN-01",
+        "category": "manual"
+      },
+      "category": "qse",
+      "document_number": "QSE-1-MAN-01"
+    },
+    "content": {
+      "html": "<h3>1.0 Introduction and Purpose</h3><p>This Integrated Management System (IMS) Manual is the principal document outlining the framework and core commitments of AustBuild Civil Pty Ltd in relation to Quality, Safety, and Environmental (QSE) management. It serves as a roadmap for our operations, articulating the policies, processes, and procedures that govern our activities in the civil construction sector.</p><p>This manual describes how the company meets QSE requirements through the integrated use of its digital QSE Management System platform.</p><p>The primary purpose of this manual is to:</p><ul><li>Demonstrate top management's unwavering commitment to achieving excellence in QSE performance.</li><li>Define the structure of the IMS and the interaction between its key processes, aligned with the Plan-Do-Check-Act (PDCA) cycle.</li><li>Ensure consistent and controlled operations that meet and exceed the requirements of our clients, as well as all applicable statutory and regulatory obligations.</li><li>Provide a framework for setting QSE objectives and targets, driving continual improvement throughout the organization.</li><li>Serve as a key reference document for employees, clients, auditors, and other interested parties.</li></ul><h3>2.0 Normative References</h3><p>The IMS is established in conformance with the following internationally recognized standards and key Australian legal and other requirements:</p><ul><li><strong>ISO 9001:2015:</strong> Quality management systems — Requirements</li><li><strong>ISO 14001:2015:</strong> Environmental management systems — Requirements with guidance for use</li><li><strong>ISO 45001:2018:</strong> Occupational health and safety management systems — Requirements with guidance for use</li><li><strong>Work Health and Safety Act 2011 (Commonwealth)</strong> and associated State/Territory WHS Acts</li><li><strong>Work Health and Safety Regulations 2011 (Commonwealth)</strong> and associated State/Territory WHS Regulations</li><li><strong>Environmental Protection and Biodiversity Conservation Act 1999 (EPBC Act)</strong></li><li>State and Territory Environmental Protection Acts (e.g., Protection of the Environment Operations Act 1997 (NSW))</li><li><strong>National Construction Code (NCC)</strong> of Australia</li><li><strong>Austroads Guide to Road Design</strong> - Part 2: Design Considerations</li><li><strong>Austroads Guide to Road Construction</strong> - Part 4: Earthworks</li><li><strong>Austroads Guide to Traffic Management</strong> - Part 3: Traffic Control Devices</li><li><strong>Austroads Guide to Pavement Technology</strong> - Part 2: Pavement Structural Design</li><li><strong>AS 1100 Technical Drawing Standards</strong></li><li><strong>AS 2601 The Demolition of Structures</strong></li><li><strong>AS 3798 Guidelines on Earthworks for Commercial and Residential Developments</strong></li><li><strong>AS/NZS 1170 Structural Design Actions</strong></li><li>Relevant Australian Standards (AS/NZS) and Codes of Practice (e.g., AS/NZS 4801, Safe Work Australia Codes of Practice)</li></ul><h3>3.0 Terms and Definitions</h3><p>For the purposes of this document, the terms and definitions given in the referenced ISO standards apply, along with the following critical definitions for our operations:</p><ul><li><strong>IMS:</strong> Integrated Management System. The unified system that manages the Quality, Safety, and Environmental aspects of our operations in a cohesive manner.</li><li><strong>Aspect (Environmental):</strong> An element of our activities, products, or services that can interact with the environment (e.g., fuel consumption, waste generation).</li><li><strong>Hazard (OHS):</strong> A source with a potential to cause injury and ill health (e.g., working at height, operating mobile plant).</li><li><strong>Risk:</strong> The effect of uncertainty. Within the IMS, this is considered for Quality (e.g., project delays), Environment (e.g., pollution event), and Safety (e.g., serious injury).</li><li><strong>Project:</strong> A specific construction undertaking with a defined scope, budget, and timeline, governed by a contract with a client.</li><li><strong>Client:</strong> The entity commissioning the project.</li><li><strong>Competence:</strong> The ability to apply knowledge and skills to achieve intended results.</li></ul><h3>4.0 Context of the Organization</h3><p>AustBuild Civil Pty Ltd has systematically determined the external and internal issues that are relevant to its purpose and strategic direction, and that affect its ability to achieve the intended results of its IMS. This process, which is reviewed at least annually during management review meetings, is detailed in document <a href=\"/qse/corp-context\">QSE-4.1-PROC-01 - Procedure for Determining Context of the Organization</a>. The outputs are maintained in the live registers within the <code>/qse/corp-context</code> module of the QSE system, including a comprehensive Register of Internal & External Issues and a Register of Interested Parties, which form critical inputs into our risk management process, strategic planning, and the overall IMS. The IMS is integrated with the project dashboard (<code>/dashboard</code>) to provide real-time visibility of organizational performance and context-related issues.</p><h3>5.0 Leadership and Commitment</h3><p>Top management at AustBuild Civil Pty Ltd demonstrates leadership and commitment by taking full accountability for the effectiveness of the IMS. This is achieved through:</p><ul><li>Establishing, implementing, and maintaining the QSE Policy and Objectives, ensuring they are compatible with the strategic direction of the company.</li><li>Integrating IMS requirements into all business processes.</li><li>Providing necessary resources (human, financial, technological) for the IMS.</li><li>Promoting a culture of risk-based thinking and process-based management.</li><li>Actively participating in and leading management reviews.</li><li>Ensuring that roles, responsibilities, and authorities are clearly defined, communicated, and understood throughout the organization, as detailed in QSE-5.3-REG-01 Roles, Responsibilities & Authorities Matrix.</li></ul><p>The <a href=\"/qse/corp-policy-roles\">QSE Policy (QSE-5.2-POL-01)</a> is our public declaration of these commitments.</p><h3>6.0 Planning</h3><p>Planning within our IMS is a proactive process to address risks and opportunities, and to establish objectives for improvement. Our planning process, detailed in <a href=\"/qse/corp-risk-management\">QSE-6.1-PROC-01 - Procedure for Risk & Opportunity Management</a>, ensures that we:</p><ul><li>Identify and assess risks and opportunities related to our context, interested parties, and QSE aspects/hazards.</li><li>Establish measurable QSE objectives at corporate and project levels, which are documented in the <a href=\"/qse/corp-objectives\">Annual QSE Objectives & Targets Plan (QSE-6.2-PLAN-01)</a>.</li><li>Plan actions to achieve these objectives, including defining responsibilities, resources, and timelines.</li></ul><h3>7.0 Support</h3><p>AustBuild Civil Pty Ltd is committed to providing the support necessary for an effective IMS. This includes:</p><ul><li><strong>Resources:</strong> Provision of competent personnel, fit-for-purpose infrastructure, and a work environment conducive to safety and quality.</li><li><strong>Competence:</strong> Ensuring all employees are competent on the basis of appropriate education, training, or experience, as managed through <a href=\"/qse/corp-competence\">Procedure QSE-7.2-PROC-01</a>.</li><li><strong>Awareness:</strong> Making personnel aware of the QSE Policy, their contribution to the IMS, and the implications of not conforming.</li><li><strong>Communication:</strong> Managing internal and external communications as per <a href=\"/qse/corp-communication\">Procedure QSE-7.4-PROC-01</a>.</li><li><strong>Documented Information:</strong> Controlling the creation, update, and retention of all documented information required by the IMS and the ISO standards, in accordance with <a href=\"/qse/corp-documentation\">Procedure QSE-7.5-PROC-01</a>.</li></ul><h3>8.0 Operation</h3><p>All operational activities at AustBuild Civil Pty Ltd are planned and executed under controlled conditions to manage QSE risks and meet client requirements. Operational control is achieved through project-specific workspaces in the application. Our core operational processes include:</p><ul><li>Tendering and Contract Review</li><li>Project Mobilisation and Planning</li><li>Procurement and Subcontractor Management</li><li>Construction Execution (including management of environmental aspects and OHS hazards)</li><li>Inspection, Testing, and Handover</li><li>Control of Nonconforming Outputs</li></ul><p>These processes are governed by a suite of operational procedures and templates, listed in the <a href=\"/qse/corp-documentation\">Master Document Register</a>, which are implemented at the project level through specific Project Management Plans (PMPs) that are generated by the system. Work Breakdown Structures (WBS) are visualized in the <code>/wbs</code> tab, and all records (ITPs, NCRs) are managed within their respective modules.</p><h3>9.0 Performance Evaluation</h3><p>We systematically monitor, measure, analyze, and evaluate our QSE performance to assess the effectiveness of the IMS. Performance metrics and KPIs are tracked on the project dashboard (<code>/projects/[projectId]</code>) and aggregated for management review. Key performance evaluation activities include:</p><ul><li>Monitoring of QSE Objectives and KPIs.</li><li>Client satisfaction surveys and feedback analysis.</li><li>Workplace inspections and environmental monitoring.</li><li>A comprehensive internal audit program, as detailed in <a href=\"/qse/corp-audit\">QSE-9.2-PROC-01 - Internal Audit Procedure</a>.</li><li>Formal Management Reviews to assess overall system performance, detailed in <a href=\"/qse/corp-review\">QSE-9.3-PROC-01 - Management Review Procedure</a>.</li></ul><p>The overall process is defined in <a href=\"/qse/corp-monitoring\">QSE-9.1-PROC-01 - Performance Monitoring and Measurement</a>.</p><h3>10.0 Improvement</h3><p>Continual improvement is an underlying principle of our IMS and organizational culture. We drive improvement through:</p><ul><li>Proactive identification of improvement opportunities from audits, risk assessments, and stakeholder feedback.</li><li>A systematic approach to managing nonconformities and incidents, including thorough root cause analysis and the implementation of effective corrective actions to prevent recurrence.</li></ul><p>These processes are outlined in <a href=\"/qse/corp-ncr\">QSE-10.2-PROC-01 - Procedure for Nonconformity & Corrective Action</a> and <a href=\"/qse/corp-continual-improvement\">QSE-10.3-PROC-01 - Procedure for Continual Improvement</a>.</p><h4>Process Interaction Diagram (PDCA Model)</h4><p>The IMS of AustBuild Civil Pty Ltd operates on the Plan-Do-Check-Act (PDCA) cycle, which is a continuous loop of planning, implementing, reviewing, and improving processes and actions. The diagram below illustrates the high-level interaction of our key processes within this framework and their integration with the QSE system modules.</p><div ><div ><div ><h5 >PLAN (Clauses 4, 5, 6)</h5><ul ><li>• Context Analysis (/qse/corp-context)</li><li>• Leadership & Policy (/qse/corp-policy-roles)</li><li>• Risk Management (/qse/corp-risk-management)</li><li>• Objectives Setting (/qse/corp-objectives)</li></ul></div><div ><h5 >DO (Clauses 7, 8)</h5><ul ><li>• Competence & Training (/qse/corp-competence)</li><li>• Communication (/qse/corp-communication)</li><li>• Project Execution (/projects/[projectId])</li><li>• Operational Procedures (/qse/corp-op-procedures-templates)</li></ul></div><div ><h5 >CHECK (Clause 9)</h5><ul ><li>• Performance Monitoring (/qse/corp-monitoring)</li><li>• Internal Audits (/qse/corp-audit)</li><li>• Management Review (/qse/corp-review)</li><li>• Dashboard Analytics (/dashboard)</li></ul></div><div ><h5 >ACT (Clause 10)</h5><ul ><li>• NCR Management (/qse/corp-ncr)</li><li>• Corrective Actions (/qse/corp-ncr)</li><li>• Continual Improvement (/qse/corp-continual-improvement)</li><li>• System Updates & Enhancements</li></ul></div></div><div ><p>This continuous cycle is driven by Customer Requirements and stakeholder needs, aiming for enhanced Customer Satisfaction and organizational excellence.</p></div></div>"
+    },
+    "created_at": "2025-09-24 08:37:51.926146+00:00",
+    "updated_at": "2025-09-24 20:53:44.324958+00:00"
+  },
+  {
+    "id": "164024d2-b8a4-42f6-a107-a002699ccb08",
+    "asset_uid": "bc74a22b-3d87-4284-81fc-7e2deaf49e51",
+    "version": 1,
+    "is_current": true,
+    "type": "procedure",
+    "name": "QSE-4.1-PROC-01 - Procedure for Determining Context and Interested Parties",
+    "project_id": null,
+    "document_number": "QSE-4.1-PROC-01",
+    "revision_code": null,
+    "metadata": {
+      "title": "Procedure for Determining Context and Interested Parties",
+      "qse_doc": {
+        "code": "QSE-4.1-PROC-01",
+        "category": "procedure"
+      },
+      "category": "qse",
+      "document_number": "QSE-4.1-PROC-01"
+    },
+    "content": {
+      "html": "<h3>1.0 Purpose</h3><p>This procedure establishes the systematic and ongoing process for identifying, analyzing, monitoring, and reviewing the external and internal issues that constitute the context of AustBuild Civil. It also defines the method for identifying interested parties and their relevant needs and expectations. This process is fundamental to our strategic planning, risk management, and the overall effectiveness of our Integrated Management System (IMS), ensuring compliance with clauses 4.1 and 4.2 of ISO 9001:2015, ISO 14001:2015, and ISO 45001:2018.</p><h3>2.0 Scope</h3><p>This procedure applies to all corporate, functional, and project levels of AustBuild Civil. The outputs of this procedure are mandatory inputs for the management review process, the setting of QSE objectives, and the risk and opportunity management process.</p><h3>3.0 Responsibilities</h3><ul><li><strong>Chief Executive Officer (CEO):</strong> Holds ultimate responsibility for understanding and approving the organization's context and ensuring it aligns with the strategic direction. The CEO ratifies the key issues identified.</li><li><strong>Executive Leadership Team (ELT):</strong> Actively participates in the context analysis, identifies strategic-level issues, and allocates resources to manage associated risks and opportunities.</li><li><strong>QSE Manager:</strong> Is the custodian of this procedure, responsible for facilitating the context analysis process, maintaining the associated registers, and ensuring the outputs are communicated and integrated into the IMS.</li><li><strong>Department and Project Managers:</strong> Are responsible for identifying project-specific issues and interested parties during the project start-up phase. These are to be recorded in the project's workspace and escalated to the QSE Manager if they have corporate-level significance.</li></ul><h3>4.0 Procedure</h3><h4>Context Analysis Flowchart</h4><div style=\"my-8 p-6 border-2 border-gray-300 bg-gray-50\"><div style=\"text-align: center;\"><p style=\"font-weight: bold; color: #4A5568; margin-bottom: 1rem;\">Context Analysis Process Flow</p><div style=\"display: grid; grid-template-columns: 1fr; gap: 1rem; max-width: 42rem; margin-left: auto; margin-right: auto;\"><div style=\"background-color: #DBEAFE; padding: 0.75rem; border-radius: 0.25rem; border: 1px solid #93C5FD;\"><p style=\"font-weight: 600;\">1. Data Gathering</p><p style=\"font-size: 0.875rem;\">PESTLE, SWOT, Performance Data</p></div><div style=\"text-align: center; font-size: 1.5rem;\">↓</div><div style=\"background-color: #D1FAE5; padding: 0.75rem; border-radius: 0.25rem; border: 1px solid #6EE7B7;\"><p style=\"font-weight: 600;\">2. Analysis Workshop</p><p style=\"font-size: 0.875rem;\">ELT Review & Issue Identification</p></div><div style=\"text-align: center; font-size: 1.5rem;\">↓</div><div style=\"background-color: #FFEDD5; padding: 0.75rem; border-radius: 0.25rem; border: 1px solid #FDBA74;\"><p style=\"font-weight: 600;\">3. Documentation</p><p style=\"font-size: 0.875rem;\">Register Updates & Owner Assignment</p></div><div style=\"text-align: center; font-size: 1.5rem;\">↓</div><div style=\"background-color: #EDE9FE; padding: 0.75rem; border-radius: 0.25rem; border: 1px solid #C4B5FD;\"><p style=\"font-weight: 600;\">4. Integration</p><p style=\"font-size: 0.875rem;\">Risk Management & WBS Agent</p></div></div></div></div><h4>4.1 Determining Organizational Context</h4><p>The context of the organization is formally determined through a structured workshop held annually as part of the strategic planning cycle, led by the CEO and facilitated by the QSE Manager. The context is also reviewed during quarterly management review meetings.</p><ol><li><strong>Step 1: Data Gathering.</strong> The QSE Manager collates data from various sources, including PESTLE (Political, Economic, Social, Technological, Legal, Environmental) analysis, SWOT (Strengths, Weaknesses, Opportunities, Threats) analysis, market reports, client feedback, audit results, and performance data.</li><li><strong>Step 2: Analysis Workshop.</strong> The ELT analyzes the collated data to identify significant internal and external issues that could positively or negatively impact the IMS and business objectives.</li><li><strong>Step 3: Issue Documentation.</strong> Each identified issue is documented in the 'Register of Internal & External Issues' (QSE-4.1-REG-01), detailing its description, potential impact, and assigning an owner.</li><li><strong>Step 4: Integration with Risk Management.</strong> The identified issues are used as a primary input into the corporate risk and opportunity assessment process (ref: QSE-6.1-PROC-01). Issues also feed into the AI risk assessment in the WBS Agent for automated risk identification during project planning.</li></ol><h4>4.2 Identifying Interested Parties</h4><p>The identification of interested parties and their requirements is conducted in parallel with the context analysis.</p><ol><li><strong>Step 1: Stakeholder Mapping.</strong> During the annual workshop, the ELT conducts a stakeholder mapping exercise, identifying all relevant parties in predefined categories (e.g., Customers, Employees, Regulators, Suppliers, Community).</li><li><strong>Step 2: Determining Needs and Expectations.</strong> For each identified party, their relevant needs, expectations, and legal or other requirements are determined. This is gathered through formal (e.g., contracts, legislation) and informal (e.g., meetings, surveys) channels.</li><li><strong>Step 3: Requirement Documentation.</strong> All interested parties and their associated requirements are documented in the 'Register of Interested Parties & Their Requirements' (QSE-4.2-REG-01). The register includes the method and frequency of engagement for each party.</li><li><strong>Step 4: Compliance Obligation Link.</strong> Requirements that constitute a legal or compliance obligation are transferred to the 'Compliance Obligations Register' (ref: QSE-6.1-REG-01).</li></ol><h3>5.0 Monitoring, Review, and Update</h3><p>The context of the organization is dynamic and requires continuous monitoring. The registers associated with this procedure are considered live documents.</p><ul><li><strong>Formal Review:</strong> The CEO and ELT formally review the complete context analysis and associated registers during the annual strategic planning meeting and quarterly management reviews.</li><li><strong>Ongoing Monitoring:</strong> Department and Project Managers are responsible for monitoring their areas for any changes that could affect the context (e.g., new legislation, new client, major incident) and immediately reporting them to the QSE Manager.</li><li><strong>Triggered Updates:</strong> The registers must be updated immediately upon the identification of a new significant issue or interested party.</li></ul><h3>5.1 Monitoring Triggers</h3><p>The following events and indicators trigger immediate review and potential update of the organizational context:</p><ul><li>[Enter trigger criteria]</li><li>[Enter monitoring indicators]</li><li>[Enter escalation thresholds]</li><li>[Enter review frequencies]</li><li>[Enter notification requirements]</li></ul><h3>6.0 Records</h3><p>The following live records are maintained within the <code>/qse/corp-context</code> module:</p><ul><li><strong>QSE-4.1-REG-01:</strong> Register of Internal and External Issues</li><li><strong>QSE-4.2-REG-01:</strong> Register of Interested Parties and Their Requirements</li><li>Minutes of Management Meetings where context and interested parties are discussed.</li><li>Records from SWOT/PESTLE analysis workshops.</li></ul>"
+    },
+    "created_at": "2025-09-24 20:53:44.324958+00:00",
+    "updated_at": "2025-09-24 20:53:44.324958+00:00"
+  },
+  {
+    "id": "59ca254c-9eae-4961-a0dd-7ee1c031d7ee",
+    "asset_uid": "f22c5b19-2a95-4ed6-8a15-6fce0fd157c4",
+    "version": 1,
+    "is_current": true,
+    "type": "record",
+    "name": "QSE-4.1-REG-01 - Register of Internal & External Issues",
+    "project_id": null,
+    "document_number": "QSE-4.1-REG-01",
+    "revision_code": null,
+    "metadata": {
+      "title": "Register of Internal & External Issues",
+      "qse_doc": {
+        "code": "QSE-4.1-REG-01",
+        "category": "register"
+      },
+      "category": "qse",
+      "document_number": "QSE-4.1-REG-01"
+    },
+    "content": {
+      "html": "<h3>Internal Issues Register</h3><div class=\"overflow-x-auto\"><table class=\"min-w-full border border-gray-300 text-sm\"><thead class=\"bg-gray-50\"><tr><th class=\"border p-2 text-left\">Issue ID</th><th class=\"border p-2 text-left\">Category</th><th class=\"border p-2 text-left\">Description</th><th class=\"border p-2 text-left\">Impact on QSE</th><th class=\"border p-2 text-left\">Status</th><th class=\"border p-2 text-left\">Owner</th><th class=\"border p-2 text-left\">Link to Risk Register (ID)</th></tr></thead><tbody><tr><td class=\"border p-2\">[Enter Issue ID]</td><td class=\"border p-2\">[Enter Category]</td><td class=\"border p-2\">[Enter Description]</td><td class=\"border p-2\">[Enter Impact on QSE]</td><td class=\"border p-2\">[Enter Status]</td><td class=\"border p-2\">[Enter Owner]</td><td class=\"border p-2\">[Enter Risk Register ID]</td></tr></tbody></table></div><h3>External Issues Register</h3><div class=\"overflow-x-auto\"><table class=\"min-w-full border border-gray-300 text-sm\"><thead class=\"bg-gray-50\"><tr><th class=\"border p-2 text-left\">Issue ID</th><th class=\"border p-2 text-left\">Category</th><th class=\"border p-2 text-left\">Description</th><th class=\"border p-2 text-left\">Impact on QSE</th><th class=\"border p-2 text-left\">Status</th><th class=\"border p-2 text-left\">Monitor</th></tr></thead><tbody><tr><td class=\"border p-2\">[Enter Issue ID]</td><td class=\"border p-2\">[Enter Category]</td><td class=\"border p-2\">[Enter Description]</td><td class=\"border p-2\">[Enter Impact on QSE]</td><td class=\"border p-2\">[Enter Status]</td><td class=\"border p-2\">[Enter Monitor]</td></tr></tbody></table></div><h3>Review and Update Process</h3><ul><li><strong>Quarterly Reviews:</strong> Formal assessment of all issues by the ELT during the quarterly management review, with updates to status and actions recorded.</li><li><strong>Event-driven Updates:</strong> The register is updated immediately by the assigned owner when a significant new issue is identified or the nature of an existing issue changes.</li><li><strong>Impact Assessment:</strong> A full review of all issues and their potential impact is conducted as part of the annual strategic planning and risk management cycle.</li></ul>"
+    },
+    "created_at": "2025-09-24 20:53:44.324958+00:00",
+    "updated_at": "2025-09-24 20:53:44.324958+00:00"
+  },
+  {
+    "id": "baba308e-79fa-4b6f-9d9b-79c69bdd65b6",
+    "asset_uid": "31d37ca5-cd79-4bc1-8c25-e7ed9f38968c",
+    "version": 1,
+    "is_current": true,
+    "type": "record",
+    "name": "QSE-4.2-REG-01 - Register of Interested Parties & Requirements",
+    "project_id": null,
+    "document_number": "QSE-4.2-REG-01",
+    "revision_code": null,
+    "metadata": {
+      "title": "Register of Interested Parties & Requirements",
+      "qse_doc": {
+        "code": "QSE-4.2-REG-01",
+        "category": "register"
+      },
+      "category": "qse",
+      "document_number": "QSE-4.2-REG-01"
+    },
+    "content": {
+      "html": "<h3>Interested Parties and Their Requirements</h3><div class=\"overflow-x-auto\"><table class=\"min-w-full border border-gray-300 text-sm\"><thead class=\"bg-gray-50\"><tr><th class=\"border p-2 text-left\">Stakeholder Group</th><th class=\"border p-2 text-left\">Specific Party</th><th class=\"border p-2 text-left\">Key Requirements & Expectations (Needs)</th><th class=\"border p-2 text-left\">QSE Relevance</th><th class=\"border p-2 text-left\">Engagement Method</th><th class=\"border p-2 text-left\">Frequency</th><th class=\"border p-2 text-left\">Link to Communication Plan</th></tr></thead><tbody><tr><td class=\"border p-2\">[Enter Stakeholder Group]</td><td class=\"border p-2\">[Enter Specific Party]</td><td class=\"border p-2\">[Enter Key Requirements & Expectations]</td><td class=\"border p-2\">[Enter QSE Relevance]</td><td class=\"border p-2\">[Enter Engagement Method]</td><td class=\"border p-2\">[Enter Frequency]</td><td class=\"border p-2\">[Enter Communication Plan Link]</td></tr></tbody></table></div><h3>Stakeholder Engagement Strategy</h3><ul><li><strong>Proactive Communication:</strong> Engagement is planned and proactive, aiming to build strong, trust-based relationships and prevent issues before they arise.</li><li><strong>Responsiveness:</strong> All stakeholder inquiries and complaints are logged, acknowledged, and responded to within defined timeframes.</li><li><strong>Transparency:</strong> We are committed to open communication regarding our QSE performance, challenges, and improvement initiatives, where appropriate.</li><li><strong>Feedback Integration:</strong> Feedback from interested parties is a key input into our risk management and continual improvement processes. It is formally reviewed during management reviews.</li></ul><h3>Review and Updates</h3><p>This register is formally reviewed at least semi-annually during management review meetings. It is a live document and must be updated by the QSE Manager or relevant Project Manager whenever:</p><ul><li>A new project is commenced, requiring identification of project-specific stakeholders.</li><li>There is a significant change in organizational structure or scope.</li><li>New legal or other requirements are identified.</li><li>Feedback indicates that the needs of an interested party have changed.</li></ul>"
+    },
+    "created_at": "2025-09-24 20:53:44.324958+00:00",
+    "updated_at": "2025-09-24 20:53:44.324958+00:00"
+  },
+  {
+    "id": "757921e5-ed85-480f-904d-5cbecfe438f5",
+    "asset_uid": "e529e538-e0a0-4e2d-8bbc-65582390ada7",
+    "version": 1,
+    "is_current": true,
+    "type": "document",
+    "name": "QSE-4.3-STMT-01 - IMS Scope Statement",
+    "project_id": null,
+    "document_number": "QSE-4.3-STMT-01",
+    "revision_code": null,
+    "metadata": {
+      "title": "IMS Scope Statement",
+      "qse_doc": {
+        "code": "QSE-4.3-STMT-01",
+        "category": "statement"
+      },
+      "category": "qse",
+      "document_number": "QSE-4.3-STMT-01"
+    },
+    "content": {
+      "html": "<h3>1.0 Scope of the Integrated Management System</h3><p>The Integrated Management System (IMS) of AustBuild Civil Pty Ltd encompasses all activities, processes, products, and services associated with the provision of civil construction, project management, and related engineering services. This includes, but is not limited to, earthworks, road construction, bridge construction, drainage, and utilities installation for clients in both the public and private sectors across Australia.</p><h3>2.0 Organizational Boundaries and Facilities</h3><p>The IMS is applicable to all personnel (permanent, temporary, and contract) and all operations conducted under the control of AustBuild Civil Pty Ltd. The IMS applies to all activities managed within the AustBuild Civil Pty Ltd QSE software platform, from head office functions (in the <code>/qse</code> module) to project delivery (in the <code>/projects</code> module). This includes activities at all company-controlled sites, defined as:</p><ul><li><strong>Head Office:</strong> The central administrative and management functions located at 123 Industry Road, Sydney, NSW 2000, Australia.</li><li><strong>State and Regional Offices:</strong> All permanent support offices, including those in NSW, ACT.</li><li><strong>Project Sites:</strong> All active and future construction sites, laydown yards, and temporary work areas under the direct operational control of AustBuild Civil Pty Ltd for the duration of a project contract.</li><li><strong>Workshops and Maintenance Facilities:</strong> Any permanent or temporary facility used for the storage, maintenance, and repair of company-owned plant and equipment.</li></ul><p>The scope is defined by considering our compliance obligations, organizational units, functions, and physical boundaries.</p><h3>3.0 Applicable Standards and Conformance</h3><p>The IMS is designed to ensure conformance with the full requirements of the following standards:</p><ul><li><strong>ISO 9001:2015:</strong> Quality Management Systems</li><li><strong>ISO 14001:2015:</strong> Environmental Management Systems</li><li><strong>ISO 45001:2018:</strong> Occupational Health & Safety Management Systems</li></ul><p>Furthermore, the scope includes our commitment to satisfying all applicable federal, state, and local legal requirements, relevant codes of practice, and all contractual requirements specified by our clients.</p><h3>4.0 Justification for Non-Applicability (Exclusions)</h3><p>To ensure the IMS accurately reflects our business model, the following clause of ISO 9001:2015 has been determined to be not applicable within our defined scope. This exclusion does not affect our ability or responsibility to consistently provide services that meet customer and applicable statutory and regulatory requirements.</p><ul><li><strong>Clause 8.3 - Design and Development of Products and Services:</strong></li><li><strong>Justification:</strong> AustBuild Civil Pty Ltd operates primarily as a constructor, realizing designs that are provided by our clients or their appointed third-party design consultants. We do not engage in original, clean-sheet design and development activities that would necessitate the full application of this clause. Our quality management processes for controlling client-supplied designs, verifying inputs, and managing design changes during construction are addressed under Clause 8.2 (Requirements for Products and Services) and 8.5 (Production and Service Provision). Temporary works designs and management of client-supplied designs are controlled within the project's 'Documents' module and linked to relevant Lots.</li></ul><p>All other clauses of ISO 9001:2015, ISO 14001:2015, and ISO 45001:2018 are considered fully applicable to the scope of this Integrated Management System.</p><h3>5.0 Scope Review Checklist</h3><p>The following checklist is used during periodic reviews to ensure the scope remains current and appropriate:</p><div><table class=\"w-full border-collapse border border-gray-300\"><thead><tr class=\"bg-gray-50\"><th class=\"border border-gray-300 p-2 text-left\">Review Criteria</th><th class=\"border border-gray-300 p-2 text-left\">Status</th><th class=\"border border-gray-300 p-2 text-left\">Comments/Actions</th></tr></thead><tbody><tr><td class=\"border border-gray-300 p-2\">Are all current organizational activities included in scope?</td><td class=\"border border-gray-300 p-2\">[Enter status]</td><td class=\"border border-gray-300 p-2\">[Enter comments]</td></tr><tr><td class=\"border border-gray-300 p-2\">Are all locations and facilities covered?</td><td class=\"border border-gray-300 p-2\">[Enter status]</td><td class=\"border border-gray-300 p-2\">[Enter comments]</td></tr><tr><td class=\"border border-gray-300 p-2\">Do exclusions remain valid and justified?</td><td class=\"border border-gray-300 p-2\">[Enter status]</td><td class=\"border border-gray-300 p-2\">[Enter comments]</td></tr><tr><td class=\"border border-gray-300 p-2\">Are all applicable standards and regulations current?</td><td class=\"border border-gray-300 p-2\">[Enter status]</td><td class=\"border border-gray-300 p-2\">[Enter comments]</td></tr><tr><td class=\"border border-gray-300 p-2\">Does scope align with business strategy?</td><td class=\"border border-gray-300 p-2\">[Enter status]</td><td class=\"border border-gray-300 p-2\">[Enter comments]</td></tr></tbody></table></div>"
+    },
+    "created_at": "2025-09-24 20:53:44.324958+00:00",
+    "updated_at": "2025-09-24 20:53:44.324958+00:00"
+  },
+  {
+    "id": "d83ab619-4fb4-4eea-b254-4d223ec28f36",
+    "asset_uid": "58a35ccb-afd2-4975-bd0a-c2104ebfe9ff",
+    "version": 1,
+    "is_current": true,
+    "type": "policy",
+    "name": "QSE-5.2-POL-01 - QSE Policy Statement",
+    "project_id": null,
+    "document_number": "QSE-5.2-POL-01",
+    "revision_code": null,
+    "metadata": {
+      "title": "QSE Policy Statement",
+      "qse_doc": {
+        "code": "QSE-5.2-POL-01",
+        "category": "policy"
+      },
+      "category": "qse",
+      "document_number": "QSE-5.2-POL-01"
+    },
+    "content": {
+      "html": "<h3 class=\"text-center text-2xl font-bold mt-8 mb-4\">Integrated Quality, Safety, and Environmental (QSE) Policy</h3><p class=\"font-semibold\">AustBuild Civil Pty Ltd is a leader in the Australian civil construction industry. We are committed to achieving excellence in all aspects of our operations, with a particular focus on delivering superior quality to our clients, ensuring the health and safety of our people, and protecting the environment in the communities where we work.</p><h4 class=\"mt-6 mb-2 font-bold\">Our Commitment:</h4><p>We are dedicated to the continual improvement of our Integrated Management System (IMS) and performance. To achieve this, we commit to:</p><ul class=\"space-y-2\"><li><strong>Client Satisfaction:</strong> Consistently meeting or exceeding client expectations by delivering high-quality projects on time and within budget through robust project management and quality assurance processes.</li><li><strong>Health & Safety:</strong> Providing a safe and healthy work environment for all employees, subcontractors, and visitors, with the ultimate goal of eliminating work-related injury and ill health. We will consult with our workers and actively encourage their participation in OHS matters.</li><li><strong>Environmental Protection:</strong> Preventing pollution, minimizing our environmental footprint by reducing waste and conserving resources, and protecting biodiversity and cultural heritage.</li><li><strong>Compliance:</strong> Fulfilling all applicable legal requirements, industry standards, and other obligations to which we subscribe.</li><li><strong>Risk Management:</strong> Identifying, assessing, and controlling QSE risks and opportunities to ensure the resilience and sustainability of our business.</li><li><strong>Objectives & Targets:</strong> Setting, monitoring, and reviewing measurable QSE objectives and targets to drive continual improvement.</li><li><strong>Resources & Competence:</strong> Ensuring the availability of necessary resources and promoting the competence and awareness of our people to enable them to fulfill their responsibilities effectively.</li></ul><p class=\"mt-4\">This policy is communicated to all persons working for or on behalf of AustBuild Civil Pty Ltd and is made available to the public and other interested parties. It is reviewed annually to ensure its ongoing suitability and effectiveness.</p><div class=\"mt-12 text-right\"><p class=\"font-bold\">_________________________</p><p>Jane Smith</p><p>Chief Executive Officer</p><p>Date: 2025-07-01</p></div>"
+    },
+    "created_at": "2025-09-24 08:37:51.926146+00:00",
+    "updated_at": "2025-09-24 20:53:44.324958+00:00"
+  },
+  {
+    "id": "88fcad6b-e63d-4eb2-b018-362423cd1626",
+    "asset_uid": "1507deaa-ab88-423e-9503-b54782912f33",
+    "version": 1,
+    "is_current": true,
+    "type": "record",
+    "name": "QSE-5.3-REG-01 - Roles, Responsibilities & Authorities Matrix",
+    "project_id": null,
+    "document_number": "QSE-5.3-REG-01",
+    "revision_code": null,
+    "metadata": {
+      "title": "Roles, Responsibilities & Authorities Matrix",
+      "qse_doc": {
+        "code": "QSE-5.3-REG-01",
+        "category": "register"
+      },
+      "category": "qse",
+      "document_number": "QSE-5.3-REG-01"
+    },
+    "content": {
+      "html": "<h3>QSE Roles, Responsibilities, and Authorities</h3><div class=\"overflow-x-auto\"><table class=\"min-w-full border border-gray-300 text-sm\"><thead class=\"bg-gray-50\"><tr><th class=\"border p-2 text-left w-1/4\">Role</th><th class=\"border p-2 text-left w-1/2\">Key QSE Responsibilities</th><th class=\"border p-2 text-left w-1/4\">Key Authorities</th></tr></thead><tbody><tr><td class=\"border p-2 font-semibold\">Chief Executive Officer (CEO)</td><td class=\"border p-2\"><ul><li>Ensuring the QSE Policy and Objectives are established and compatible with the strategic direction.</li><li>Taking ultimate accountability for the effectiveness of the IMS.</li><li>Ensuring necessary resources are available.</li><li>Chairing Management Review meetings.</li></ul></td><td class=\"border p-2\"><ul><li>Approve QSE Policy.</li><li>Stop any operation on QSE grounds.</li><li>Allocate corporate budget for QSE initiatives.</li></ul></td></tr><tr><td class=\"border p-2 font-semibold\">Operations Manager</td><td class=\"border p-2\"><ul><li>Ensuring all projects are resourced to meet QSE requirements.</li><li>Driving consistent implementation of IMS procedures across all sites.</li><li>Monitoring project QSE performance against targets.</li></ul></td><td class=\"border p-2\"><ul><li>Approve Project Management Plans.</li><li>Authorize resource allocation to projects.</li><li>Initiate investigation into major incidents.</li></ul></td></tr><tr><td class=\"border p-2 font-semibold\">QSE Manager</td><td class=\"border p-2\"><ul><li>Maintaining and improving the IMS in accordance with ISO standards.</li><li>Reporting on IMS performance to the CEO.</li><li>Coordinating the internal audit program.</li><li>Providing expert QSE advice and support.</li><li>Administering the corporate-level QSE modules (/qse) and ensuring system templates remain compliant.</li></ul></td><td class=\"border p-2\"><ul><li>Issue and control IMS documentation.</li><li>Stop work on grounds of imminent danger or serious environmental breach.</li><li>Liaise with external auditors and regulators.</li></ul></td></tr><tr><td class=\"border p-2 font-semibold\">Project Manager</td><td class=\"border p-2\"><ul><li>Overall responsibility for QSE performance on their project.</li><li>Developing and implementing the Project QSE Management Plan.</li><li>Ensuring all site personnel comply with IMS requirements.</li><li>Managing project-specific risks, incidents, and emergencies.</li><li>Maintaining the project's Lot Register, NCR Register, and Document Register within the system.</li></ul></td><td class=\"border p-2\"><ul><li>Stop any unsafe work on their site.</li><li>Approve site-specific risk assessments (e.g., SWMS).</li><li>Manage project QSE budget.</li></ul></td></tr><tr><td class=\"border p-2 font-semibold\">Site Engineer / Supervisor</td><td class=\"border p-2\"><ul><li>Conducting daily pre-start meetings and site inspections.</li><li>Ensuring works are carried out according to the approved method statements and ITPs.</li><li>Supervising workers and correcting unsafe behaviors.</li><li>Reporting all incidents and hazards immediately.</li><li>Conducting and recording daily pre-starts and ITPs using the system's forms and workflows.</li></ul></td><td class=\"border p-2\"><ul><li>Stop a specific task if it is unsafe.</li><li>Issue instructions to workers and subcontractors on QSE matters.</li></ul></td></tr><tr><td class=\"border p-2 font-semibold\">All Workers and Subcontractors</td><td class=\"border p-2\"><ul><li>Taking reasonable care for their own and others' health and safety.</li><li>Complying with all QSE policies, procedures, and instructions.</li><li>Reporting any hazards, incidents, or environmental spills immediately.</li><li>Using provided personal protective equipment (PPE) correctly.</li><li>Using the system to access controlled documents (SWMS, ITPs) and report hazards/incidents.</li></ul></td><td class=\"border p-2\"><ul><li>The right and obligation to stop work if they believe it is unsafe.</li></ul></td></tr></tbody></table></div>"
+    },
+    "created_at": "2025-09-24 08:37:51.926146+00:00",
+    "updated_at": "2025-09-24 20:53:44.324958+00:00"
+  },
+  {
+    "id": "8c71183f-3d98-458f-af46-537ab85f58a0",
+    "asset_uid": "69fbdee4-873e-4ce1-98d9-d328bc6aefc1",
+    "version": 1,
+    "is_current": true,
+    "type": "form",
+    "name": "QSE-5.4-FORM-01 - Health & Safety Committee Meeting Minutes Template",
+    "project_id": null,
+    "document_number": "QSE-5.4-FORM-01",
+    "revision_code": null,
+    "metadata": {
+      "title": "Health & Safety Committee Meeting Minutes Template",
+      "qse_doc": {
+        "code": "QSE-5.4-FORM-01",
+        "category": "form"
+      },
+      "category": "qse",
+      "document_number": "QSE-5.4-FORM-01"
+    },
+    "content": {
+      "html": "<h3 class=\"text-center text-xl font-bold mt-8 mb-4\">Health & Safety Committee Meeting Minutes Template</h3><p><strong>Attendees:</strong> [Enter list of attendees]</p><p><strong>Apologies:</strong> [Enter list of apologies]</p><p><strong>Secretariat:</strong> [Enter secretariat name]</p><h4 class=\"mt-6 mb-2 font-bold\">1.0 Welcome & Opening Remarks</h4><p>[Enter opening remarks and key safety messages]</p><h4 class=\"mt-6 mb-2 font-bold\">2.0 Review of Previous Minutes & Actions</h4><p>[Enter review of previous minutes acceptance]</p><ul><li>[Enter status of previous actions]</li></ul><h4 class=\"mt-6 mb-2 font-bold\">3.0 QSE Performance Review</h4><p>[Enter performance dashboard presentation summary]</p><ul><li><strong>Lead Indicators:</strong> [Enter lead indicator data]</li><li><strong>Lag Indicators:</strong> [Enter lag indicator data]</li><li><strong>Environmental:</strong> [Enter environmental performance data]</li></ul><h4 class=\"mt-6 mb-2 font-bold\">4.0 HSR Reports & Key Issues Raised</h4><p>[Enter HSR reports and key issues discussed]</p><h4 class=\"mt-6 mb-2 font-bold\">5.0 New Business</h4><p>[Enter new business items discussed]</p><h4 class=\"mt-6 mb-2 font-bold\">6.0 Actions Arising from Meeting</h4><p><strong>Note:</strong> Actions arising are to be logged in the Continual Improvement Register (QSE-10.3-REG-01) with assigned responsibilities and due dates tracked within the system.</p><table class=\"min-w-full border border-gray-300 text-sm mb-8\"><thead><tr><th class=\"border p-2 text-left\">Action ID</th><th class=\"border p-2 text-left\">Action Item</th><th class=\"border p-2 text-left\">Responsible</th><th class=\"border p-2 text-left\">Due Date</th></tr></thead><tbody><tr><td class=\"border p-2\">[Enter Action ID]</td><td class=\"border p-2\">[Enter Action Description]</td><td class=\"border p-2\">[Enter Responsible Person]</td><td class=\"border p-2\">[Enter Due Date]</td></tr></tbody></table><h4 class=\"mt-6 mb-2 font-bold\">7.0 Next Meeting</h4><p>[Enter next meeting details]</p>"
+    },
+    "created_at": "2025-09-24 08:37:51.926146+00:00",
+    "updated_at": "2025-09-24 20:53:44.324958+00:00"
+  },
+  {
+    "id": "ec84c5cb-3512-404a-b30a-5f2966e21dcc",
+    "asset_uid": "ab1bd45e-f6af-4e8a-9f19-bc83562305eb",
+    "version": 1,
+    "is_current": true,
+    "type": "procedure",
+    "name": "QSE-5.4-PROC-01 - Procedure for Consultation & Participation",
+    "project_id": null,
+    "document_number": "QSE-5.4-PROC-01",
+    "revision_code": null,
+    "metadata": {
+      "title": "Procedure for Consultation & Participation",
+      "qse_doc": {
+        "code": "QSE-5.4-PROC-01",
+        "category": "procedure"
+      },
+      "category": "qse",
+      "document_number": "QSE-5.4-PROC-01"
+    },
+    "content": {
+      "html": "<h3>1.0 Purpose</h3><p>The purpose of this procedure is to establish a systematic, effective, and meaningful framework for the consultation and participation of workers at all levels and functions, including subcontractors, in the development, planning, implementation, performance evaluation, and continual improvement of the Integrated Management System (IMS). This ensures we meet our legal duties and our commitment to a proactive QSE culture.</p><h3>2.0 Scope</h3><p>This procedure applies to all AustBuild Civil operations, projects, and facilities. It outlines the specific mechanisms for consultation, defines the matters requiring consultation, and clarifies roles and responsibilities to ensure worker participation is integral to our decision-making processes.</p><h3>3.0 Responsibilities</h3><ul><li><strong>Management (CEO, Operations Manager):</strong> Accountable for establishing and maintaining consultation arrangements, providing adequate time and resources for participation, ensuring feedback from consultation is genuinely considered in decision-making, and protecting workers from any reprisal for raising QSE concerns.</li><li><strong>Project Managers:</strong> Responsible for implementing project-level consultation arrangements (e.g., weekly meetings, toolbox talks), ensuring HSRs have the resources to perform their functions, and actioning or escalating issues raised on their projects.</li><li><strong>Supervisors/Engineers:</strong> Responsible for facilitating daily consultation forums, ensuring workers understand the hazards and controls for their tasks, and recording and communicating outcomes to project management.</li><li><strong>Health and Safety Representatives (HSRs):</strong> As elected representatives for their work groups, HSRs are responsible for representing worker concerns, escalating unresolved issues through formal channels, participating in inspections and investigations, and actively contributing to Health & Safety Committee meetings.</li><li><strong>All Workers & Subcontractors:</strong> Have a responsibility to actively and constructively participate in consultation, comply with agreed procedures, report hazards and incidents promptly, and contribute to a positive and safe work environment.</li></ul><h3>4.0 Consultation Arrangements</h3><p>AustBuild Civil utilizes a multi-layered approach to ensure consultation is timely and appropriate to the nature of the issue. The primary mechanisms are detailed below.</p><h4 class=\"font-bold\">4.1 Health & Safety Committee (HSC)</h4><p>The HSC is the primary forum for formal consultation on strategic QSE matters.</p><ul><li><strong>Frequency:</strong> Quarterly.</li><li><strong>Membership:</strong> Comprises senior management representatives and an equal or greater number of elected HSRs and worker representatives from across the business.</li><li><strong>Function:</strong> To review company-wide QSE performance, analyze trends, develop and review policies and procedures, and facilitate cooperation between management and workers on QSE matters.</li><li><strong>Records:</strong> Formal minutes are recorded and distributed to all worksites.</li></ul><h4 class=\"font-bold\">4.2 Project-Level Consultation</h4><ul><li><strong>Weekly Project Safety Meetings:</strong> Held by the Project Manager with supervisors, HSRs, and subcontractor representatives to review the past week's performance, plan for upcoming high-risk activities, and address any site-wide concerns.</li><li><strong>Daily Pre-Start / Toolbox Talks:</strong> Facilitated by supervisors for their work crews. These focus on the specific tasks for the day, reviewing relevant SWMS/risk assessments, identifying any changed conditions, and confirming controls are in place. Attendance and topics are recorded.</li></ul><h4 class=\"font-bold\">4.3 Issue-Specific Consultation</h4><ul><li><strong>Hazard/Incident Reporting:</strong> Workers report hazards and incidents using the system's reporting tools. The reporter is automatically included in the workflow for consultation during the investigation.</li><li><strong>Risk Assessment Development/Review:</strong> When creating or reviewing a Safe Work Method Statement (SWMS) or other risk assessment, the workers who will be carrying out the task must be consulted to ensure the procedure is practical and effective.</li></ul><h3>5.0 Matters Requiring Consultation</h3><p>In accordance with WHS legislation, AustBuild Civil will consult with its workers on the following matters:</p><ul><li>When identifying hazards and assessing risks arising from the work.</li><li>When making decisions about ways to eliminate or minimize those risks.</li><li>When making decisions about the adequacy of facilities for the welfare of workers.</li><li>When proposing changes that may affect the health or safety of workers (e.g., changes to equipment, procedures, or the work environment).</li><li>When making decisions about procedures for consulting with workers; resolving safety issues; monitoring worker health and workplace conditions; and providing information and training.</li><li>Any other matter prescribed by regulation.</li></ul><h3>6.0 Records</h3><p>The following records shall be maintained as evidence of consultation:</p><ul><li>Health & Safety Committee Meeting Minutes (stored in the <code>/qse/corp-leadership</code> module).</li><li>Records of Toolbox Talks (attached to relevant Lots or stored in Project Documents).</li><li>All Hazard/Incident/NCR reports logged within the system's central registers.</li><li>Risk assessments and SWMS showing evidence of worker consultation.</li></ul>"
+    },
+    "created_at": "2025-09-24 08:37:51.926146+00:00",
+    "updated_at": "2025-09-24 20:53:44.324958+00:00"
+  },
+  {
+    "id": "b06e026f-4de1-4d32-a427-5e60efb8e75b",
+    "asset_uid": "8302887e-779f-45e8-9692-c559943d36fa",
+    "version": 1,
+    "is_current": true,
+    "type": "procedure",
+    "name": "QSE-6.1-PROC-01 - Procedure for Risk & Opportunity Management",
+    "project_id": null,
+    "document_number": "QSE-6.1-PROC-01",
+    "revision_code": null,
+    "metadata": {
+      "title": "Procedure for Risk & Opportunity Management",
+      "qse_doc": {
+        "code": "QSE-6.1-PROC-01",
+        "category": "procedure"
+      },
+      "category": "qse",
+      "document_number": "QSE-6.1-PROC-01"
+    },
+    "content": {
+      "html": "<h3>1.0 Purpose</h3><p>This procedure defines the systematic process for identifying, analyzing, evaluating, treating, monitoring, and communicating risks and opportunities relevant to the Integrated Management System (IMS) at AustBuild Civil.</p><h3>2.0 Scope</h3><p>This procedure applies to all strategic and operational risks and opportunities associated with the company's context, interested parties, processes, and QSE objectives.</p><h3>3.0 Risk Management Process</h3><ol><li><strong>Identification:</strong> Risks and opportunities are identified from sources including context analysis, compliance reviews, incident investigations, audits, and stakeholder feedback.</li><li><strong>Analysis & Evaluation:</strong> Each risk is analyzed to determine its likelihood and potential consequences using the corporate risk matrix. The resulting risk level (Extreme, High, Medium, Low) is determined.</li><li><strong>Treatment:</strong> For each unacceptable risk, a treatment plan is developed based on the hierarchy of controls (Elimination, Substitution, Engineering, Administration, PPE). Opportunities are assessed for feasibility and action plans are developed to realize them.</li><li><strong>Documentation:</strong> All identified risks and opportunities are recorded in the Corporate Risk Register (QSE-6.1-REG-01) or Corporate Opportunity Register (QSE-6.1-REG-02). Project-specific risks are managed through the WBS Agent for AI-driven risk assessment and integration with project planning.</li><li><strong>Monitoring & Review:</strong> The effectiveness of treatment plans is monitored, and the registers are reviewed at least quarterly by management.</li></ol><h3>4.0 Risk Matrix</h3><p>A 5x5 Likelihood and Consequence matrix is used to determine risk levels. (A visual representation of the matrix would be included here).</p>"
+    },
+    "created_at": "2025-09-24 08:37:51.926146+00:00",
+    "updated_at": "2025-09-24 20:53:44.324958+00:00"
+  },
+  {
+    "id": "fdbd025a-15e4-4e20-9287-4f3a99c8efac",
+    "asset_uid": "fd82b317-869a-4f7b-8080-1f343e76ff1a",
+    "version": 1,
+    "is_current": true,
+    "type": "procedure",
+    "name": "QSE-6.1-PROC-02 - Procedure for Identifying Compliance Obligations",
+    "project_id": null,
+    "document_number": "QSE-6.1-PROC-02",
+    "revision_code": null,
+    "metadata": {
+      "title": "Procedure for Identifying Compliance Obligations",
+      "qse_doc": {
+        "code": "QSE-6.1-PROC-02",
+        "category": "procedure"
+      },
+      "category": "qse",
+      "document_number": "QSE-6.1-PROC-02"
+    },
+    "content": {
+      "html": "<h3>1.0 Purpose</h3><p>This procedure defines the systematic process used by AustBuild Civil to identify, access, evaluate, and maintain the currency of all legal and other compliance obligations applicable to our quality, safety, and environmental aspects and operations.</p><h3>2.0 Scope</h3><p>This procedure applies to all compliance obligations, including:</p><ul><li>Legislation (Acts and Regulations) at Commonwealth, State, and Local levels.</li><li>Permits, licenses, and approvals issued by regulatory authorities.</li><li>Mandatory Australian and International Standards.</li><li>Industry codes of practice.</li><li>Contractual requirements from our clients.</li><li>Voluntary commitments made by the company (e.g., to industry bodies).</li></ul><h3>3.0 Process for Identification and Management</h3><ol><li><strong>Identification:</strong> The QSE Manager is responsible for identifying obligations. This is achieved through:<ul><li>Subscription to a legal update service (e.g., LexisNexis).</li><li>Monitoring of government gazettes and regulatory agency websites.</li><li>Participation in industry forums (e.g., Civil Contractors Federation).</li><li>Review of all new project contracts and tender documents.</li></ul></li><li><strong>Documentation:</strong> All identified obligations are recorded in the 'Compliance Obligations Register' (QSE-6.1-REG-03). Each entry includes the source, key requirements, and the part of the business it applies to. Project-specific legal requirements are automatically linked to relevant projects within the system.</li><li><strong>Evaluation of Compliance:</strong> The QSE Manager, in consultation with relevant department heads (e.g., Project Managers, HR), coordinates a quarterly evaluation of our compliance status against each obligation. The results of this evaluation are recorded in the register.</li><li><strong>Communication & Training:</strong> When a new obligation is identified or an existing one changes, the QSE Manager is responsible for communicating this to all relevant personnel. If the change requires new or modified controls, training will be arranged and delivered.</li><li><strong>Management Review:</strong> A summary of our compliance status, including any non-compliances and corrective actions, is presented as a mandatory input at every Management Review meeting.</li></ol><h3>4.0 Legal Change Management</h3><p>When legal requirements change, the following process is followed:</p><ol><li><strong>Impact Assessment:</strong> Determine which business processes, projects, and procedures are affected by the change.</li><li><strong>Gap Analysis:</strong> Identify any gaps between current practices and new requirements.</li><li><strong>Implementation Plan:</strong> Develop a plan to address gaps, including timeline, resources, and responsibilities. This plan is tracked through the Continual Improvement Register (QSE-10.3-REG-01).</li><li><strong>Communication:</strong> Notify all affected personnel through the system's communication module and provide necessary training.</li><li><strong>Verification:</strong> Conduct follow-up audits to verify implementation effectiveness.</li></ol>"
+    },
+    "created_at": "2025-09-24 08:37:51.926146+00:00",
+    "updated_at": "2025-09-24 20:53:44.324958+00:00"
+  },
+  {
+    "id": "6eac8064-cdb8-47f0-b7a2-7232f681c0a3",
+    "asset_uid": "75924867-cbc3-4ef1-9666-fb9ac81b2980",
+    "version": 1,
+    "is_current": true,
+    "type": "record",
+    "name": "QSE-6.1-REG-01 - Corporate Risk Register",
+    "project_id": null,
+    "document_number": "QSE-6.1-REG-01",
+    "revision_code": null,
+    "metadata": {
+      "title": "Corporate Risk Register",
+      "qse_doc": {
+        "code": "QSE-6.1-REG-01",
+        "category": "register"
+      },
+      "category": "qse",
+      "document_number": "QSE-6.1-REG-01"
+    },
+    "content": {
+      "html": "<h2>Corporate Risk Register</h2><p>A live register of significant strategic and operational QSE risks.</p><div class=\"overflow-x-auto\"><table class=\"min-w-full border border-gray-300 text-sm\"><thead class=\"bg-gray-50\"><tr><th class=\"border p-2 text-left\">ID</th><th class=\"border p-2 text-left\">Risk Description</th><th class=\"border p-2 text-left\">Consequence</th><th class=\"border p-2 text-left\">Likelihood</th><th class=\"border p-2 text-left\">Risk Level</th><th class=\"border p-2 text-left\">Treatment Plan</th><th class=\"border p-2 text-left\">Owner</th><th class=\"border p-2 text-left\">Link to Projects/WBS</th></tr></thead><tbody><tr><td class=\"border p-2\">[Enter Risk ID]</td><td class=\"border p-2\">[Enter Risk Description]</td><td class=\"border p-2\">[Enter Consequence Level]</td><td class=\"border p-2\">[Enter Likelihood]</td><td class=\"border p-2\">[Enter Risk Level]</td><td class=\"border p-2\">[Enter Treatment Plan]</td><td class=\"border p-2\">[Enter Risk Owner]</td><td class=\"border p-2\">[Link to WBS Agent/Project]</td></tr></tbody></table></div>"
+    },
+    "created_at": "2025-09-24 20:53:44.324958+00:00",
+    "updated_at": "2025-09-24 20:53:44.324958+00:00"
+  },
+  {
+    "id": "ede72c18-8857-46e4-be21-ea1aa23782cc",
+    "asset_uid": "7f64f721-206e-4ad6-a217-1cbfb1550a1f",
+    "version": 1,
+    "is_current": true,
+    "type": "record",
+    "name": "QSE-6.1-REG-02 - Corporate Opportunity Register",
+    "project_id": null,
+    "document_number": "QSE-6.1-REG-02",
+    "revision_code": null,
+    "metadata": {
+      "title": "Corporate Opportunity Register",
+      "qse_doc": {
+        "code": "QSE-6.1-REG-02",
+        "category": "register"
+      },
+      "category": "qse",
+      "document_number": "QSE-6.1-REG-02"
+    },
+    "content": {
+      "html": "<div class=\"overflow-x-auto\"><table class=\"min-w-full border border-gray-300 text-sm\"><thead class=\"bg-gray-50\"><tr><th class=\"border p-2 text-left\">ID</th><th class=\"border p-2 text-left\">Opportunity Description</th><th class=\"border p-2 text-left\">Potential Benefit</th><th class=\"border p-2 text-left\">Action Plan</th><th class=\"border p-2 text-left\">Status</th><th class=\"border p-2 text-left\">Owner</th><th class=\"border p-2 text-left\">Link to Improvement Register</th></tr></thead><tbody><tr><td class=\"border p-2\">[Enter Opportunity ID]</td><td class=\"border p-2\">[Enter Opportunity Description]</td><td class=\"border p-2\">[Enter Potential Benefit]</td><td class=\"border p-2\">[Enter Action Plan]</td><td class=\"border p-2\">[Enter Status]</td><td class=\"border p-2\">[Enter Opportunity Owner]</td><td class=\"border p-2\">[Link to QSE-10.3-REG-01]</td></tr></tbody></table></div>"
+    },
+    "created_at": "2025-09-24 20:53:44.324958+00:00",
+    "updated_at": "2025-09-24 20:53:44.324958+00:00"
+  },
+  {
+    "id": "ee5a86bf-ab5b-418a-8b73-14b576dbb3fb",
+    "asset_uid": "c3b2b32f-ea4d-49a3-a839-661e809c93ce",
+    "version": 1,
+    "is_current": true,
+    "type": "record",
+    "name": "QSE-6.1-REG-03 - Compliance Obligations Register",
+    "project_id": null,
+    "document_number": "QSE-6.1-REG-03",
+    "revision_code": null,
+    "metadata": {
+      "title": "Compliance Obligations Register",
+      "qse_doc": {
+        "code": "QSE-6.1-REG-03",
+        "category": "register"
+      },
+      "category": "qse",
+      "document_number": "QSE-6.1-REG-03"
+    },
+    "content": {
+      "html": "<p>A live register of the key legal and other requirements applicable to our operations.</p><table><thead><tr><th>ID</th><th>Obligation Title</th><th>Source / Jurisdiction</th><th>Key Requirements Summary</th><th>Applicable To</th><th>Compliance Check Method</th><th>Status</th><th>Next Review Date</th><th>Link to Projects/Risk Register</th></tr></thead><tbody><tr><td>[Enter ID]</td><td>[Enter Obligation Title]</td><td>[Enter Source/Jurisdiction]</td><td>[Enter Key Requirements Summary]</td><td>[Enter Applicable To]</td><td>[Enter Compliance Check Method]</td><td>[Enter Status]</td><td>[Enter Next Review Date]</td><td>[Link to Project/Risk Register ID]</td></tr></tbody></table><h3>Legal Change Notification Template</h3><p>When legal requirements change, the following template is used to notify affected personnel:</p><table><thead><tr><th>Field</th><th>Information Required</th></tr></thead><tbody><tr><td>Change Description</td><td>[Enter description of legal change]</td></tr><tr><td>Effective Date</td><td>[Enter effective date]</td></tr><tr><td>Affected Areas</td><td>[Enter affected business areas/projects]</td></tr><tr><td>Required Actions</td><td>[Enter required actions for compliance]</td></tr><tr><td>Responsible Person</td><td>[Enter responsible person]</td></tr><tr><td>Implementation Deadline</td><td>[Enter implementation deadline]</td></tr><tr><td>Training Required</td><td>[Yes/No - Enter training requirements]</td></tr><tr><td>System Updates Required</td><td>[Enter system/procedure updates needed]</td></tr></tr></tbody></table>"
+    },
+    "created_at": "2025-09-24 08:37:51.926146+00:00",
+    "updated_at": "2025-09-24 20:53:44.324958+00:00"
+  },
+  {
+    "id": "5ccac5e1-68b1-41cb-92eb-ad643d79585b",
+    "asset_uid": "8a4dbddc-e34c-438f-8be8-28e8b920d05f",
+    "version": 1,
+    "is_current": true,
+    "type": "plan",
+    "name": "QSE-6.2-PLN-01 - Annual QSE Objectives & Targets Plan",
+    "project_id": null,
+    "document_number": "QSE-6.2-PLN-01",
+    "revision_code": null,
+    "metadata": {
+      "title": "Annual QSE Objectives & Targets Plan",
+      "qse_doc": {
+        "code": "QSE-6.2-PLN-01",
+        "category": "plan"
+      },
+      "category": "qse",
+      "document_number": "QSE-6.2-PLN-01"
+    },
+    "content": {
+      "html": "<h2>Annual QSE Objectives & Targets Plan</h2><p>The documented plan outlining our specific QSE goals for the current year.</p><table><thead><tr><th>Area</th><th>Objective</th><th>Target</th><th>KPI</th><th>Owner</th><th>Current Status</th><th>Due Date</th><th>Dashboard Link</th></tr></thead><tbody><tr><td>[Enter QSE Area]</td><td>[Enter Objective Description]</td><td>[Enter Measurable Target]</td><td>[Enter KPI/Measurement Method]</td><td>[Enter Owner Name]</td><td>[Auto-populated from Dashboard]</td><td>[Enter Due Date]</td><td>[Link to Dashboard Module]</td></tr></tbody></table><h3>Objective Progress Tracking</h3><p>Progress tracking for QSE objectives is integrated with the system's monitoring capabilities:</p><ul><li><strong>Real-Time Dashboard:</strong> Current performance metrics are displayed on the main dashboard (<code>/dashboard</code>) with automatic updates from project data</li><li><strong>Monthly Reviews:</strong> Automated reports generated from system data for management review meetings</li><li><strong>Variance Analysis:</strong> Objectives not meeting targets trigger automatic alerts and are flagged for corrective action in the Continual Improvement Register</li><li><strong>Historical Tracking:</strong> System maintains complete historical data for trend analysis and year-over-year comparisons</li></ul><h3>Objective Review Template</h3><table><thead><tr><th>Review Period</th><th>Objective</th><th>Target Performance</th><th>Actual Performance</th><th>Variance</th><th>Action Required</th><th>Improvement Register ID</th></tr></thead><tbody><tr><td>[Enter Review Period]</td><td>[Enter Objective]</td><td>[Enter Target]</td><td>[Enter Actual Performance]</td><td>[Calculate Variance]</td><td>[Enter Required Action]</td><td>[Link to QSE-10.3-REG-01]</td></tr></tbody></table>"
+    },
+    "created_at": "2025-09-24 20:53:44.324958+00:00",
+    "updated_at": "2025-09-24 20:53:44.324958+00:00"
+  },
+  {
+    "id": "061092ab-dca8-4b0b-9781-b1e345dc6d3e",
+    "asset_uid": "ad9c9d60-a69f-46c0-bd7d-24065ca5ef00",
+    "version": 1,
+    "is_current": true,
+    "type": "procedure",
+    "name": "QSE-6.2-PROC-01 - Procedure for Setting QSE Objectives",
+    "project_id": null,
+    "document_number": "QSE-6.2-PROC-01",
+    "revision_code": null,
+    "metadata": {
+      "title": "Procedure for Setting QSE Objectives",
+      "qse_doc": {
+        "code": "QSE-6.2-PROC-01",
+        "category": "procedure"
+      },
+      "category": "qse",
+      "document_number": "QSE-6.2-PROC-01"
+    },
+    "content": {
+      "html": "<h3 class=\"mt-8 mb-4\">1.0 Purpose</h3><p>This procedure outlines the process for establishing, planning, and reviewing Quality, Safety, and Environmental (QSE) objectives at corporate and project levels to drive continual improvement.</p><h3 class=\"mt-8 mb-4\">2.0 Process</h3><ol><li><strong>Establishment:</strong> During the annual management review, top management establishes corporate QSE objectives for the coming year. These are based on the QSE Policy, risk and opportunity analysis, and performance reviews.</li><li><strong>Cascading:</strong> Corporate objectives are cascaded down to functional departments and projects, which may establish their own supporting objectives and targets.</li><li><strong>Planning:</strong> For each objective, a plan is developed detailing the actions required, responsibilities, resources, and timeline. This is documented in the Annual QSE Objectives & Targets Plan.</li><li><strong>Monitoring & Measurement:</strong> Progress towards objectives is monitored through Key Performance Indicators (KPIs) displayed on the real-time monitoring dashboard (<code>/dashboard</code>) and reviewed during quarterly management meetings. Performance data is automatically collected from project modules including Lot Register, NCR Register, and Document Register.</li><li><strong>Communication:</strong> Objectives and progress are communicated to all employees through the system's communication module and dashboard displays.</li><li><strong>Continual Improvement:</strong> Objectives that are not met or require adjustment are logged in the Continual Improvement Register (QSE-10.3-REG-01) with associated corrective actions and target dates.</li></ol>"
+    },
+    "created_at": "2025-09-24 20:53:44.324958+00:00",
+    "updated_at": "2025-09-24 20:53:44.324958+00:00"
+  },
+  {
+    "id": "ec282b18-bcb4-457f-9f89-e2b3b485cc50",
+    "asset_uid": "c6a20a31-0067-4100-b528-3469ae9728bc",
+    "version": 1,
+    "is_current": true,
+    "type": "procedure",
+    "name": "QSE-7.2-PROC-01 - Procedure for Training, Competence & Awareness",
+    "project_id": null,
+    "document_number": "QSE-7.2-PROC-01",
+    "revision_code": null,
+    "metadata": {
+      "title": "Procedure for Training, Competence & Awareness",
+      "qse_doc": {
+        "code": "QSE-7.2-PROC-01",
+        "category": "procedure"
+      },
+      "category": "qse",
+      "document_number": "QSE-7.2-PROC-01"
+    },
+    "content": {
+      "html": "<h3>1.0 Purpose</h3><p>This procedure establishes the comprehensive and systematic framework for ensuring AustBuild Civil provides adequate resources, develops and maintains personnel competence, and promotes full awareness of all Quality, Safety, and Environmental (QSE) policies, procedures, and objectives. The goal is to ensure that all individuals working for or on behalf of the company have the necessary skills, knowledge, and understanding to perform their work safely, efficiently, and in a manner that meets our high QSE standards, thereby ensuring compliance with ISO 9001:2015 (7.1.2, 7.2, 7.3), ISO 14001:2015 (7.1, 7.2, 7.3), and ISO 45001:2018 (7.1, 7.2, 7.3).</p><h3>2.0 Scope</h3><p>This procedure applies to all personnel, including full-time and part-time employees, contractors, and subcontractors, whose work can affect QSE performance. It covers the entire lifecycle of competence management, from recruitment and induction through to ongoing training, assessment, and development.</p><h3>3.0 Responsibilities</h3><ul><li><strong>Top Management (CEO, ELT):</strong> Accountable for allocating the necessary resources (financial, human, technological) to support competence and awareness programs and for fostering a culture that values continuous learning.</li><li><strong>HR Manager:</strong> Responsible for the overall administration of this procedure, maintaining the corporate Training and Competency Matrix, managing the training budget, and ensuring records of training and competence are maintained.</li><li><strong>QSE Manager:</strong> Responsible for identifying QSE-specific training needs (e.g., changes in legislation, incident trends), developing QSE awareness materials, and verifying the effectiveness of QSE training.</li><li><strong>Department and Project Managers:</strong> Responsible for identifying role-specific training needs within their teams, conducting annual competency assessments, approving individual training plans, and verifying the competence of new hires and subcontractors for their assigned roles.</li><li><strong>All Personnel:</strong> Responsible for actively participating in all assigned training, applying learned skills and knowledge to their work, maintaining currency of their licenses and qualifications, and seeking further development opportunities.</li></ul><h3>4.0 Procedure Details</h3><h4>4.1 Determining Competence Requirements</h4><p>Competence requirements for each role are defined in the 'Training and Competency Matrix' (QSE-7.2-REG-01) and are stored within the system's competence management module and are derived from:</p><ul><li>Position descriptions and job task analyses.</li><li>Applicable legal and regulatory requirements (e.g., High-Risk Work Licenses).</li><li>Client-specific contractual requirements.</li><li>Requirements of ISO 9001, 14001, and 45001.</li></ul><h4>4.2 Training Needs Analysis (TNA)</h4><p>The HR Manager coordinates an annual company-wide TNA. This process involves:</p><ol><li>Managers assessing their team members against the competency requirements for their roles to identify gaps.</li><li>Consolidating identified gaps to determine group training needs.</li><li>Analyzing incident reports, audit findings, and performance reviews for trends that indicate a need for training.</li><li>The output is a corporate Annual Training Plan, which is approved by the CEO and budgeted for accordingly.</li></ol><h4>4.3 Training & Development Delivery</h4><p>Training is delivered via a blended approach:</p><ul><li><strong>Induction:</strong> All new personnel undergo a corporate and site-specific induction before commencing work, covering essential QSE policies and procedures as per C-HR-TEMP-001.</li><li><strong>Internal Training:</strong> Delivered by qualified internal staff (e.g., QSE Manager, Supervisors) on company-specific procedures, systems, and lessons learned.</li><li><strong>External Training:</strong> Personnel are enrolled in courses with approved Registered Training Organisations (RTOs) for formal qualifications, licenses, and specialized skills.</li><li><strong>On-the-Job Training (OJT):</strong> Structured OJT, including mentorship and supervision, is used to develop practical skills. Competence is signed off by a qualified supervisor.</li></ul><h4>4.4 Evaluating Competence & Training Effectiveness</h4><p>The effectiveness of training and the ongoing competence of personnel are evaluated through:</p><ul><li>Post-training assessments (written or practical).</li><li>Verification of tickets, licenses, and qualifications (VOC).</li><li>Workplace observations conducted by supervisors to ensure procedures are being followed correctly.</li><li>Review of individual and team performance against QSE KPIs.</li></ul><h3>5.0 Promoting Awareness</h3><p>Awareness of QSE matters is actively promoted through a continuous communication cycle:</p><ul><li>The QSE Policy is displayed in all offices and sites and is a core part of all inductions.</li><li>Performance against QSE objectives and targets is communicated via notice boards, toolbox talks, and company newsletters.</li><li>Safety Alerts and Lessons Learned from incidents are distributed company-wide to raise awareness of specific risks and control failures.</li><li>Positive contributions to QSE are recognized through employee reward programs.</li></ul><h3>6.0 Digital Records Management & System Integration</h3><p>The following records are maintained within the QSE Management System's competence module with automatic tracking and alerts for expiring qualifications:</p><ul><li>Training and Competency Matrix (QSE-7.2-REG-01) with real-time competency status dashboard</li><li>Individual training records (including certificates, licenses, VOCs) with automated expiry tracking</li><li>Completed induction checklists linked to project assignments</li><li>Records of attendance at internal training sessions and toolbox talks with automatic roster generation</li><li>Annual Training Plans integrated with budget tracking and ROI analysis</li><li>Competency gaps automatically flagged and linked to the Continual Improvement Register (QSE-10.3-REG-01)</li><li>Training effectiveness metrics displayed on the monitoring dashboard (<code>/dashboard</code>)</li></ul>"
+    },
+    "created_at": "2025-09-24 08:37:51.926146+00:00",
+    "updated_at": "2025-09-24 20:53:44.324958+00:00"
+  },
+  {
+    "id": "6e787712-5735-4c84-a8ab-caa2888cb649",
+    "asset_uid": "1e879e44-6851-4a2c-a480-856ac7737833",
+    "version": 1,
+    "is_current": true,
+    "type": "record",
+    "name": "QSE-7.2-REG-01 - Training Needs Analysis & Competency Matrix",
+    "project_id": null,
+    "document_number": "QSE-7.2-REG-01",
+    "revision_code": null,
+    "metadata": {
+      "title": "Training Needs Analysis & Competency Matrix",
+      "qse_doc": {
+        "code": "QSE-7.2-REG-01",
+        "category": "register"
+      },
+      "category": "qse",
+      "document_number": "QSE-7.2-REG-01"
+    },
+    "content": {
+      "html": "<h3>Core Competency Requirements by Role</h3><div class=\"overflow-x-auto\"><table class=\"min-w-full border border-gray-300 text-sm\"><thead class=\"bg-gray-50\"><tr><th class=\"border p-2 text-left\">Position</th><th class=\"border p-2 text-left\">Essential Qualifications</th><th class=\"border p-2 text-left\">Mandatory QSE Training</th><th class=\"border p-2 text-left\">Refresh Cycle</th></tr></thead><tbody><tr><td class=\"border p-2 font-semibold\">Project Manager</td><td class=\"border p-2\">Civil Engineering Degree, White Card</td><td class=\"border p-2\">WHS for Managers, Environmental Awareness</td><td class=\"border p-2\">36 months</td></tr><tr><td class=\"border p-2 font-semibold\">Site Supervisor</td><td class=\"border p-2\">Trade Certificate, High Risk Work Licenses as required</td><td class=\"border p-2\">First Aid, Supervisor WHS</td><td class=\"border p-2\">24 months</td></tr></tbody></table></div><h3>Annual Corporate Training Plan - 2024</h3><div class=\"overflow-x-auto\"><table class=\"min-w-full border border-gray-300 text-sm\"><thead class=\"bg-gray-50\"><tr><th class=\"border p-2 text-left\">Quarter</th><th class=\"border p-2 text-left\">Strategic Training Program</th><th class=\"border p-2 text-left\">Target Audience</th><th class=\"border p-2 text-left\">Delivery Method</th><th class=\"border p-2 text-left\">Budget</th></tr></thead><tbody><tr><td class=\"border p-2\">[Enter Quarter]</td><td class=\"border p-2\">[Enter Training Program Name]</td><td class=\"border p-2\">[Enter Target Audience & Number]</td><td class=\"border p-2\">[Enter Delivery Method]</td><td class=\"border p-2\">[Enter Budget Amount]</td></tr></tbody></table></div><h3>Competency Gap Analysis & Action Plan Template</h3><div class=\"overflow-x-auto mb-8\"><table class=\"min-w-full border border-gray-300 text-sm\"><thead class=\"bg-gray-50\"><tr><th class=\"border p-2 text-left\">Development Area</th><th class=\"border p-2 text-left\">Gap Description</th><th class=\"border p-2 text-left\">Action Plan</th><th class=\"border p-2 text-left\">Owner</th><th class=\"border p-2 text-left\">Target Date</th><th class=\"border p-2 text-left\">System Tracking</th></tr></thead><tbody><tr><td class=\"border p-2\">[Enter Development Area]</td><td class=\"border p-2\">[Enter Gap Description & Impact]</td><td class=\"border p-2\">[Enter Action Plan with Resources]</td><td class=\"border p-2\">[Enter Action Owner]</td><td class=\"border p-2\">[Enter Target Completion Date]</td><td class=\"border p-2\">[Link to Improvement Register QSE-10.3-REG-01]</td></tr></tbody></table></div>"
+    },
+    "created_at": "2025-09-24 08:37:51.926146+00:00",
+    "updated_at": "2025-09-24 20:53:44.324958+00:00"
+  },
+  {
+    "id": "c4c60d8c-7bd2-49ce-a696-0f24ba9e432c",
+    "asset_uid": "85ece80c-c7fe-444b-92da-8e24a62a9bb2",
+    "version": 1,
+    "is_current": true,
+    "type": "procedure",
+    "name": "QSE-7.4-PROC-01 - Procedure for Internal & External Communication",
+    "project_id": null,
+    "document_number": "QSE-7.4-PROC-01",
+    "revision_code": null,
+    "metadata": {
+      "title": "Procedure for Internal & External Communication",
+      "qse_doc": {
+        "code": "QSE-7.4-PROC-01",
+        "category": "procedure"
+      },
+      "category": "qse",
+      "document_number": "QSE-7.4-PROC-01"
+    },
+    "content": {
+      "html": "<h3>1.0 Purpose</h3><p>This procedure establishes the framework and defines the processes for ensuring timely, accurate, and effective internal and external communication regarding the Quality, Safety, and Environmental (QSE) management system at AustBuild Civil. Its purpose is to ensure that relevant information is conveyed to and received from employees, clients, regulators, and other interested parties in a consistent and controlled manner, thereby meeting the requirements of ISO 9001, ISO 14001, and ISO 45001.</p><h3>2.0 Scope</h3><p>This procedure applies to all planned and unplanned communication activities related to the IMS, including the communication of policies, objectives, performance, risks, incidents, and improvement initiatives. It outlines what will be communicated, when, to whom, and how.</p><h3>3.0 Responsibilities</h3><ul><li><strong>Top Management:</strong> Responsible for ensuring adequate resources are provided for communication and for leading key strategic communications.</li><li><strong>QSE Manager:</strong> Responsible for developing and maintaining this procedure, managing the Communication Matrix, and ensuring the consistency of QSE-related messaging.</li><li><strong>Project Managers:</strong> Responsible for implementing project-specific communication plans, including client and community liaison.</li><li><strong>All Managers/Supervisors:</strong> Responsible for ensuring information is effectively cascaded to their teams and that feedback is relayed back to management.</li><li><strong>All Personnel:</strong> Responsible for being aware of and adhering to communication protocols.</li></ul><h3>4.0 Internal Communication Process</h3><p>Internal communication is designed to ensure all personnel are aware of their roles, responsibilities, and the performance of the IMS. Key channels are defined in the Communication Matrix (QSE-7.4-REG-01) and are integrated with the system's communication module, including automated notifications, real-time dashboard updates, and digital messaging platforms.</p><h3>5.0 External Communication Process</h3><p>All external communication must be professional, accurate, and consistent with company values. Specific protocols apply to different stakeholder groups:</p><ul><li><strong>Clients:</strong> Communication is managed by the Project Manager in accordance with contractual requirements. This includes formal reporting, meeting minutes, and official correspondence.</li><li><strong>Regulators:</strong> All formal communication with regulatory bodies (e.g., SafeWork, EPA) must be coordinated through the QSE Manager to ensure accuracy and consistency.</li><li><strong>Community:</strong> Project-specific community engagement is managed by the Project Manager or a dedicated Community Liaison Officer, following an approved Community Engagement Plan.</li><li><strong>Media:</strong> No employee is authorized to speak to the media. All media inquiries must be directed to the CEO or the designated public relations representative.</li></ul><h3>6.0 Emergency Communication</h3><p>In the event of a crisis or emergency, a structured communication protocol will be initiated:</p><ol><li><strong>Initial Notification:</strong> The senior person on-site is responsible for making initial notifications to emergency services (if required) and to the AustBuild Civil management chain as per the Emergency Communication section of the Communication Matrix. The system automatically generates emergency notification workflows and tracks response times.</li><li><strong>Crisis Management Team (CMT):</strong> For significant incidents, the CEO will convene the CMT to manage the situation and coordinate all internal and external communication.</li><li><strong>Information Control:</strong> The CMT will control the flow of information to ensure accuracy and prevent speculation. A single point of contact will be established for each key stakeholder group (employees, clients, media).</li></ol><h3>7.0 Digital Communication Platform Integration</h3><p>The QSE Management System provides integrated communication capabilities:</p><ul><li><strong>Automated Notifications:</strong> System generates automatic alerts for critical events, policy changes, and document updates</li><li><strong>Real-Time Dashboard:</strong> Communication status and metrics displayed on monitoring dashboard (<code>/dashboard</code>)</li><li><strong>Digital Messaging:</strong> Integrated messaging platform for secure internal communications</li><li><strong>Document Distribution:</strong> Automatic distribution of updated documents to relevant personnel</li><li><strong>Training Integration:</strong> Communication requirements linked to competency management and training records</li><li><strong>Audit Trail:</strong> Complete communication history maintained for compliance and audit purposes</li></ul><h3>8.0 Evaluating Effectiveness</h3><p>The effectiveness of communication processes is evaluated annually through:</p><ul><li>Review of feedback from employee and client satisfaction surveys.</li><li>Analysis of communication-related issues identified in incident investigations or audits.</li><li>Review of performance against the KPIs set in the Communication Matrix and displayed on the system dashboard.</li><li>Communication effectiveness metrics tracked through the Continual Improvement Register (QSE-10.3-REG-01).</li></ul>"
+    },
+    "created_at": "2025-09-24 08:37:51.926146+00:00",
+    "updated_at": "2025-09-24 20:53:44.324958+00:00"
+  },
+  {
+    "id": "2ebb392c-18c7-43b7-ae9a-d3305434894e",
+    "asset_uid": "413140b9-f74c-4c7b-bf42-b308f40bce5c",
+    "version": 1,
+    "is_current": true,
+    "type": "record",
+    "name": "QSE-7.4-REG-01 - Communication Matrix",
+    "project_id": null,
+    "document_number": "QSE-7.4-REG-01",
+    "revision_code": null,
+    "metadata": {
+      "title": "Communication Matrix",
+      "qse_doc": {
+        "code": "QSE-7.4-REG-01",
+        "category": "register"
+      },
+      "category": "qse",
+      "document_number": "QSE-7.4-REG-01"
+    },
+    "content": {
+      "html": "<h3>Internal Communication Matrix</h3><div class=\"overflow-x-auto\"><table class=\"min-w-full border border-gray-300 text-sm\"><thead class=\"bg-gray-50\"><tr><th class=\"border p-2 text-left\">Information Type</th><th class=\"border p-2 text-left\">Audience</th><th class=\"border p-2 text-left\">Method</th><th class=\"border p-2 text-left\">Frequency</th><th class=\"border p-2 text-left\">Responsibility</th><th class=\"border p-2 text-left\">Success Measure</th><th class=\"border p-2 text-left\">System Integration</th></tr></thead><tbody><tr><td class=\"border p-2\">[Enter Information Type]</td><td class=\"border p-2\">[Enter Target Audience]</td><td class=\"border p-2\">[Enter Communication Method]</td><td class=\"border p-2\">[Enter Frequency]</td><td class=\"border p-2\">[Enter Responsible Person]</td><td class=\"border p-2\">[Enter Success Measure/KPI]</td><td class=\"border p-2\">[Auto-tracked via Dashboard/System Module]</td></tr></tbody></table></div><h3>External Communication Matrix</h3><div class=\"overflow-x-auto\"><table class=\"min-w-full border border-gray-300 text-sm\"><thead class=\"bg-gray-50\"><tr><th class=\"border p-2 text-left\">Stakeholder</th><th class=\"border p-2 text-left\">Information Type</th><th class=\"border p-2 text-left\">Method</th><th class=\"border p-2 text-left\">Frequency</th><th class=\"border p-2 text-left\">Responsibility</th><th class=\"border p-2 text-left\">System Tracking</th></tr></thead><tbody><tr><td class=\"border p-2 font-semibold\">[Enter Stakeholder Group]</td><td class=\"border p-2\">[Enter Information Type]</td><td class=\"border p-2\">[Enter Communication Method]</td><td class=\"border p-2\">[Enter Frequency/Timing]</td><td class=\"border p-2\">[Enter Responsible Person/Role]</td><td class=\"border p-2\">[System Module/Dashboard Link]</td></tr></tbody></table></div><h3>Communication Effectiveness Evaluation Template</h3><div class=\"overflow-x-auto mb-8\"><table class=\"min-w-full border border-gray-300 text-sm\"><thead class=\"bg-gray-50\"><tr><th class=\"border p-2 text-left\">Communication Activity</th><th class=\"border p-2 text-left\">Target Metric</th><th class=\"border p-2 text-left\">Actual Performance</th><th class=\"border p-2 text-left\">Variance</th><th class=\"border p-2 text-left\">Issues Identified</th><th class=\"border p-2 text-left\">Improvement Actions</th><th class=\"border p-2 text-left\">System Tracking ID</th></tr></thead><tbody><tr><td class=\"border p-2\">[Enter Communication Activity]</td><td class=\"border p-2\">[Enter Target/KPI]</td><td class=\"border p-2\">[Auto-populated from System]</td><td class=\"border p-2\">[Calculated Variance]</td><td class=\"border p-2\">[Enter Issues/Barriers]</td><td class=\"border p-2\">[Enter Improvement Actions]</td><td class=\"border p-2\">[Link to QSE-10.3-REG-01]</td></tr></tbody></table></div>"
+    },
+    "created_at": "2025-09-24 20:53:44.324958+00:00",
+    "updated_at": "2025-09-24 20:53:44.324958+00:00"
+  },
+  {
+    "id": "2e718663-5826-4f5b-ae93-dcc5210e2386",
+    "asset_uid": "251d930e-c349-49bd-84b6-6901693b1132",
+    "version": 1,
+    "is_current": true,
+    "type": "procedure",
+    "name": "QSE-7.5-PROC-01 - Procedure for Control of Documented Information",
+    "project_id": null,
+    "document_number": "QSE-7.5-PROC-01",
+    "revision_code": null,
+    "metadata": {
+      "title": "Procedure for Control of Documented Information",
+      "qse_doc": {
+        "code": "QSE-7.5-PROC-01",
+        "category": "procedure"
+      },
+      "category": "qse",
+      "document_number": "QSE-7.5-PROC-01"
+    },
+    "content": {
+      "html": "<h3>1.0 Purpose</h3><p>This procedure establishes the definitive requirements for the creation, review, approval, distribution, use, storage, and disposal of all documented information required by the QSE management system of AustBuild Civil. Its purpose is to ensure that information is accurate, available at the point of use, and adequately controlled throughout its lifecycle.</p><h3>2.0 Scope</h3><p>This procedure applies to all documented information created internally or of external origin that is necessary for the planning and operation of the IMS. This includes policies, procedures, work instructions, forms (records), and external documents such as standards and legislation.</p><h3>3.0 Document Lifecycle Management</h3><h4>3.1 Creation and Identification</h4><ol><li>New documents must be created using the official company templates, which contain fields for a unique document ID, title, revision, and approval information.</li><li>The document author, typically a subject matter expert, is responsible for the accuracy of the content.</li><li>The unique Document ID is assigned by the Document Controller from the Master Document Register.</li></ol><h4>3.2 Review and Approval</h4><ol><li>The author's Department Manager must review the draft for technical accuracy and operational suitability.</li><li>The QSE Manager must review the draft for conformity with the IMS and ISO standards.</li><li>The final document must be approved by the authority level specified in the Master Document Register (e.g., CEO for policies, Operations Manager for procedures). Approval is formally recorded.</li></ol><h4>3.3 Digital Distribution and Access Control</h4><ol><li>The primary method for accessing controlled documents is via the QSE Management System's integrated document management module with automatic version control and audit trails.</li><li>Access permissions are role-based and integrated with competency management to ensure personnel can only view information relevant to their function and competency level.</li><li>Document access is automatically logged for compliance tracking, and users receive automatic notifications of document updates relevant to their role.</li><li>Where controlled hard copies are required (e.g., for a remote site office), they must be stamped \"CONTROLLED COPY\" and tracked through the system's distribution register with automatic expiry alerts.</li></ol><h4>3.4 Digital Amendment and Revision Workflow</h4><ol><li>Any employee can suggest a change to a document through the system's integrated change request module with automatic routing to the document owner.</li><li>If the change is approved, the digital review and approval workflow (3.2) is automatically initiated with progress tracking and automated reminders.</li><li>The system automatically increments revision numbers and maintains a complete version history with change tracking and comparison tools.</li><li>Document updates are automatically communicated to all relevant personnel based on role-based distribution lists and competency requirements.</li><li>Change impact analysis is facilitated through the system's document relationship mapping and dependency tracking.</li></ol><h4>3.5 Automated Control of Obsolete Documents</h4><ol><li>When a new revision is issued, the system automatically archives the previous version and updates all active links to point to the current revision.</li><li>All holders of controlled hard copies receive automatic notifications to destroy the superseded version with confirmation tracking.</li><li>Obsolete versions are automatically archived in a secure digital repository for a minimum of 7 years with clear \"OBSOLETE - FOR REFERENCE ONLY\" watermarks and access controls.</li><li>The system maintains a complete audit trail of document lifecycle events for compliance and legal purposes.</li></ol><h3>4.0 Digital Records Management & System Integration</h3><p>Records are a special type of documented information that provides evidence of conformity. The QSE Management System provides comprehensive digital records management with automatic tracking, retention, and disposal.</p><ul><li><strong>Digital Storage:</strong> Records are stored in the secure digital repository with automatic backup, version control, and integrity verification.</li><li><strong>Automated Retention:</strong> The system automatically tracks retention periods and generates alerts for records approaching disposal dates based on the Master Document & Records Register (QSE-7.5-REG-01).</li><li><strong>Secure Disposal:</strong> Records are automatically flagged for secure disposal after retention periods expire, with audit trails maintained for compliance purposes.</li><li><strong>Integration Tracking:</strong> Records are automatically linked to related processes (projects, training, incidents) for comprehensive traceability and audit support.</li><li><strong>Dashboard Analytics:</strong> Document and records metrics are displayed on the monitoring dashboard (<code>/dashboard</code>) for real-time oversight.</li><li><strong>Continuous Improvement:</strong> Document control issues and improvement opportunities are automatically logged in the Continual Improvement Register (QSE-10.3-REG-01).</li></ul>"
+    },
+    "created_at": "2025-09-24 08:37:51.926146+00:00",
+    "updated_at": "2025-09-24 20:53:44.324958+00:00"
+  },
+  {
+    "id": "89bc6280-29fd-4205-9173-b54e4a882311",
+    "asset_uid": "86dca891-d76d-4c61-a22a-3865daed4d8d",
+    "version": 1,
+    "is_current": true,
+    "type": "record",
+    "name": "QSE-7.5-REG-01 - Master Document & Records Register",
+    "project_id": null,
+    "document_number": "QSE-7.5-REG-01",
+    "revision_code": null,
+    "metadata": {
+      "title": "Master Document & Records Register",
+      "qse_doc": {
+        "code": "QSE-7.5-REG-01",
+        "category": "register"
+      },
+      "category": "qse",
+      "document_number": "QSE-7.5-REG-01"
+    },
+    "content": {
+      "html": "<h3 class=\"mt-8 mb-4\">Part A: Controlled Documents Register</h3><div class=\"overflow-x-auto\"><table class=\"min-w-full border border-gray-300 text-sm\"><thead class=\"bg-gray-50\"><tr><th class=\"border p-2 text-left\">Doc ID</th><th class=\"border p-2 text-left\">Document Title</th><th class=\"border p-2 text-left\">Type</th><th class=\"border p-2 text-left\">Rev</th><th class=\"border p-2 text-left\">Owner</th><th class=\"border p-2 text-left\">Next Review</th><th class=\"border p-2 text-left\">System Status</th><th class=\"border p-2 text-left\">Access Level</th></tr></thead><tbody><tr><td class=\"border p-2\">[Enter Document ID]</td><td class=\"border p-2\">[Enter Document Title]</td><td class=\"border p-2\">[Enter Document Type]</td><td class=\"border p-2\">[Rev]</td><td class=\"border p-2\">[Enter Owner/Role]</td><td class=\"border p-2\">[Enter Next Review Date]</td><td class=\"border p-2\">[Auto-tracked: Active/Review Due/Obsolete]</td><td class=\"border p-2\">[Auto-assigned: Public/Restricted/Confidential]</td></tr></tbody></table></div><h3 class=\"mt-8 mb-4\">Part B: Records Register</h3><div class=\"overflow-x-auto\"><table class=\"min-w-full border border-gray-300 text-sm\"><thead class=\"bg-gray-50\"><tr><th class=\"border p-2 text-left\">Record Type</th><th class=\"border p-2 text-left\">Storage Location</th><th class=\"border p-2 text-left\">Format</th><th class=\"border p-2 text-left\">Retention Period</th><th class=\"border p-2 text-left\">Disposal Method</th><th class=\"border p-2 text-left\">System Module</th><th class=\"border p-2 text-left\">Auto-Alerts</th></tr></thead><tbody><tr><td class=\"border p-2\">[Enter Record Type]</td><td class=\"border p-2\">[Digital Repository/System Module]</td><td class=\"border p-2\">[Electronic/Physical/Hybrid]</td><td class=\"border p-2\">[Enter Retention Period]</td><td class=\"border p-2\">[Automatic Secure Disposal Method]</td><td class=\"border p-2\">[QSE System Module Link]</td><td class=\"border p-2\">[Auto-generated disposal alerts]</td></tr></tbody></table></div><h3 class=\"mt-8 mb-4\">Document Control Analytics Template</h3><div class=\"overflow-x-auto mb-8\"><table class=\"min-w-full border border-gray-300 text-sm\"><thead class=\"bg-gray-50\"><tr><th class=\"border p-2 text-left\">Metric</th><th class=\"border p-2 text-left\">Current Value</th><th class=\"border p-2 text-left\">Target</th><th class=\"border p-2 text-left\">Trend</th><th class=\"border p-2 text-left\">Action Required</th><th class=\"border p-2 text-left\">Dashboard Link</th><th class=\"border p-2 text-left\">Improvement ID</th></tr></thead><tbody><tr><td class=\"border p-2\">[Enter Document Metric]</td><td class=\"border p-2\">[Auto-populated from System]</td><td class=\"border p-2\">[Enter Target Value]</td><td class=\"border p-2\">[Auto-calculated Trend]</td><td class=\"border p-2\">[Enter Action if Below Target]</td><td class=\"border p-2\">/dashboard</td><td class=\"border p-2\">QSE-10.3-REG-01</td></tr></tbody></table></div>"
+    },
+    "created_at": "2025-09-24 08:37:51.926146+00:00",
+    "updated_at": "2025-09-24 20:53:44.324958+00:00"
+  },
+  {
+    "id": "deeff899-28a8-49bf-9815-fbbc63d3e88c",
+    "asset_uid": "a3e821d0-2544-4796-a673-cb9d33a9c893",
+    "version": 1,
+    "is_current": true,
+    "type": "procedure",
+    "name": "QSE-8.1-PROC-01 - Project Management Procedure",
+    "project_id": null,
+    "document_number": "QSE-8.1-PROC-01",
+    "revision_code": null,
+    "metadata": {
+      "title": "Project Management Procedure",
+      "qse_doc": {
+        "code": "QSE-8.1-PROC-01",
+        "category": "procedure"
+      },
+      "category": "qse",
+      "document_number": "QSE-8.1-PROC-01"
+    },
+    "content": {
+      "html": "<h3>1.0 Purpose</h3><p>This procedure defines the mandatory project delivery framework for all projects undertaken by AustBuild Civil Pty Ltd. It establishes the planning, control, and governance mechanisms required to ensure consistent project delivery that meets client, regulatory, and internal QSE standards, aligning with the principles outlined in the Austroads Guide to Project Delivery.</p><h3>2.0 Project Lifecycle Phases</h3><p>All projects shall be managed through four distinct lifecycle phases, each with specific gate reviews and required deliverables.</p><h4>2.1 Phase 1: Tender / Initiation</h4><ul><li><strong>Key Activities:</strong> Opportunity assessment, bid/no-bid decision, client requirements analysis, preliminary risk assessment, and development of the tender submission including a preliminary Project Delivery Plan.</li><li><strong>Key Deliverables:</strong> Tender Submission, Preliminary Risk Register, high-level program.</li></ul><h4>2.2 Phase 2: Project Start-up & Planning</h4><ul><li><strong>Key Activities:</strong> Contract award, project team mobilisation, generation and refinement of the Project Management Plan (PMP) using the system's AI assistant followed by formal review and approval, establishment of project controls (cost, schedule, quality), detailed risk and opportunity workshops, procurement planning, and community engagement planning.</li><li><strong>Key Deliverables:</strong> Approved PMP, Detailed Project Schedule (Baseline), Cost Plan, Project Risk & Opportunity Register, Safety in Design Report, Community Engagement Plan.</li></ul><h4>2.3 Phase 3: Project Execution & Monitoring</h4><ul><li><strong>Key Activities:</strong> Implementation of the PMP, management of construction activities, subcontractor management, performance monitoring via the real-time project dashboard tracking progress of Lots, NCRs, and ITPs, ongoing risk management, change control, stakeholder communication, and regular project reporting.</li><li><strong>Key Deliverables:</strong> Monthly Progress Reports, Variation Register, updated Risk Register, NCRs, audit reports.</li></ul><h4>2.4 Phase 4: Project Close-out & Handover</h4><ul><li><strong>Key Activities:</strong> Achieving practical completion, managing the defects liability period, finalising all commercial arrangements, compiling the final handover package by exporting the required records directly from the project's Document, Lot, and ITP registers, conducting a post-project review and lessons learned workshop.</li><li><strong>Key Deliverables:</strong> Handover Report, As-Built Drawings, Quality Records Dossier, Final Financial Report, Lessons Learned Report.</li></ul><h3>3.0 Key Management Processes</h3><h4>3.1 Governance & Reporting</h4><p>A clear governance structure will be established for each project, defining roles, responsibilities, and authorities. Monthly project review meetings will be held to assess performance against KPIs for schedule, cost, safety, quality, and environment. A formal Monthly Project Report shall be submitted to senior management.</p><h4>3.2 Risk & Opportunity Management</h4><p>Project risks and opportunities shall be managed in accordance with 'Procedure for Risk & Opportunity Management' (C-QSE-PROC-002). This includes maintaining a live project risk register, conducting regular risk reviews, and implementing mitigation strategies.</p><h4>3.3 Change Control</h4><p>Any deviation from the approved project scope, schedule, or budget must be managed through a formal Change Control process. All variations must be documented, assessed for their impact, and approved by the appropriate authority level before implementation.</p><h4>3.4 Community Engagement</h4><p>Community and stakeholder engagement will be managed proactively in line with the project-specific Community Engagement Plan, ensuring minimal disruption and maintaining the company's social license to operate.</p>"
+    },
+    "created_at": "2025-09-24 20:53:44.324958+00:00",
+    "updated_at": "2025-09-24 20:53:44.324958+00:00"
+  },
+  {
+    "id": "09c2593d-f94c-4bd1-b3cb-d82ddf9d7ee1",
+    "asset_uid": "0de5637d-905d-4908-94ca-8acb3b1e1931",
+    "version": 1,
+    "is_current": true,
+    "type": "procedure",
+    "name": "QSE-8.1-PROC-02 - Incident Reporting & Investigation Procedure",
+    "project_id": null,
+    "document_number": "QSE-8.1-PROC-02",
+    "revision_code": null,
+    "metadata": {
+      "title": "Incident Reporting & Investigation Procedure",
+      "qse_doc": {
+        "code": "QSE-8.1-PROC-02",
+        "category": "procedure"
+      },
+      "category": "qse",
+      "document_number": "QSE-8.1-PROC-02"
+    },
+    "content": {
+      "html": "<h3>1.0 Purpose</h3><p>To ensure all QSE incidents are reported, investigated, and analysed in a timely and systematic manner to identify root causes, implement effective corrective actions, and share lessons learned across the organisation.</p><h3>2.0 Reporting Requirements</h3><ul><li>All incidents, including injuries, illnesses, property damage, environmental spills, and near misses, must be reported to the immediate supervisor as soon as practicable.</li><li>The supervisor must enter the initial report into the company's safety management system ('SafetyConnect') within 24 hours.</li><li>Notifiable incidents must be immediately reported to the regulator by the Project Manager or QSE Manager.</li></ul><h3>3.0 Investigation</h3><p>The level of investigation shall be proportionate to the severity or potential severity of the incident. Significant incidents (with a high or extreme risk rating) must be investigated using the Incident Cause Analysis Method (ICAM) led by a trained investigator.</p>"
+    },
+    "created_at": "2025-09-24 08:37:51.926146+00:00",
+    "updated_at": "2025-09-24 20:53:44.324958+00:00"
+  },
+  {
+    "id": "e2be44a9-f21b-4e6f-bb5f-872a89997cef",
+    "asset_uid": "05f8240f-6f8a-4989-b898-d8a2a6d99c3c",
+    "version": 1,
+    "is_current": true,
+    "type": "procedure",
+    "name": "QSE-8.1-PROC-03 - WHS Management Procedure",
+    "project_id": null,
+    "document_number": "QSE-8.1-PROC-03",
+    "revision_code": null,
+    "metadata": {
+      "title": "WHS Management Procedure",
+      "qse_doc": {
+        "code": "QSE-8.1-PROC-03",
+        "category": "procedure"
+      },
+      "category": "qse",
+      "document_number": "QSE-8.1-PROC-03"
+    },
+    "content": {
+      "html": "<h3>1.0 Purpose</h3><p>To outline the mandatory processes for managing Work Health and Safety (WHS) risks, ensuring compliance with legislation, and systematically working towards the elimination of work-related injury and illness.</p><h3>2.0 WHS Risk Management</h3><p>WHS risks shall be managed by following the hierarchy of controls. Project-specific WHS risks are to be identified and assessed in the Project Risk Register, with detailed controls documented in SWMS for high-risk activities.</p><h3>3.0 Consultation & Participation</h3><p>We are committed to consulting with our workers on WHS matters. This is achieved through Health and Safety Committees, daily pre-start meetings, and the development of SWMS in consultation with the work crews.</p><h3>4.0 Incident Management</h3><p>All WHS incidents, including near misses, must be reported immediately. Serious incidents will be investigated using the ICAM methodology to identify root causes and implement effective corrective actions.</p>"
+    },
+    "created_at": "2025-09-24 08:37:51.926146+00:00",
+    "updated_at": "2025-09-24 20:53:44.324958+00:00"
+  },
+  {
+    "id": "d817a27c-e6c2-431b-a38f-6562b0c7216b",
+    "asset_uid": "4a1bb29e-3d35-4366-b209-ecfb4c3fb01b",
+    "version": 1,
+    "is_current": true,
+    "type": "procedure",
+    "name": "QSE-8.1-PROC-04 - Environmental Management Procedure",
+    "project_id": null,
+    "document_number": "QSE-8.1-PROC-04",
+    "revision_code": null,
+    "metadata": {
+      "title": "Environmental Management Procedure",
+      "qse_doc": {
+        "code": "QSE-8.1-PROC-04",
+        "category": "procedure"
+      },
+      "category": "qse",
+      "document_number": "QSE-8.1-PROC-04"
+    },
+    "content": {
+      "html": "<h3>1.0 Purpose</h3><p>To establish a framework for identifying, assessing, and managing environmental aspects and impacts associated with our construction activities, ensuring compliance with legal requirements and promoting environmental protection.</p><h3>2.0 Key Management Areas</h3><h4>2.1 Erosion & Sediment Control</h4><p>All projects must implement an Erosion and Sediment Control Plan (ESCP) to minimise the impact of soil disturbance on waterways. Controls (e.g., sediment fences, catch drains) must be in place before bulk earthworks commence and be maintained regularly, especially after rainfall.</p><h4>2.2 Waste Management</h4><p>Waste shall be managed according to the waste hierarchy (Avoid, Reduce, Reuse, Recycle, Dispose). All waste streams must be segregated on site, and licensed contractors used for disposal. Waste tracking records must be maintained.</p><h4>2.3 Spill Prevention & Response</h4><p>All hazardous substances must be stored in appropriately bunded areas. Spill kits must be readily available where liquids are stored or transferred. In the event of a spill, it must be contained immediately, and reported in accordance with the Incident Reporting Procedure.</p>"
+    },
+    "created_at": "2025-09-24 20:53:44.324958+00:00",
+    "updated_at": "2025-09-24 20:53:44.324958+00:00"
+  },
+  {
+    "id": "27b1ab59-e83b-48ab-90b1-e5b0ec5063b2",
+    "asset_uid": "256d732b-48c6-4ae1-9408-b5a594072338",
+    "version": 1,
+    "is_current": true,
+    "type": "procedure",
+    "name": "QSE-8.1-PROC-05 - Construction & Operational Control Procedure",
+    "project_id": null,
+    "document_number": "QSE-8.1-PROC-05",
+    "revision_code": null,
+    "metadata": {
+      "title": "Construction & Operational Control Procedure",
+      "qse_doc": {
+        "code": "QSE-8.1-PROC-05",
+        "category": "procedure"
+      },
+      "category": "qse",
+      "document_number": "QSE-8.1-PROC-05"
+    },
+    "content": {
+      "html": "<h3 class=\"mt-8 mb-4\">1.0 Purpose</h3><p>To ensure that all construction and operational activities are planned and executed in a controlled manner that prevents harm to people, protects the environment, and meets quality specifications.</p><h3 class=\"mt-8 mb-4\">2.0 Risk-Based Work Planning</h3><p>All on-site work must be planned and executed using a hierarchy of risk control documentation.</p><h4>2.1 Safe Work Method Statements (SWMS)</h4><ul><li>A SWMS is required for all High Risk Construction Work (HRCW) as defined by WHS Regulations.</li><li>The SWMS must be developed in consultation with the workers undertaking the task.</li><li>It must identify the steps of the task, the potential hazards, and the control measures to be implemented.</li><li>No HRCW shall commence until the SWMS has been reviewed and approved by the site supervisor and all workers involved have signed on to it.</li></ul><h4>2.2 Inspection and Test Plans (ITPs)</h4><p>ITPs shall be developed for all key construction processes to ensure quality requirements are met. The ITP will detail the sequence of inspections, tests, hold points, and records required to verify conformity.</p>"
+    },
+    "created_at": "2025-09-24 20:53:44.324958+00:00",
+    "updated_at": "2025-09-24 20:53:44.324958+00:00"
+  },
+  {
+    "id": "65e88fd5-9e59-4362-b8b4-4d1df4c82c1f",
+    "asset_uid": "eda5ea4a-dd74-4f15-88ad-f7261ac540c1",
+    "version": 1,
+    "is_current": true,
+    "type": "procedure",
+    "name": "QSE-8.1-PROC-06 - Design & Development Control Procedure",
+    "project_id": null,
+    "document_number": "QSE-8.1-PROC-06",
+    "revision_code": null,
+    "metadata": {
+      "title": "Design & Development Control Procedure",
+      "qse_doc": {
+        "code": "QSE-8.1-PROC-06",
+        "category": "procedure"
+      },
+      "category": "qse",
+      "document_number": "QSE-8.1-PROC-06"
+    },
+    "content": {
+      "html": "<h3 class=\"mt-8 mb-4\">1.0 Purpose</h3><p>To establish a systematic process for the review, verification, and management of designs used for construction. While <span style=\"background-color: yellow;\">AustBuild Civil Pty Ltd</span> typically does not perform principal design, this procedure ensures that client-supplied designs are fit for purpose and that any minor or temporary works designs we produce are safe, compliant, and controlled.</p><h3 class=\"mt-8 mb-4\">2.0 Management of Client-Supplied Design</h3><h4>2.1 Design Input Review</h4><p>Upon receipt, all client-supplied design packages shall undergo a formal multi-disciplinary review before being issued 'For Construction'. This review shall assess:</p><ul><li><strong>Constructability:</strong> Feasibility of construction methods, site access, and sequencing.</li><li><strong>Safety in Design:</strong> Identification of hazards that may be introduced during construction, maintenance, or demolition, and verification that risks are eliminated or minimised So Far As Is Reasonably Practicable (SFAIRP).</li><li><strong>Environmental Considerations:</strong> Impact on sensitive receivers, heritage items, flora, and fauna.</li><li><strong>Quality:</strong> Clarity, completeness, and absence of conflicts within the design documentation.</li></ul><p>Findings from this review will be documented in a Design Review Report and communicated to the client.</p><h4>2.2 Design Verification</h4><p>Where specified by the contract or deemed necessary by the Project Manager, key design elements shall be subject to independent verification by a competent third-party engineer.</p><h3 class=\"mt-8 mb-4\">3.0 Control of AustBuild Civil Generated Design</h3><p>For minor temporary works (e.g., traffic management plans, formwork, excavation support) designed internally or by our consultants:</p><ul><li>Designs shall be developed by competent persons with relevant experience.</li><li>All designs must be independently checked and verified before use.</li><li>A risk assessment must be completed and documented as part of the design package.</li></ul><h3 class=\"mt-8 mb-4\">4.0 Design Change Control</h3><p>No changes shall be made to an approved design without following a formal change management process. This includes:</p><ol><li>Documenting the proposed change on a Design Change Request form.</li><li>Assessing the impact of the change on safety, cost, schedule, and quality.</li><li>Obtaining approval for the change from the client and the Project Manager before implementation.</li></ol>"
+    },
+    "created_at": "2025-09-24 08:37:51.926146+00:00",
+    "updated_at": "2025-09-24 20:53:44.324958+00:00"
+  },
+  {
+    "id": "c2c2ce4c-9363-4373-abe5-3b2e9200d137",
+    "asset_uid": "db228c83-1d95-402f-b8f0-63c7b4530b77",
+    "version": 1,
+    "is_current": true,
+    "type": "procedure",
+    "name": "QSE-8.1-PROC-07 - Procurement & Supplier Management Procedure",
+    "project_id": null,
+    "document_number": "QSE-8.1-PROC-07",
+    "revision_code": null,
+    "metadata": {
+      "title": "Procurement & Supplier Management Procedure",
+      "qse_doc": {
+        "code": "QSE-8.1-PROC-07",
+        "category": "procedure"
+      },
+      "category": "qse",
+      "document_number": "QSE-8.1-PROC-07"
+    },
+    "content": {
+      "html": "<h3>1.0 Purpose</h3><p>To establish a systematic process for the procurement of all goods, services, and subcontracts, ensuring they conform to project and QSE requirements. This procedure governs the evaluation, selection, and ongoing management of suppliers and subcontractors to minimise risk and ensure value for money.</p><h3>2.0 Supplier & Subcontractor Pre-qualification</h3><ol><li>No supplier or subcontractor shall be engaged without first being pre-qualified and added to the <span>AustBuild Civil</span> Approved Supplier Register.</li><li>The pre-qualification assessment shall be proportionate to the risk and value of the supply, and will as a minimum evaluate the supplier's:<ul><li>WHS management system, performance history (LTIFR), and certifications (e.g., ISO 45001).</li><li>Environmental management system, incident history, and certifications (e.g., ISO 14001).</li><li>Quality management system and certifications (e.g., ISO 9001).</li><li>Financial capacity and relevant insurances.</li><li>Technical capability and past performance.</li></ul></li><li>High-risk subcontractors (e.g., demolition, asbestos removal, cranes) are subject to a more intensive assessment.</li></ol><h3>3.0 Tendering & Contract Award</h3><p>The procurement process for major subcontracts will align with the principles of fairness and transparency outlined in Section 12 of the Austroads Guide to Project Delivery.</p><ol><li>Purchase Orders and Subcontracts shall clearly define the scope of work, QSE requirements, specifications, and hold points for inspection.</li><li>Tenders are to be assessed against both price and non-price criteria, with QSE performance being a significant factor.</li><li>The Project Manager is responsible for ensuring contracts are awarded in line with delegations of authority.</li></ol><h3>4.0 Performance Monitoring</h3><p>The performance of key subcontractors and suppliers shall be monitored throughout the project lifecycle.</p><ul><li>Regular performance reviews will be held to discuss progress, QSE compliance, and any issues.</li><li>Site inspections and audits will be conducted to verify compliance with agreed QSE standards.</li><li>A Supplier Performance Report will be completed upon conclusion of the contract, which will inform future tender considerations.</li></ul>"
+    },
+    "created_at": "2025-09-24 08:37:51.926146+00:00",
+    "updated_at": "2025-09-24 20:53:44.324958+00:00"
+  },
+  {
+    "id": "10cc02ae-8156-459f-87a7-a583ef6a518a",
+    "asset_uid": "e23bae5a-4f4a-4ad1-9f14-27996dba5d5c",
+    "version": 1,
+    "is_current": true,
+    "type": "document",
+    "name": "QSE-8.1-TEMP-PQP - Project Quality Plan (PQP) Template",
+    "project_id": null,
+    "document_number": "QSE-8.1-TEMP-PQP",
+    "revision_code": null,
+    "metadata": {
+      "title": "Project Quality Plan (PQP) Template",
+      "qse_doc": {
+        "code": "QSE-8.1-TEMP-PQP",
+        "category": "template"
+      },
+      "category": "qse",
+      "document_number": "QSE-8.1-TEMP-PQP"
+    },
+    "content": {
+      "html": "<h3>1.0 Project Information</h3><div class=\"overflow-x-auto mb-8\"><table class=\"min-w-full border border-gray-300 text-sm\"><tbody><tr><td class=\"border p-2 font-semibold w-1/4\">Project Name:</td><td class=\"border p-2\">[Enter Project Name]</td></tr><tr><td class=\"border p-2 font-semibold\">Client:</td><td class=\"border p-2\">[Enter Client Name]</td></tr><tr><td class=\"border p-2 font-semibold\">Contract Value:</td><td class=\"border p-2\">[Enter Value]</td></tr><tr><td class=\"border p-2 font-semibold\">Project Manager:</td><td class=\"border p-2\">[Enter PM Name]</td></tr><tr><td class=\"border p-2 font-semibold\">QA/QC Manager:</td><td class=\"border p-2\">Michael Lee</td></tr></tbody></table></div><h3>2.0 Quality Policy & Objectives</h3><p><strong>Quality Policy Statement:</strong> [Reference corporate QSE Policy QSE-5.2-POL-01]</p><p><strong>Project-Specific Quality Objectives:</strong></p><div class=\"overflow-x-auto mb-8\"><table class=\"min-w-full border border-gray-300 text-sm\"><thead class=\"bg-gray-50\"><tr><th class=\"border p-2 text-left\">Quality Objective</th><th class=\"border p-2 text-left\">Target</th><th class=\"border p-2 text-left\">Measurement Method</th><th class=\"border p-2 text-left\">Responsible</th></tr></thead><tbody><tr><td class=\"border p-2\">[Enter objective]</td><td class=\"border p-2\">[Enter target]</td><td class=\"border p-2\">[Enter measurement]</td><td class=\"border p-2\">[Enter responsible party]</td></tr></tbody></table></div><h3>3.0 Lot Management</h3><p>This project utilizes the integrated Lot Management System for quality control. Lots are managed within the <code>/projects/[projectId]/lots</code> module with the following structure:</p><ul><li><strong>Lot Register:</strong> All work packages tracked with unique identifiers</li><li><strong>ITP Assignment:</strong> Each lot linked to appropriate Inspection & Test Plans</li><li><strong>Progress Tracking:</strong> Real-time status updates and completion records</li><li><strong>NCR Integration:</strong> Non-conformances linked to specific lots for traceability</li></ul><h3>4.0 Inspection & Test Plans (ITPs)</h3><p>ITPs are generated through the AI-driven ITP Generation Agent and managed within the system:</p><ul><li><strong>ITP Templates:</strong> Based on project specifications and industry standards</li><li><strong>Digital Execution:</strong> ITPs executed using tablets with real-time data entry</li><li><strong>Hold Points:</strong> Automatic notifications to relevant parties for sign-off</li><li><strong>Records Management:</strong> All ITP records stored in <code>/projects/[projectId]/itp-templates</code></li></ul><h3>5.0 Quality Risks & Mitigation</h3><div class=\"overflow-x-auto mb-8\"><table class=\"min-w-full border border-gray-300 text-sm\"><thead class=\"bg-gray-50\"><tr><th class=\"border p-2 text-left\">Quality Risk</th><th class=\"border p-2 text-left\">Impact</th><th class=\"border p-2 text-left\">Likelihood</th><th class=\"border p-2 text-left\">Mitigation Measures</th></tr></thead><tbody><tr><td class=\"border p-2\">[Enter risk description]</td><td class=\"border p-2\">[High/Medium/Low]</td><td class=\"border p-2\">[High/Medium/Low]</td><td class=\"border p-2\">[Enter mitigation measures]</td></tr></tbody></table></div><h3>6.0 Handover Records</h3><p>The following records will be compiled for project handover using the system's export functionality:</p><ul><li>Completed ITP Register with all test results and certifications</li><li>As-Built Documentation from Document Register</li><li>NCR Register with closure evidence</li><li>Material Certificates and Compliance Documentation</li><li>Final Quality Audit Report</li></ul><h3>7.0 Quality KPIs</h3><div class=\"overflow-x-auto mb-8\"><table class=\"min-w-full border border-gray-300 text-sm\"><thead class=\"bg-gray-50\"><tr><th class=\"border p-2 text-left\">KPI</th><th class=\"border p-2 text-left\">Target</th><th class=\"border p-2 text-left\">Current Performance</th><th class=\"border p-2 text-left\">Trend</th></tr></thead><tbody><tr><td class=\"border p-2\">ITP First-Pass Rate</td><td class=\"border p-2\">[Enter target %]</td><td class=\"border p-2\">[Auto-populated from system]</td><td class=\"border p-2\">[System trend analysis]</td></tr><tr><td class=\"border p-2\">NCR Closure Rate</td><td class=\"border p-2\">[Enter target days]</td><td class=\"border p-2\">[Auto-populated from system]</td><td class=\"border p-2\">[System trend analysis]</td></tr></tbody></table></div>"
+    },
+    "created_at": "2025-09-24 20:53:44.324958+00:00",
+    "updated_at": "2025-09-24 20:53:44.324958+00:00"
+  },
+  {
+    "id": "768ea7b3-a4f3-4865-bf87-fa211c57f2a9",
+    "asset_uid": "9204269a-6804-4e05-842f-48b75f093192",
+    "version": 1,
+    "is_current": true,
+    "type": "procedure",
+    "name": "QSE-9.1-PROC-01 - Procedure for Monitoring, Measurement, and Analysis",
+    "project_id": null,
+    "document_number": "QSE-9.1-PROC-01",
+    "revision_code": null,
+    "metadata": {
+      "title": "Procedure for Monitoring, Measurement, and Analysis",
+      "qse_doc": {
+        "code": "QSE-9.1-PROC-01",
+        "category": "procedure"
+      },
+      "category": "qse",
+      "document_number": "QSE-9.1-PROC-01"
+    },
+    "content": {
+      "html": "<h3>1.0 Purpose</h3><p>To define the systematic digital process for monitoring, measuring, analysing, and evaluating the QSE performance of AustBuild Civil Pty Ltd's operations and management system. This ensures that performance against objectives is understood through real-time dashboard analytics, compliance is maintained, and data-driven decisions are made to foster continual improvement.</p><h3>2.0 Scope</h3><p>This procedure applies to all activities across the organisation that monitor and measure QSE performance. This includes, but is not limited to, project site operations, workshop activities, and corporate functions.</p><h3>3.0 Procedure Details</h3><h4>3.1 Automated Digital Monitoring & Measurement</h4><p>The key aspects to be monitored are defined in the company's QSE Objectives and Targets Plan and project-specific PMPs, with real-time data collection and dashboard display (<code>/dashboard</code>). These typically include:</p><ul><li><strong>Quality:</strong> Conformance of work to specifications (e.g., survey results, material test reports), number of non-conformances (NCRs) from QSE-10.2-REG-01 with automated trend analysis.</li><li><strong>Safety:</strong> Lead and lag indicators such as the number of site inspections, positive observations, near misses, and LTIFR/TRIFR with real-time calculation and alert thresholds.</li><li><strong>Environment:</strong> Environmental monitoring results (e.g., water quality, noise levels), waste generation data, and incident reports with automatic compliance checking against legal obligations (QSE-6.1-REG-03).</li><li><strong>Compliance:</strong> Status of compliance with all items listed in the Compliance Obligations Register with automated monitoring and alert notifications.</li><li><strong>Customer Satisfaction:</strong> Digital feedback and results from customer surveys with automated analysis and improvement opportunity identification (QSE-10.3-REG-01).</li><li><strong>System Performance:</strong> Digital analytics on user adoption, process efficiency, and automation effectiveness across all QSE modules.</li></ul><h4>3.2 Digital Methods and Automated Frequency</h4><p>Monitoring shall be conducted through various digital methods with automated data collection and real-time processing:</p><ul><li><strong>Digital Inspections:</strong> Mobile app-based daily site safety walks, weekly environmental inspections, formal system audits with GPS tracking and photo evidence automatically uploaded to the system.</li><li><strong>Automated Testing Integration:</strong> Material sampling and testing results automatically imported into project ITPs with compliance checking.</li><li><strong>Real-Time Observation:</strong> Digital behavioural safety observations with immediate reporting and trend analysis.</li><li><strong>Continuous Data Review:</strong> Automated analysis of incident reports, NCRs, and customer feedback with AI-powered pattern recognition and alert generation.</li></ul><p>The frequency of these activities is defined in project schedules, PMPs, and the Internal Audit Schedule, with automated scheduling and reminder notifications through the system.</p><h4>3.3 Real-Time Analysis and Evaluation</h4><p>Data collected from monitoring and measurement activities is automatically analysed using system analytics to identify trends, performance gaps, and opportunities for improvement in real-time. This analysis is continuously displayed on the monitoring dashboard (<code>/dashboard</code>) and forms a key input into monthly project reviews and the formal Management Review process. Performance variance alerts automatically trigger improvement opportunities in the Continual Improvement Register (QSE-10.3-REG-01).</p><h3>4.0 Digital Records & Analytics</h3><p>All records of monitoring, measurement, analysis, and evaluation are automatically maintained in the digital system as evidence of performance. This includes digital inspection checklists, test reports, audit findings, and meeting minutes with complete audit trails, timestamps, and cross-system integration. Performance analytics are automatically generated and displayed on the real-time monitoring dashboard for management oversight and decision-making.</p>"
+    },
+    "created_at": "2025-09-24 20:53:44.324958+00:00",
+    "updated_at": "2025-09-24 20:53:44.324958+00:00"
+  },
+  {
+    "id": "cd602c7b-32a3-42e9-b6af-ffaa6dd9bebc",
+    "asset_uid": "10417543-4d22-46ad-b2e3-7f67c395a7e6",
+    "version": 1,
+    "is_current": true,
+    "type": "procedure",
+    "name": "QSE-9.2-PROC-01 - Internal Audit Procedure",
+    "project_id": null,
+    "document_number": "QSE-9.2-PROC-01",
+    "revision_code": null,
+    "metadata": {
+      "title": "Internal Audit Procedure",
+      "qse_doc": {
+        "code": "QSE-9.2-PROC-01",
+        "category": "procedure"
+      },
+      "category": "qse",
+      "document_number": "QSE-9.2-PROC-01"
+    },
+    "content": {
+      "html": "<h3>1.0 Purpose</h3><p>To define the process for planning, conducting, reporting, and following up on internal audits of the QSE Integrated Management System (IMS). This ensures the system's ongoing conformity to ISO 9001, ISO 14001, and ISO 45001 standards, and its effectiveness in achieving organisational objectives.</p><h3>2.0 Digital Audit Programme & System Integration</h3><p>An annual internal audit programme is developed by the QSE Manager using the system's integrated audit management module, based on the status and importance of the processes to be audited and the results of previous audits. High-risk areas and processes with poor performance indicators (automatically identified through dashboard analytics) are prioritised for more frequent audits. Audit scheduling and tracking are integrated with the monitoring dashboard (<code>/dashboard</code>) for real-time visibility.</p><h3>3.0 Audit Process</h3><h4>3.1 Digital Audit Planning</h4><p>For each audit, a Lead Auditor will be assigned through the system's auditor competency management module and will be responsible for preparing a detailed Digital Audit Plan. The plan will specify the audit scope, objectives, criteria, and schedule, and is automatically distributed to all relevant stakeholders with notification tracking.</p><h4>3.2 Digital Audit Execution</h4><p>Audits will commence with a digital opening meeting to confirm the plan. The audit team will then gather objective evidence through interviews, observation of activities, and digital review of documents and records accessed through the document management system. All audit evidence is captured digitally with timestamps and audit trails. All auditors must remain impartial and objective.</p><h4>3.3 Digital Reporting & Analytics</h4><p>Audit findings will be classified as either a Non-conformance (Major/Minor) or an Opportunity for Improvement (OFI) through the integrated audit reporting module. A formal Digital Audit Report will be automatically generated and issued to the relevant managers with dashboard notifications. The report will summarise the findings and conclusions of the audit with trend analysis and performance metrics.</p><h4>3.4 Automated Follow-up & Tracking</h4><p>The manager responsible for the audited area must propose corrective actions for all non-conformances through the system's corrective action module. The effectiveness of these actions will be verified by the Lead Auditor through digital evidence collection before the finding can be automatically closed out. All corrective actions are tracked through the Continual Improvement Register (QSE-10.3-REG-01) with automated reminders and progress monitoring.</p><h3>4.0 Digital Auditor Competency Management</h3><p>All internal auditors must have completed a recognised internal auditor training course, with competency records maintained in the system's training management module (QSE-7.2-REG-01). Lead Auditors will have additional qualifications and experience in lead auditing techniques. Auditor qualifications and competency status are tracked through automatic alerts for renewal requirements and linked to the competency dashboard.</p>"
+    },
+    "created_at": "2025-09-24 08:37:51.926146+00:00",
+    "updated_at": "2025-09-24 20:53:44.324958+00:00"
+  },
+  {
+    "id": "00983947-5104-4482-9004-fd87a076cb33",
+    "asset_uid": "cd7026e5-c2d4-4b2c-828f-b9bdff5c2220",
+    "version": 1,
+    "is_current": true,
+    "type": "plan",
+    "name": "QSE-9.2-SCHED-01 - Annual Internal Audit Schedule",
+    "project_id": null,
+    "document_number": "QSE-9.2-SCHED-01",
+    "revision_code": null,
+    "metadata": {
+      "title": "Annual Internal Audit Schedule",
+      "qse_doc": {
+        "code": "QSE-9.2-SCHED-01",
+        "category": "schedule"
+      },
+      "category": "qse",
+      "document_number": "QSE-9.2-SCHED-01"
+    },
+    "content": {
+      "html": "<h3>2025 Annual Internal Audit Schedule</h3><div><table><thead><tr><th>Month</th><th>Audit Focus</th><th>Lead Auditor</th><th>Risk Level</th><th>System Module</th><th>Dashboard Tracking</th></tr></thead><tbody><tr><td>[Enter Month]</td><td>[Enter Audit Focus Area/Process]</td><td>Kim Tran</td><td>[Auto-assigned: High/Medium/Low]</td><td>[System Module/Process Area]</td><td>[Auto-linked to Dashboard Analytics]</td></tr></tbody></table></div><h3>Audit Performance Analytics Template</h3><div><table><thead><tr><th>Performance Indicator</th><th>Current Value</th><th>Target</th><th>Trend</th><th>Action Required</th><th>Dashboard Link</th><th>Improvement ID</th></tr></thead><tbody><tr><td>[Enter Audit KPI/Metric]</td><td>[Auto-populated from System]</td><td>[Enter Target Value]</td><td>[Auto-calculated Trend Analysis]</td><td>[Enter Action if Below Target]</td><td>Link to /dashboard</td><td>[Link to QSE-10.3-REG-01]</td></tr></tbody></table></div>"
+    },
+    "created_at": "2025-09-24 08:37:51.926146+00:00",
+    "updated_at": "2025-09-24 20:53:44.324958+00:00"
+  },
+  {
+    "id": "19d9ea0a-dfbf-4b82-ba86-7a43586fc2ec",
+    "asset_uid": "5e077356-265f-411f-855f-b7b052cb6bd6",
+    "version": 1,
+    "is_current": true,
+    "type": "procedure",
+    "name": "QSE-9.3-PROC-01 - Procedure for Management Review",
+    "project_id": null,
+    "document_number": "QSE-9.3-PROC-01",
+    "revision_code": null,
+    "metadata": {
+      "title": "Procedure for Management Review",
+      "qse_doc": {
+        "code": "QSE-9.3-PROC-01",
+        "category": "procedure"
+      },
+      "category": "qse",
+      "document_number": "QSE-9.3-PROC-01"
+    },
+    "content": {
+      "html": "<h3>1.0 Purpose</h3><p>To define the process for conducting regular management reviews of the QSE Integrated Management System (IMS). This ensures the ongoing suitability, adequacy, and effectiveness of the IMS and its alignment with the strategic direction of AustBuild Civil Pty Ltd. Management review processes are supported by real-time dashboard analytics and automated data collection from all QSE system modules.</p><h3>2.0 Frequency & Digital Scheduling</h3><p>Management reviews will be conducted at least annually with automated calendar scheduling and reminder notifications through the system. Additional reviews may be convened to address significant changes or events, with automatic triggering based on performance threshold alerts from the monitoring dashboard. Review scheduling is integrated with participant availability and automatically distributes meeting materials from the system's data repositories.</p><h3>3.0 Automated Data Inputs & Analytics</h3><p>The management review shall consider a range of inputs, automatically compiled and analyzed by the system, including but not limited to:</p><ul><li>The status of actions from previous management reviews (auto-tracked through QSE-10.3-REG-01).</li><li>Changes in external and internal issues that are relevant to the IMS (auto-updated from context analysis).</li><li>Information on QSE performance, including trends in customer satisfaction, objectives, non-conformities, and audit results (real-time dashboard analytics from <code>/dashboard</code>).</li><li>The adequacy of resources (competency analysis from QSE-7.2-REG-01).</li><li>The effectiveness of actions taken to address risks and opportunities (risk register analytics from QSE-6.1-REG-01).</li><li>Opportunities for continual improvement (auto-identified through system performance analytics).</li><li>Real-time project performance data from Lot Register, NCR Register, and ITP systems.</li><li>Automated compliance monitoring reports from legal obligations tracking (QSE-6.1-REG-03).</li></ul><h3>4.0 Digital Outputs & Action Tracking</h3><p>The outputs of the management review shall include decisions and actions related to:</p><ul><li>Opportunities for improvement (automatically logged in QSE-10.3-REG-01 with action tracking).</li><li>Any need for changes to the IMS (system change requests with impact analysis).</li><li>Resource needs (competency gap analysis and budget allocation tracking).</li><li>System performance targets and objectives updates (automated dashboard configuration).</li><li>Risk and opportunity register updates (automatic priority reassignment).</li></ul><p>Digital minutes shall be recorded for all management review meetings with automatic distribution, and actions shall be assigned to responsible individuals with due dates, progress tracking, and automated reminder notifications. All decisions are logged in the system audit trail for compliance verification.</p>"
+    },
+    "created_at": "2025-09-24 20:53:44.324958+00:00",
+    "updated_at": "2025-09-24 20:53:44.324958+00:00"
+  },
+  {
+    "id": "b09273e0-90b1-4e34-9816-8074a78d6568",
+    "asset_uid": "e6d9b921-16c4-46bc-a673-50c9cd171fd5",
+    "version": 1,
+    "is_current": true,
+    "type": "document",
+    "name": "QSE-CORP-IMPROVEMENT-0001 - 10.0 Improvement",
+    "project_id": null,
+    "document_number": "QSE-CORP-IMPROVEMENT-0001",
+    "revision_code": null,
+    "metadata": {
+      "title": "10.0 Improvement",
+      "qse_doc": {
+        "code": "QSE-CORP-IMPROVEMENT-0001",
+        "category": "section"
+      },
+      "category": "qse",
+      "document_number": "QSE-CORP-IMPROVEMENT-0001"
+    },
+    "content": {
+      "html": "<h1>10.0 Improvement</h1><p>This section establishes the framework for identifying, implementing, and sustaining improvements to enhance the effectiveness, efficiency, and performance of the integrated QSE management system.</p><h2>Continuous Improvement Excellence</h2><p>Systematic approach to identifying and implementing improvements for sustained success</p><p>The Improvement section defines how AustBuild Civil systematically identifies and implements improvements to enhance the suitability, adequacy, and effectiveness of the QSE management system. Improvement opportunities are automatically identified through system analytics and tracked via the Continual Improvement Register (QSE-10.3-REG-01) with real-time dashboard monitoring (/dashboard). This includes addressing nonconformities, implementing corrective actions, and pursuing continual improvement opportunities to better serve customers and stakeholders.</p><h3>Nonconformity & Corrective Action</h3><p>Systematic identification, investigation, and correction of nonconformities to prevent recurrence and improve system effectiveness through root cause analysis and preventive measures.</p><h3>Continual Improvement</h3><p>Proactive identification and implementation of improvement opportunities to enhance customer satisfaction, operational efficiency, and organizational capability for sustained competitive advantage.</p><h3>Core Improvement Elements:</h3><ul><li><strong>Nonconformity Management:</strong> Systematic handling of deviations from requirements and standards</li><li><strong>Root Cause Analysis:</strong> Deep investigation to identify and address underlying causes of problems</li><li><strong>Corrective Action:</strong> Elimination of causes of nonconformities to prevent recurrence</li><li><strong>Preventive Action:</strong> Proactive measures to prevent potential nonconformities and issues</li><li><strong>Improvement Opportunities:</strong> Identification and implementation of enhancements to system effectiveness</li><li><strong>Innovation Integration:</strong> Incorporation of new technologies, methods, and best practices</li></ul><h3>Sub-sections in this Category:</h3><ul><li><strong>10.2 Nonconformity & Corrective Action:</strong> Systematic approach to managing nonconformities and implementing corrective actions</li><li><strong>10.3 Continual Improvement:</strong> Proactive improvement processes and opportunity identification systems</li></ul><p><strong>Performance Enhancement:</strong> The improvement section ensures that the organization continuously enhances its ability to meet customer requirements, achieve QSE objectives, and adapt to changing circumstances through systematic learning and development.</p><p><strong>Learning Organization:</strong> Improvement activities are designed to capture and share knowledge, promote innovation, and build organizational capability for sustained excellence in construction delivery and stakeholder satisfaction.</p><p><strong>Cultural Integration:</strong> Improvement is embedded in the organizational culture, encouraging all personnel to identify opportunities, suggest enhancements, and participate in the continuous evolution of the QSE management system for long-term success.</p>"
+    },
+    "created_at": "2025-09-24 20:53:44.324958+00:00",
+    "updated_at": "2025-09-24 20:53:44.324958+00:00"
+  },
+  {
+    "id": "60ddde8c-9b6c-4e7c-8734-cd7cd33d31d8",
+    "asset_uid": "a074465f-d77e-4b58-af4a-d8b5b6894303",
+    "version": 1,
+    "is_current": true,
+    "type": "document",
+    "name": "QSE-CORP-LEADERSHIP-0001 - 5.0 Leadership",
+    "project_id": null,
+    "document_number": "QSE-CORP-LEADERSHIP-0001",
+    "revision_code": null,
+    "metadata": {
+      "title": "5.0 Leadership",
+      "qse_doc": {
+        "code": "QSE-CORP-LEADERSHIP-0001",
+        "category": "section"
+      },
+      "category": "qse",
+      "document_number": "QSE-CORP-LEADERSHIP-0001"
+    },
+    "content": {
+      "html": "<h1>5.0 Leadership</h1><p>This section outlines the leadership commitment, policy, roles, and consultation mechanisms that drive the Integrated Management System at AustBuild Civil. Real-time leadership metrics and performance indicators are displayed on the monitoring dashboard (/dashboard).</p><p>Effective leadership is the cornerstone of our Integrated Management System. Top management is committed to establishing a culture of excellence in Quality, Safety, and Environmental performance.</p><p>The documents and procedures within this section detail our formal QSE Policy, define the organizational structure with clear roles and responsibilities, and establish the framework for worker consultation and participation. Please use the sidebar navigation to explore the specific topics within this section.</p>"
+    },
+    "created_at": "2025-09-24 20:53:44.324958+00:00",
+    "updated_at": "2025-09-24 20:53:44.324958+00:00"
+  },
+  {
+    "id": "44dd36dc-bb9e-460e-b62d-bd1145c83b47",
+    "asset_uid": "b9e4e42a-9ee1-441b-afef-21dd8dfe958d",
+    "version": 1,
+    "is_current": true,
+    "type": "document",
+    "name": "QSE-CORP-OPERATION-0001 - 8.0 Operation",
+    "project_id": null,
+    "document_number": "QSE-CORP-OPERATION-0001",
+    "revision_code": null,
+    "metadata": {
+      "title": "8.0 Operation",
+      "qse_doc": {
+        "code": "QSE-CORP-OPERATION-0001",
+        "category": "section"
+      },
+      "category": "qse",
+      "document_number": "QSE-CORP-OPERATION-0001"
+    },
+    "content": {
+      "html": "<p>The operational phase is where our commitment to Quality, Safety, and Environmental management is put into practice. The documents in this section provide the practical, hands-on instructions and tools our teams use every day to control their work and manage risks.</p><p class=\"mt-4\">These corporate-level procedures and templates form the basis of our Project Management Plans, ensuring a consistent approach to operational control across all AustBuild Civil sites. Operational performance metrics are tracked in real-time via the system dashboard (/dashboard) and integrated with project management modules. Please use the sidebar navigation to explore the specific operational documents.</p>"
+    },
+    "created_at": "2025-09-24 20:53:44.324958+00:00",
+    "updated_at": "2025-09-24 20:53:44.324958+00:00"
+  },
+  {
+    "id": "1c91973e-9883-4c82-b3d5-4d0c5d9cf367",
+    "asset_uid": "79d5a711-1901-4159-bee5-07a30f78acfb",
+    "version": 1,
+    "is_current": true,
+    "type": "document",
+    "name": "QSE-CORP-PERFORMANCE-0001 - 9.0 Performance Evaluation",
+    "project_id": null,
+    "document_number": "QSE-CORP-PERFORMANCE-0001",
+    "revision_code": null,
+    "metadata": {
+      "title": "9.0 Performance Evaluation",
+      "qse_doc": {
+        "code": "QSE-CORP-PERFORMANCE-0001",
+        "category": "section"
+      },
+      "category": "qse",
+      "document_number": "QSE-CORP-PERFORMANCE-0001"
+    },
+    "content": {
+      "html": "<h1>9.0 Performance Evaluation</h1><p>This section establishes the framework for monitoring, measuring, analyzing, and evaluating the performance and effectiveness of the integrated QSE management system.</p><h2>Performance Excellence Framework</h2><p>Systematic approach to measuring and improving QSE performance</p><p>The Performance Evaluation section defines how AustBuild Civil monitors, measures, analyzes, and evaluates its QSE performance to ensure the effectiveness of the integrated management system. All performance data is automatically collected and displayed on the real-time monitoring dashboard (/dashboard) with advanced analytics and trend analysis capabilities. This includes determining what needs to be monitored, the methods for monitoring and evaluation, and when results should be analyzed and evaluated.</p><h3>Monitoring & Measurement</h3><p>Systematic collection and analysis of performance data to track progress toward QSE objectives, identify trends, and provide evidence of management system effectiveness.</p><h3>Evaluation & Review</h3><p>Regular assessment of performance data through internal audits and management reviews to identify improvement opportunities and ensure continued suitability and effectiveness.</p><h3>Key Performance Evaluation Elements:</h3><ul><li><strong>Monitoring & Measurement:</strong> Systematic tracking of QSE performance indicators and process effectiveness</li><li><strong>Analysis & Evaluation:</strong> Data analysis to determine performance trends and improvement opportunities</li><li><strong>Customer Satisfaction:</strong> Assessment of customer perceptions and satisfaction with delivered services</li><li><strong>Internal Audits:</strong> Systematic examination of management system conformity and effectiveness</li><li><strong>Management Review:</strong> Top management evaluation of system performance and improvement needs</li></ul><h3>Sub-sections in this Category:</h3><ul><li><strong>9.1 Monitoring, Measurement, Analysis & Evaluation:</strong> Performance monitoring systems and customer satisfaction measurement</li><li><strong>9.2 Internal Audit:</strong> Internal audit programs and systematic management system evaluation</li><li><strong>9.3 Management Review:</strong> Strategic review processes and management system improvement planning</li></ul><p><strong>Data-Driven Decisions:</strong> All performance evaluation activities are designed to provide objective evidence for informed decision-making regarding the effectiveness of the QSE management system and the achievement of intended outcomes.</p><p><strong>Continuous Monitoring:</strong> Performance evaluation is an ongoing process that provides real-time insights into system performance, enabling proactive management of risks and opportunities while ensuring sustained compliance with requirements.</p><p><strong>Improvement Focus:</strong> The outputs of performance evaluation activities directly inform improvement planning and resource allocation, ensuring that the organization continuously enhances its capability to deliver quality outcomes safely and sustainably.</p>"
+    },
+    "created_at": "2025-09-24 20:53:44.324958+00:00",
+    "updated_at": "2025-09-24 20:53:44.324958+00:00"
+  },
+  {
+    "id": "bd46137c-ae4a-4cb3-bcba-ca9fd8daf2fd",
+    "asset_uid": "4387328a-9229-41d8-a53d-c2bc89f72cdb",
+    "version": 1,
+    "is_current": true,
+    "type": "document",
+    "name": "QSE-CORP-PLANNING-0001 - 6.0 Planning",
+    "project_id": null,
+    "document_number": "QSE-CORP-PLANNING-0001",
+    "revision_code": null,
+    "metadata": {
+      "title": "6.0 Planning",
+      "qse_doc": {
+        "code": "QSE-CORP-PLANNING-0001",
+        "category": "section"
+      },
+      "category": "qse",
+      "document_number": "QSE-CORP-PLANNING-0001"
+    },
+    "content": {
+      "html": "<p>This section details our systematic approach to planning within the Integrated Management System, focusing on risk and opportunity management, compliance, and setting objectives.</p><p>Effective planning is fundamental to achieving our QSE goals. At AustBuild Civil, our planning processes are designed to be proactive and risk-based, ensuring that we identify potential challenges and opportunities early and take decisive action. Planning effectiveness is monitored through the system dashboard (<a href=\"/dashboard\">/dashboard</a>) with integrated risk and opportunity tracking.</p><p>The documents within this section provide the frameworks for managing risks and opportunities, ensuring we meet our compliance obligations, and setting meaningful objectives that drive continual improvement. Please use the sidebar navigation to explore the specific procedures and registers related to our planning activities.</p>"
+    },
+    "created_at": "2025-09-24 20:53:44.324958+00:00",
+    "updated_at": "2025-09-24 20:53:44.324958+00:00"
+  },
+  {
+    "id": "4f661f03-1c3d-4186-80df-eee64542c74c",
+    "asset_uid": "437f3cd5-db38-4f96-80b4-d10a2ef46c7b",
+    "version": 1,
+    "is_current": true,
+    "type": "document",
+    "name": "QSE-CORP-SUPPORT-0001 - 7.0 Support",
+    "project_id": null,
+    "document_number": "QSE-CORP-SUPPORT-0001",
+    "revision_code": null,
+    "metadata": {
+      "title": "7.0 Support",
+      "qse_doc": {
+        "code": "QSE-CORP-SUPPORT-0001",
+        "category": "section"
+      },
+      "category": "qse",
+      "document_number": "QSE-CORP-SUPPORT-0001"
+    },
+    "content": {
+      "html": "<h1>7.0 Support</h1><p>This section encompasses the organizational support systems required for effective implementation and maintenance of the integrated QSE management system, covering resources, competence, awareness, communication, and documented information.</p><h2>Support Systems Overview</h2><p>Foundation elements that enable effective QSE management</p><p>The Support section establishes the foundation for effective implementation of the integrated management system. It defines how AustBuild Civil provides the necessary resources, develops personnel competence, maintains awareness, facilitates communication, and controls documented information. Support system effectiveness is continuously monitored through integrated dashboard analytics (/dashboard) and linked to the Continual Improvement Register.</p><h3>Resources & Competence</h3><p>Ensuring adequate human resources, infrastructure, and work environment to support QSE objectives. Developing and maintaining personnel competence through systematic training and awareness programs.</p><h3>Communication & Documentation</h3><p>Establishing effective internal and external communication channels, and implementing robust systems for the creation, update, control, and retention of documented information.</p><h3>Sub-sections in this Category:</h3><ul><li><strong>7.1-7.3 Resources, Competence & Awareness:</strong> <span>Personnel development and organizational capability building</span></li><li><strong>7.4 Communication:</strong> <span>Internal and external communication processes and protocols</span></li><li><strong>7.5 Documented Information:</strong> <span>Document control and information management systems</span></li></ul><p><strong>Note:</strong> Each sub-section contains specific procedures, templates, and registers that collectively ensure the organization has the necessary support infrastructure to achieve its QSE objectives and maintain compliance with ISO 9001:2015, ISO 14001:2015, and ISO 45001:2018 standards.</p>"
+    },
+    "created_at": "2025-09-24 20:53:44.324958+00:00",
+    "updated_at": "2025-09-24 20:53:44.324958+00:00"
+  }
+]

@@ -1,0 +1,232 @@
+#!/usr/bin/env python3
+import psycopg2
+import sys
+
+def query_database():
+    try:
+        conn = psycopg2.connect(
+            host="localhost",
+            port="5555",
+            database="projectpro",
+            user="postgres",
+            password="password"
+        )
+
+        cursor = conn.cursor()
+
+        print("=== ASSETS TABLE ANALYSIS ===")
+        cursor.execute("SELECT COUNT(*) FROM public.assets;")
+        total_assets = cursor.fetchone()[0]
+        print(f"Total assets in database: {total_assets}")
+
+        if total_assets > 0:
+            print("\n=== ASSETS BY TYPE ===")
+            cursor.execute("""
+                SELECT type, COUNT(*) as count
+                FROM public.assets
+                GROUP BY type
+                ORDER BY count DESC;
+            """)
+            asset_types = cursor.fetchall()
+            for asset_type, count in asset_types:
+                print(f"  • {asset_type}: {count}")
+
+        print("\n=== ALL ASSETS (DETAILED) ===")
+        cursor.execute("""
+            SELECT
+                id,
+                asset_uid,
+                type,
+                subtype,
+                name,
+                project_id,
+                status,
+                approval_state,
+                created_at,
+                updated_at,
+                CASE
+                    WHEN content IS NOT NULL THEN 'Has Content'
+                    ELSE 'No Content'
+                END as content_status
+            FROM public.assets
+            ORDER BY created_at DESC
+            LIMIT 50;
+        """)
+        all_assets = cursor.fetchall()
+
+        if all_assets:
+            for i, asset in enumerate(all_assets, 1):
+                asset_id, asset_uid, asset_type, subtype, name, project_id, status, approval_state, created_at, updated_at, content_status = asset
+                print(f"\n{i}. ASSET ID: {asset_id}")
+                print(f"   └─ Asset UID: {asset_uid}")
+                print(f"   └─ Type: {asset_type}")
+                print(f"   └─ Subtype: {subtype or 'None'}")
+                print(f"   └─ Name: {name or 'None'}")
+                print(f"   └─ Project ID: {project_id or 'None'}")
+                print(f"   └─ Status: {status or 'None'}")
+                print(f"   └─ Approval State: {approval_state or 'None'}")
+                print(f"   └─ Content: {content_status}")
+                print(f"   └─ Created: {created_at.strftime('%Y-%m-%d %H:%M:%S')}")
+                print(f"   └─ Updated: {updated_at.strftime('%Y-%m-%d %H:%M:%S')}")
+
+                # Get content details if it exists
+                if content_status == 'Has Content':
+                    cursor.execute("""
+                        SELECT content
+                        FROM public.assets
+                        WHERE id = %s;
+                    """, (asset_id,))
+                    content_result = cursor.fetchone()
+                    if content_result and content_result[0]:
+                        content_keys = list(content_result[0].keys()) if isinstance(content_result[0], dict) else ['(non-dict content)']
+                        print(f"   └─ Content Keys: {', '.join(content_keys[:5])}" + ('...' if len(content_keys) > 5 else ''))
+
+        print("\n" + "="*80)
+        print("=== PROJECT-ASSET RELATIONSHIPS ===")
+        print("="*80)
+
+        cursor.execute("SELECT COUNT(*) FROM public.projects;")
+        total_projects = cursor.fetchone()[0]
+        print(f"Total projects in database: {total_projects}")
+
+        cursor.execute("SELECT COUNT(*) FROM public.assets WHERE type = 'plan';")
+        total_plans = cursor.fetchone()[0]
+        print(f"Total plans in database: {total_plans}")
+
+        cursor.execute("SELECT COUNT(*) FROM public.assets WHERE type = 'wbs_node';")
+        total_wbs = cursor.fetchone()[0]
+        print(f"Total WBS nodes in database: {total_wbs}")
+
+        cursor.execute("SELECT COUNT(*) FROM public.assets WHERE type = 'lbs_node';")
+        total_lbs = cursor.fetchone()[0]
+        print(f"Total LBS nodes in database: {total_lbs}")
+
+
+        # Check processing runs table
+        print("\n" + "="*80)
+        print("CHECKING PROCESSING RUNS")
+        print("="*80)
+
+        try:
+            cursor.execute("SELECT COUNT(*) FROM public.processing_runs;")
+            processing_count = cursor.fetchone()[0]
+            print(f"Total processing runs: {processing_count}")
+
+            if processing_count > 0:
+                cursor.execute("""
+                    SELECT id, agent_id, model, status, created_at, ended_at
+                    FROM public.processing_runs
+                    ORDER BY created_at DESC
+                    LIMIT 10;
+                """)
+                runs = cursor.fetchall()
+                for run in runs:
+                    run_id, agent, model, status, created, ended = run
+                    print(f"  • {agent} ({status}) - {created.strftime('%Y-%m-%d %H:%M')}")
+
+                # Check for assets generated by processing runs
+                cursor.execute("""
+                    SELECT COUNT(*) FROM public.asset_edges
+                    WHERE edge_type IN ('OUTPUT_OF', 'GENERATED_FROM');
+                """)
+                generated_count = cursor.fetchone()[0]
+                print(f"  • Assets generated by processing: {generated_count}")
+        except Exception as e:
+            print(f"  ⚠️ Processing runs table may not exist or is empty: {e}")
+
+        # Check for other asset types that might exist
+        print("\n" + "="*80)
+        print("CHECKING FOR OTHER ASSET TYPES")
+        print("="*80)
+
+        cursor.execute("""
+            SELECT type, COUNT(*) as count
+            FROM public.assets
+            GROUP BY type
+            HAVING COUNT(*) > 0
+            ORDER BY count DESC;
+        """)
+        all_types = cursor.fetchall()
+
+        print("All asset types in database:")
+        for asset_type, count in all_types:
+            print(f"  • {asset_type}: {count}")
+
+        # Check if there are any assets with different types that might be plans
+        print("\n" + "="*80)
+        print("CHECKING FOR POTENTIAL PLAN ASSETS")
+        print("="*80)
+
+        cursor.execute("""
+            SELECT a.id, a.name, a.type, a.subtype, a.content->>'plan_type' as plan_type
+            FROM public.assets a
+            WHERE (a.content->>'plan_type' IS NOT NULL
+                   OR a.name ILIKE '%plan%'
+                   OR a.type IN ('plan', 'wbs_node', 'lbs_node'))
+                  AND a.is_current = true
+                  AND a.is_deleted = false;
+        """)
+
+        potential_plans = cursor.fetchall()
+        if potential_plans:
+            print(f"Found {len(potential_plans)} potential plan-related assets:")
+            for plan in potential_plans:
+                asset_id, name, asset_type, subtype, plan_type = plan
+                print(f"  • {asset_type}: {name} (ID: {asset_id})")
+                if plan_type:
+                    print(f"    └─ Plan Type: {plan_type}")
+        else:
+            print("❌ No potential plan assets found")
+
+        # Check for any recent assets (last 24 hours)
+        print("\n" + "="*80)
+        print("CHECKING FOR RECENT ASSETS (LAST 24 HOURS)")
+        print("="*80)
+
+        cursor.execute("""
+            SELECT COUNT(*), type
+            FROM public.assets
+            WHERE created_at > NOW() - INTERVAL '24 hours'
+            GROUP BY type
+            ORDER BY count DESC;
+        """)
+
+        recent_assets = cursor.fetchall()
+        if recent_assets:
+            print("Recent assets added:")
+            for count, asset_type in recent_assets:
+                print(f"  • {asset_type}: {count}")
+        else:
+            print("❌ No assets added in the last 24 hours")
+
+        # Also check for any plans that might not be associated with projects
+        print("\n" + "="*80)
+        print("CHECKING FOR ORPHANED PLANS (plans not associated with projects)")
+        print("="*80)
+
+        orphan_query = """
+        SELECT COUNT(*) as orphaned_plans
+        FROM public.assets a
+        WHERE a.type = 'plan'
+            AND a.project_id IS NULL
+            AND a.is_current = true
+            AND a.is_deleted = false;
+        """
+
+        cursor.execute(orphan_query)
+        orphaned_count = cursor.fetchone()[0]
+
+        if orphaned_count > 0:
+            print(f"⚠️  Found {orphaned_count} orphaned plans (not associated with any project)")
+        else:
+            print("✅ No orphaned plans found")
+
+        cursor.close()
+        conn.close()
+
+    except Exception as e:
+        print(f"❌ Error: {e}")
+        sys.exit(1)
+
+if __name__ == "__main__":
+    query_database()

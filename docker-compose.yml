@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  # db: Commented out - using Supabase instead (port 54332)
+  #   image: pgvector/pgvector:pg15
+  #   environment:
+  #     POSTGRES_DB: projectpro
+  #     POSTGRES_USER: postgres
+  #     POSTGRES_PASSWORD: password
+  #   ports:
+  #     - "5555:5432"
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data
+  #     - ./db/migrations:/docker-entrypoint-initdb.d
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  # langgraph:
+  #   build: ./services/langgraphv10
+  #   ports:
+  #     - "8777:8000"
+  #   environment:
+  #     - OPENAI_API_KEY=${OPENAI_API_KEY}
+  #   depends_on:
+  #     - db
+
+volumes:
+  postgres_data:
