@@ -13,13 +13,13 @@ import { CreateNCRButton } from '@/components/quality/create-ncr-button';
  */
 
 interface PageProps {
-  params: { projectId: string };
-  searchParams: { status?: string; severity?: string };
+  params: Promise<{ projectId: string }>;
+  searchParams?: Promise<{ status?: string; severity?: string }>;
 }
 
 async function getNCRs(
   projectId: string,
-  filters: { status?: string }
+  filters: { status?: string; severity?: string }
 ): Promise<NCRNode[]> {
   try {
     let query = NCR_QUERIES.getAllNCRs;
@@ -30,14 +30,21 @@ async function getNCRs(
     }
     
     const ncrs = await neo4jClient.read<NCRNode>(query, params);
+
+    if (filters.severity) {
+      return ncrs.filter((ncr) => ncr.severity === filters.severity);
+    }
+
     return ncrs;
   } catch (error) {
     console.error('Failed to fetch NCRs:', error);
-    return [];
+    throw error instanceof Error
+      ? error
+      : new Error('Failed to fetch NCRs');
   }
 }
 
-async function NCRsContent({ projectId, filters }: { projectId: string; filters: PageProps['searchParams'] }) {
+async function NCRsContent({ projectId, filters }: { projectId: string; filters: { status?: string; severity?: string } }) {
   const ncrs = await getNCRs(projectId, filters);
   
   return (
@@ -66,11 +73,16 @@ async function NCRsContent({ projectId, filters }: { projectId: string; filters:
   );
 }
 
-export default function NCRsPage({ params, searchParams }: PageProps) {
+export default async function NCRsPage({ params, searchParams }: PageProps) {
+  const [{ projectId }, filters] = await Promise.all([
+    params,
+    searchParams ?? Promise.resolve({}),
+  ]);
+
   return (
     <div className="container mx-auto py-6">
       <Suspense fallback={<NCRsTableSkeleton />}>
-        <NCRsContent projectId={params.projectId} filters={searchParams} />
+        <NCRsContent projectId={projectId} filters={filters ?? {}} />
       </Suspense>
     </div>
   );

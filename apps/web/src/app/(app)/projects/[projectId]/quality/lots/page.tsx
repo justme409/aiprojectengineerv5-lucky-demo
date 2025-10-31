@@ -13,8 +13,8 @@ import { CreateLotButton } from '@/components/quality/create-lot-button';
  */
 
 interface PageProps {
-  params: { projectId: string };
-  searchParams: { status?: string; workType?: string };
+  params: Promise<{ projectId: string }>;
+  searchParams?: Promise<{ status?: string; workType?: string }>;
 }
 
 async function getProjectLots(
@@ -33,15 +33,16 @@ async function getProjectLots(
       params.workType = filters.workType;
     }
     
-    const lots = await neo4jClient.read<LotNode>(query, params);
-    return lots;
+    return await neo4jClient.read<LotNode>(query, params);
   } catch (error) {
     console.error('Failed to fetch lots:', error);
-    return [];
+    throw error instanceof Error
+      ? error
+      : new Error('Failed to fetch lots');
   }
 }
 
-async function LotsContent({ projectId, filters }: { projectId: string; filters: PageProps['searchParams'] }) {
+async function LotsContent({ projectId, filters }: { projectId: string; filters: { status?: string; workType?: string } }) {
   const lots = await getProjectLots(projectId, filters);
   
   return (
@@ -70,11 +71,16 @@ async function LotsContent({ projectId, filters }: { projectId: string; filters:
   );
 }
 
-export default function LotsPage({ params, searchParams }: PageProps) {
+export default async function LotsPage({ params, searchParams }: PageProps) {
+  const [{ projectId }, filters] = await Promise.all([
+    params,
+    searchParams ?? Promise.resolve({}),
+  ]);
+
   return (
     <div className="container mx-auto py-6">
       <Suspense fallback={<LotsTableSkeleton />}>
-        <LotsContent projectId={params.projectId} filters={searchParams} />
+        <LotsContent projectId={projectId} filters={filters ?? {}} />
       </Suspense>
     </div>
   );

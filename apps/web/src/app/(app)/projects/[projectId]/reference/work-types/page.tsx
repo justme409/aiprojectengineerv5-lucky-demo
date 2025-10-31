@@ -20,19 +20,20 @@ import { Skeleton } from '@/components/ui/skeleton';
  */
 
 interface PageProps {
-  params: { projectId: string };
+  params: Promise<{ projectId: string }>;
 }
 
 async function getWorkTypes(projectId: string): Promise<WorkTypeNode[]> {
   try {
-    const workTypes = await neo4jClient.read<WorkTypeNode>(
+    return await neo4jClient.read<WorkTypeNode>(
       WORK_TYPE_QUERIES.getAllWorkTypes,
       { projectId }
     );
-    return workTypes;
   } catch (error) {
     console.error('Failed to fetch work types:', error);
-    return [];
+    throw error instanceof Error
+      ? error
+      : new Error('Failed to fetch work types');
   }
 }
 
@@ -102,11 +103,13 @@ function WorkTypesSkeleton() {
   );
 }
 
-export default function WorkTypesPage({ params }: PageProps) {
+export default async function WorkTypesPage({ params }: PageProps) {
+  const { projectId } = await params;
+
   return (
     <div className="container mx-auto py-6">
       <Suspense fallback={<WorkTypesSkeleton />}>
-        <WorkTypesContent projectId={params.projectId} />
+        <WorkTypesContent projectId={projectId} />
       </Suspense>
     </div>
   );

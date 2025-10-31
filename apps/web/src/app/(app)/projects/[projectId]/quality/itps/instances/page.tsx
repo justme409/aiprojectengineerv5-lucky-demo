@@ -13,8 +13,8 @@ import { CreateITPInstanceButton } from '@/components/quality/create-itp-instanc
  */
 
 interface PageProps {
-  params: { projectId: string };
-  searchParams: { status?: string };
+  params: Promise<{ projectId: string }>;
+  searchParams?: Promise<{ status?: string }>;
 }
 
 async function getITPInstances(
@@ -29,15 +29,16 @@ async function getITPInstances(
       query = ITP_INSTANCE_QUERIES.getInProgressInstances;
     }
     
-    const instances = await neo4jClient.read<ITPInstanceNode>(query, params);
-    return instances;
+    return await neo4jClient.read<ITPInstanceNode>(query, params);
   } catch (error) {
     console.error('Failed to fetch ITP instances:', error);
-    return [];
+    throw error instanceof Error
+      ? error
+      : new Error('Failed to fetch ITP instances');
   }
 }
 
-async function ITPInstancesContent({ projectId, filters }: { projectId: string; filters: PageProps['searchParams'] }) {
+async function ITPInstancesContent({ projectId, filters }: { projectId: string; filters: { status?: string } }) {
   const instances = await getITPInstances(projectId, filters);
   
   return (
@@ -66,11 +67,16 @@ async function ITPInstancesContent({ projectId, filters }: { projectId: string; 
   );
 }
 
-export default function ITPInstancesPage({ params, searchParams }: PageProps) {
+export default async function ITPInstancesPage({ params, searchParams }: PageProps) {
+  const [{ projectId }, filters] = await Promise.all([
+    params,
+    searchParams ?? Promise.resolve({}),
+  ]);
+
   return (
     <div className="container mx-auto py-6">
       <Suspense fallback={<ITPInstancesTableSkeleton />}>
-        <ITPInstancesContent projectId={params.projectId} filters={searchParams} />
+        <ITPInstancesContent projectId={projectId} filters={filters ?? {}} />
       </Suspense>
     </div>
   );

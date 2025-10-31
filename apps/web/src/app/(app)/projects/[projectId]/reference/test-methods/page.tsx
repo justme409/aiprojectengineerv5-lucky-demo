@@ -20,19 +20,20 @@ import { Skeleton } from '@/components/ui/skeleton';
  */
 
 interface PageProps {
-  params: { projectId: string };
+  params: Promise<{ projectId: string }>;
 }
 
 async function getTestMethods(projectId: string): Promise<TestMethodNode[]> {
   try {
-    const methods = await neo4jClient.read<TestMethodNode>(
+    return await neo4jClient.read<TestMethodNode>(
       TEST_METHOD_QUERIES.getAllMethods,
       { projectId }
     );
-    return methods;
   } catch (error) {
     console.error('Failed to fetch test methods:', error);
-    return [];
+    throw error instanceof Error
+      ? error
+      : new Error('Failed to fetch test methods');
   }
 }
 
@@ -108,11 +109,13 @@ function TestMethodsSkeleton() {
   );
 }
 
-export default function TestMethodsPage({ params }: PageProps) {
+export default async function TestMethodsPage({ params }: PageProps) {
+  const { projectId } = await params;
+
   return (
     <div className="container mx-auto py-6">
       <Suspense fallback={<TestMethodsSkeleton />}>
-        <TestMethodsContent projectId={params.projectId} />
+        <TestMethodsContent projectId={projectId} />
       </Suspense>
     </div>
   );

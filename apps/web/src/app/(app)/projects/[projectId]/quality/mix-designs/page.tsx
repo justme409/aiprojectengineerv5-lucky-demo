@@ -13,8 +13,8 @@ import { CreateMixDesignButton } from '@/components/quality/create-mix-design-bu
  */
 
 interface PageProps {
-  params: { projectId: string };
-  searchParams: { status?: string };
+  params: Promise<{ projectId: string }>;
+  searchParams?: Promise<{ status?: string }>;
 }
 
 async function getMixDesigns(
@@ -29,15 +29,16 @@ async function getMixDesigns(
       query = MIX_DESIGN_QUERIES.getApprovedMixDesigns;
     }
     
-    const mixDesigns = await neo4jClient.read<MixDesignNode>(query, params);
-    return mixDesigns;
+    return await neo4jClient.read<MixDesignNode>(query, params);
   } catch (error) {
     console.error('Failed to fetch mix designs:', error);
-    return [];
+    throw error instanceof Error
+      ? error
+      : new Error('Failed to fetch mix designs');
   }
 }
 
-async function MixDesignsContent({ projectId, filters }: { projectId: string; filters: PageProps['searchParams'] }) {
+async function MixDesignsContent({ projectId, filters }: { projectId: string; filters: { status?: string } }) {
   const mixDesigns = await getMixDesigns(projectId, filters);
   
   return (
@@ -66,11 +67,16 @@ async function MixDesignsContent({ projectId, filters }: { projectId: string; fi
   );
 }
 
-export default function MixDesignsPage({ params, searchParams }: PageProps) {
+export default async function MixDesignsPage({ params, searchParams }: PageProps) {
+  const [{ projectId }, filters] = await Promise.all([
+    params,
+    searchParams ?? Promise.resolve({}),
+  ]);
+
   return (
     <div className="container mx-auto py-6">
       <Suspense fallback={<MixDesignsTableSkeleton />}>
-        <MixDesignsContent projectId={params.projectId} filters={searchParams} />
+        <MixDesignsContent projectId={projectId} filters={filters ?? {}} />
       </Suspense>
     </div>
   );

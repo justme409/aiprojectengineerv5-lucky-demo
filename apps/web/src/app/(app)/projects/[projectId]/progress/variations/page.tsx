@@ -13,19 +13,20 @@ import { CreateVariationButton } from '@/components/progress/create-variation-bu
  */
 
 interface PageProps {
-  params: { projectId: string };
+  params: Promise<{ projectId: string }>;
 }
 
 async function getVariations(projectId: string): Promise<VariationNode[]> {
   try {
-    const variations = await neo4jClient.read<VariationNode>(
+    return await neo4jClient.read<VariationNode>(
       VARIATION_QUERIES.getAllVariations,
       { projectId }
     );
-    return variations;
   } catch (error) {
     console.error('Failed to fetch variations:', error);
-    return [];
+    throw error instanceof Error
+      ? error
+      : new Error('Failed to fetch variations');
   }
 }
 
@@ -58,11 +59,13 @@ async function VariationsContent({ projectId }: { projectId: string }) {
   );
 }
 
-export default function VariationsPage({ params }: PageProps) {
+export default async function VariationsPage({ params }: PageProps) {
+  const { projectId } = await params;
+
   return (
     <div className="container mx-auto py-6">
       <Suspense fallback={<VariationsTableSkeleton />}>
-        <VariationsContent projectId={params.projectId} />
+        <VariationsContent projectId={projectId} />
       </Suspense>
     </div>
   );

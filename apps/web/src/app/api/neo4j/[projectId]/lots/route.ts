@@ -21,9 +21,9 @@ import {
  */
 export async function GET(
   request: NextRequest,
-  { params }: { params: { projectId: string } }
+  { params }: { params: Promise<{ projectId: string }> }
 ) {
-  const { projectId } = params;
+  const { projectId } = await params;
   
   if (!projectId) {
     return errorResponse('Project ID is required', 400);

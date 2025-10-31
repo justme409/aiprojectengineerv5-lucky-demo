@@ -13,19 +13,20 @@ import { CreateScheduleItemButton } from '@/components/progress/create-schedule-
  */
 
 interface PageProps {
-  params: { projectId: string };
+  params: Promise<{ projectId: string }>;
 }
 
 async function getScheduleItems(projectId: string): Promise<ScheduleItemNode[]> {
   try {
-    const items = await neo4jClient.read<ScheduleItemNode>(
+    return await neo4jClient.read<ScheduleItemNode>(
       SCHEDULE_ITEM_QUERIES.getAllItems,
       { projectId }
     );
-    return items;
   } catch (error) {
     console.error('Failed to fetch schedule items:', error);
-    return [];
+    throw error instanceof Error
+      ? error
+      : new Error('Failed to fetch schedule items');
   }
 }
 
@@ -58,11 +59,13 @@ async function ScheduleItemsContent({ projectId }: { projectId: string }) {
   );
 }
 
-export default function ScheduleItemsPage({ params }: PageProps) {
+export default async function ScheduleItemsPage({ params }: PageProps) {
+  const { projectId } = await params;
+
   return (
     <div className="container mx-auto py-6">
       <Suspense fallback={<ScheduleItemsTableSkeleton />}>
-        <ScheduleItemsContent projectId={params.projectId} />
+        <ScheduleItemsContent projectId={projectId} />
       </Suspense>
     </div>
   );

@@ -20,19 +20,20 @@ import { Skeleton } from '@/components/ui/skeleton';
  */
 
 interface PageProps {
-  params: { projectId: string };
+  params: Promise<{ projectId: string }>;
 }
 
 async function getWBSNodes(projectId: string): Promise<WBSNodeType[]> {
   try {
-    const nodes = await neo4jClient.read<WBSNodeType>(
+    return await neo4jClient.read<WBSNodeType>(
       WBS_NODE_QUERIES.getAllNodes,
       { projectId }
     );
-    return nodes;
   } catch (error) {
     console.error('Failed to fetch WBS nodes:', error);
-    return [];
+    throw error instanceof Error
+      ? error
+      : new Error('Failed to fetch WBS nodes');
   }
 }
 
@@ -117,11 +118,13 @@ function WBSSkeleton() {
   );
 }
 
-export default function WBSPage({ params }: PageProps) {
+export default async function WBSPage({ params }: PageProps) {
+  const { projectId } = await params;
+
   return (
     <div className="container mx-auto py-6">
       <Suspense fallback={<WBSSkeleton />}>
-        <WBSContent projectId={params.projectId} />
+        <WBSContent projectId={projectId} />
       </Suspense>
     </div>
   );

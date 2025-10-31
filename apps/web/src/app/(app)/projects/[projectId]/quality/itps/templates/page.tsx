@@ -13,8 +13,8 @@ import { CreateITPTemplateButton } from '@/components/quality/create-itp-templat
  */
 
 interface PageProps {
-  params: { projectId: string };
-  searchParams: { status?: string; workType?: string };
+  params: Promise<{ projectId: string }>;
+  searchParams?: Promise<{ status?: string; workType?: string }>;
 }
 
 async function getITPTemplates(
@@ -34,15 +34,16 @@ async function getITPTemplates(
       params.workType = filters.workType;
     }
     
-    const templates = await neo4jClient.read<ITPTemplateNode>(query, params);
-    return templates;
+    return await neo4jClient.read<ITPTemplateNode>(query, params);
   } catch (error) {
     console.error('Failed to fetch ITP templates:', error);
-    return [];
+    throw error instanceof Error
+      ? error
+      : new Error('Failed to fetch ITP templates');
   }
 }
 
-async function ITPTemplatesContent({ projectId, filters }: { projectId: string; filters: PageProps['searchParams'] }) {
+async function ITPTemplatesContent({ projectId, filters }: { projectId: string; filters: { status?: string; workType?: string } }) {
   const templates = await getITPTemplates(projectId, filters);
   
   return (
@@ -71,11 +72,16 @@ async function ITPTemplatesContent({ projectId, filters }: { projectId: string; 
   );
 }
 
-export default function ITPTemplatesPage({ params, searchParams }: PageProps) {
+export default async function ITPTemplatesPage({ params, searchParams }: PageProps) {
+  const [{ projectId }, filters] = await Promise.all([
+    params,
+    searchParams ?? Promise.resolve({}),
+  ]);
+
   return (
     <div className="container mx-auto py-6">
       <Suspense fallback={<ITPTemplatesTableSkeleton />}>
-        <ITPTemplatesContent projectId={params.projectId} filters={searchParams} />
+        <ITPTemplatesContent projectId={projectId} filters={filters ?? {}} />
       </Suspense>
     </div>
   );

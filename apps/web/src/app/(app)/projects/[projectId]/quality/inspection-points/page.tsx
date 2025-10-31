@@ -12,8 +12,8 @@ import { InspectionPointsTableSkeleton } from '@/components/quality/inspection-p
  */
 
 interface PageProps {
-  params: { projectId: string };
-  searchParams: { status?: string; type?: string };
+  params: Promise<{ projectId: string }>;
+  searchParams?: Promise<{ status?: string; type?: string }>;
 }
 
 async function getInspectionPoints(
@@ -30,15 +30,16 @@ async function getInspectionPoints(
       query = INSPECTION_POINT_QUERIES.getHoldPoints;
     }
     
-    const points = await neo4jClient.read<InspectionPointNode>(query, params);
-    return points;
+    return await neo4jClient.read<InspectionPointNode>(query, params);
   } catch (error) {
     console.error('Failed to fetch inspection points:', error);
-    return [];
+    throw error instanceof Error
+      ? error
+      : new Error('Failed to fetch inspection points');
   }
 }
 
-async function InspectionPointsContent({ projectId, filters }: { projectId: string; filters: PageProps['searchParams'] }) {
+async function InspectionPointsContent({ projectId, filters }: { projectId: string; filters: { status?: string; type?: string } }) {
   const points = await getInspectionPoints(projectId, filters);
   
   return (
@@ -66,11 +67,16 @@ async function InspectionPointsContent({ projectId, filters }: { projectId: stri
   );
 }
 
-export default function InspectionPointsPage({ params, searchParams }: PageProps) {
+export default async function InspectionPointsPage({ params, searchParams }: PageProps) {
+  const [{ projectId }, filters] = await Promise.all([
+    params,
+    searchParams ?? Promise.resolve({}),
+  ]);
+
   return (
     <div className="container mx-auto py-6">
       <Suspense fallback={<InspectionPointsTableSkeleton />}>
-        <InspectionPointsContent projectId={params.projectId} filters={searchParams} />
+        <InspectionPointsContent projectId={projectId} filters={filters ?? {}} />
       </Suspense>
     </div>
   );

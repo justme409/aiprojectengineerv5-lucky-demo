@@ -21,19 +21,20 @@ import { MapPin } from 'lucide-react';
  */
 
 interface PageProps {
-  params: { projectId: string };
+  params: Promise<{ projectId: string }>;
 }
 
 async function getLBSNodes(projectId: string): Promise<LBSNodeType[]> {
   try {
-    const nodes = await neo4jClient.read<LBSNodeType>(
+    return await neo4jClient.read<LBSNodeType>(
       LBS_NODE_QUERIES.getAllNodes,
       { projectId }
     );
-    return nodes;
   } catch (error) {
     console.error('Failed to fetch LBS nodes:', error);
-    return [];
+    throw error instanceof Error
+      ? error
+      : new Error('Failed to fetch LBS nodes');
   }
 }
 
@@ -123,11 +124,13 @@ function LBSSkeleton() {
   );
 }
 
-export default function LBSPage({ params }: PageProps) {
+export default async function LBSPage({ params }: PageProps) {
+  const { projectId } = await params;
+
   return (
     <div className="container mx-auto py-6">
       <Suspense fallback={<LBSSkeleton />}>
-        <LBSContent projectId={params.projectId} />
+        <LBSContent projectId={projectId} />
       </Suspense>
     </div>
   );

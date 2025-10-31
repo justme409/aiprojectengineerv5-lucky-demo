@@ -13,19 +13,20 @@ import { CreateDocumentButton } from '@/components/documents/create-document-but
  */
 
 interface PageProps {
-  params: { projectId: string };
+  params: Promise<{ projectId: string }>;
 }
 
 async function getDocuments(projectId: string): Promise<DocumentNode[]> {
   try {
-    const documents = await neo4jClient.read<DocumentNode>(
+    return await neo4jClient.read<DocumentNode>(
       DOCUMENT_QUERIES.getAllDocuments,
       { projectId }
     );
-    return documents;
   } catch (error) {
     console.error('Failed to fetch documents:', error);
-    return [];
+    throw error instanceof Error
+      ? error
+      : new Error('Failed to fetch documents');
   }
 }
 
@@ -58,11 +59,13 @@ async function DocumentsContent({ projectId }: { projectId: string }) {
   );
 }
 
-export default function DocumentsPage({ params }: PageProps) {
+export default async function DocumentsPage({ params }: PageProps) {
+  const { projectId } = await params;
+
   return (
     <div className="container mx-auto py-6">
       <Suspense fallback={<DocumentsTableSkeleton />}>
-        <DocumentsContent projectId={params.projectId} />
+        <DocumentsContent projectId={projectId} />
       </Suspense>
     </div>
   );

@@ -16,7 +16,7 @@ import { ArrowLeft } from 'lucide-react';
  */
 
 interface PageProps {
-  params: { projectId: string; lotId: string };
+  params: Promise<{ projectId: string; lotId: string }>;
 }
 
 async function getLotWithQuantities(lotId: string): Promise<{ lot: LotNode; quantities: QuantityNode[] } | null> {
@@ -34,7 +34,9 @@ async function getLotWithQuantities(lotId: string): Promise<{ lot: LotNode; quan
     };
   } catch (error) {
     console.error('Failed to fetch lot quantities:', error);
-    return null;
+    throw error instanceof Error
+      ? error
+      : new Error('Failed to fetch lot quantities');
   }
 }
 
@@ -100,11 +102,13 @@ function LotQuantitiesSkeleton() {
   );
 }
 
-export default function LotQuantitiesPage({ params }: PageProps) {
+export default async function LotQuantitiesPage({ params }: PageProps) {
+  const { projectId, lotId } = await params;
+
   return (
     <div className="container mx-auto py-6">
       <Suspense fallback={<LotQuantitiesSkeleton />}>
-        <LotQuantitiesContent projectId={params.projectId} lotId={params.lotId} />
+        <LotQuantitiesContent projectId={projectId} lotId={lotId} />
       </Suspense>
     </div>
   );

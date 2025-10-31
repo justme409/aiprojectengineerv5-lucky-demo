@@ -13,8 +13,8 @@ import { CreateMaterialButton } from '@/components/quality/create-material-butto
  */
 
 interface PageProps {
-  params: { projectId: string };
-  searchParams: { status?: string };
+  params: Promise<{ projectId: string }>;
+  searchParams?: Promise<{ status?: string }>;
 }
 
 async function getMaterials(
@@ -29,15 +29,16 @@ async function getMaterials(
       query = MATERIAL_QUERIES.getApprovedMaterials;
     }
     
-    const materials = await neo4jClient.read<MaterialNode>(query, params);
-    return materials;
+    return await neo4jClient.read<MaterialNode>(query, params);
   } catch (error) {
     console.error('Failed to fetch materials:', error);
-    return [];
+    throw error instanceof Error
+      ? error
+      : new Error('Failed to fetch materials');
   }
 }
 
-async function MaterialsContent({ projectId, filters }: { projectId: string; filters: PageProps['searchParams'] }) {
+async function MaterialsContent({ projectId, filters }: { projectId: string; filters: { status?: string } }) {
   const materials = await getMaterials(projectId, filters);
   
   return (
@@ -66,11 +67,16 @@ async function MaterialsContent({ projectId, filters }: { projectId: string; fil
   );
 }
 
-export default function MaterialsPage({ params, searchParams }: PageProps) {
+export default async function MaterialsPage({ params, searchParams }: PageProps) {
+  const [{ projectId }, filters] = await Promise.all([
+    params,
+    searchParams ?? Promise.resolve({}),
+  ]);
+
   return (
     <div className="container mx-auto py-6">
       <Suspense fallback={<MaterialsTableSkeleton />}>
-        <MaterialsContent projectId={params.projectId} filters={searchParams} />
+        <MaterialsContent projectId={projectId} filters={filters ?? {}} />
       </Suspense>
     </div>
   );

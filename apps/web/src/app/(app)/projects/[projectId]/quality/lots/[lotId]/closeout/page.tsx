@@ -16,7 +16,7 @@ import { Badge } from '@/components/ui/badge';
  */
 
 interface PageProps {
-  params: { projectId: string; lotId: string };
+  params: Promise<{ projectId: string; lotId: string }>;
 }
 
 async function getLot(lotId: string): Promise<LotNode | null> {
@@ -31,7 +31,9 @@ async function getLot(lotId: string): Promise<LotNode | null> {
     return result.l;
   } catch (error) {
     console.error('Failed to fetch lot:', error);
-    return null;
+    throw error instanceof Error
+      ? error
+      : new Error('Failed to fetch lot');
   }
 }
 
@@ -115,11 +117,13 @@ function LotCloseoutSkeleton() {
   );
 }
 
-export default function LotCloseoutPage({ params }: PageProps) {
+export default async function LotCloseoutPage({ params }: PageProps) {
+  const { projectId, lotId } = await params;
+
   return (
     <div className="container mx-auto py-6">
       <Suspense fallback={<LotCloseoutSkeleton />}>
-        <LotCloseoutContent projectId={params.projectId} lotId={params.lotId} />
+        <LotCloseoutContent projectId={projectId} lotId={lotId} />
       </Suspense>
     </div>
   );

@@ -13,19 +13,20 @@ import { UploadPhotoButton } from '@/components/photos/upload-photo-button';
  */
 
 interface PageProps {
-  params: { projectId: string };
+  params: Promise<{ projectId: string }>;
 }
 
 async function getPhotos(projectId: string): Promise<PhotoNode[]> {
   try {
-    const photos = await neo4jClient.read<PhotoNode>(
+    return await neo4jClient.read<PhotoNode>(
       PHOTO_QUERIES.getAllPhotos,
       { projectId }
     );
-    return photos;
   } catch (error) {
     console.error('Failed to fetch photos:', error);
-    return [];
+    throw error instanceof Error
+      ? error
+      : new Error('Failed to fetch photos');
   }
 }
 
@@ -58,11 +59,13 @@ async function PhotosContent({ projectId }: { projectId: string }) {
   );
 }
 
-export default function PhotosPage({ params }: PageProps) {
+export default async function PhotosPage({ params }: PageProps) {
+  const { projectId } = await params;
+
   return (
     <div className="container mx-auto py-6">
       <Suspense fallback={<PhotosGallerySkeleton />}>
-        <PhotosContent projectId={params.projectId} />
+        <PhotosContent projectId={projectId} />
       </Suspense>
     </div>
   );

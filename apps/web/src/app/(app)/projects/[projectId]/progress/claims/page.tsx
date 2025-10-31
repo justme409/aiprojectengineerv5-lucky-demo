@@ -13,19 +13,20 @@ import { CreateProgressClaimButton } from '@/components/progress/create-progress
  */
 
 interface PageProps {
-  params: { projectId: string };
+  params: Promise<{ projectId: string }>;
 }
 
 async function getProgressClaims(projectId: string): Promise<ProgressClaimNode[]> {
   try {
-    const claims = await neo4jClient.read<ProgressClaimNode>(
+    return await neo4jClient.read<ProgressClaimNode>(
       PROGRESS_CLAIM_QUERIES.getAllClaims,
       { projectId }
     );
-    return claims;
   } catch (error) {
     console.error('Failed to fetch progress claims:', error);
-    return [];
+    throw error instanceof Error
+      ? error
+      : new Error('Failed to fetch progress claims');
   }
 }
 
@@ -58,11 +59,13 @@ async function ProgressClaimsContent({ projectId }: { projectId: string }) {
   );
 }
 
-export default function ProgressClaimsPage({ params }: PageProps) {
+export default async function ProgressClaimsPage({ params }: PageProps) {
+  const { projectId } = await params;
+
   return (
     <div className="container mx-auto py-6">
       <Suspense fallback={<ProgressClaimsTableSkeleton />}>
-        <ProgressClaimsContent projectId={params.projectId} />
+        <ProgressClaimsContent projectId={projectId} />
       </Suspense>
     </div>
   );

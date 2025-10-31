@@ -20,19 +20,20 @@ import { Skeleton } from '@/components/ui/skeleton';
  */
 
 interface PageProps {
-  params: { projectId: string };
+  params: Promise<{ projectId: string }>;
 }
 
 async function getAreaCodes(projectId: string): Promise<AreaCodeNode[]> {
   try {
-    const areaCodes = await neo4jClient.read<AreaCodeNode>(
+    return await neo4jClient.read<AreaCodeNode>(
       AREA_CODE_QUERIES.getAllAreaCodes,
       { projectId }
     );
-    return areaCodes;
   } catch (error) {
     console.error('Failed to fetch area codes:', error);
-    return [];
+    throw error instanceof Error
+      ? error
+      : new Error('Failed to fetch area codes');
   }
 }
 
@@ -102,11 +103,13 @@ function AreaCodesSkeleton() {
   );
 }
 
-export default function AreaCodesPage({ params }: PageProps) {
+export default async function AreaCodesPage({ params }: PageProps) {
+  const { projectId } = await params;
+
   return (
     <div className="container mx-auto py-6">
       <Suspense fallback={<AreaCodesSkeleton />}>
-        <AreaCodesContent projectId={params.projectId} />
+        <AreaCodesContent projectId={projectId} />
       </Suspense>
     </div>
   );

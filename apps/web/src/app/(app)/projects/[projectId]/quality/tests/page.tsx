@@ -13,8 +13,8 @@ import { CreateTestRequestButton } from '@/components/quality/create-test-reques
  */
 
 interface PageProps {
-  params: { projectId: string };
-  searchParams: { status?: string };
+  params: Promise<{ projectId: string }>;
+  searchParams?: Promise<{ status?: string }>;
 }
 
 async function getTestRequests(
@@ -29,15 +29,16 @@ async function getTestRequests(
       query = TEST_REQUEST_QUERIES.getPendingTests;
     }
     
-    const tests = await neo4jClient.read<TestRequestNode>(query, params);
-    return tests;
+    return await neo4jClient.read<TestRequestNode>(query, params);
   } catch (error) {
     console.error('Failed to fetch test requests:', error);
-    return [];
+    throw error instanceof Error
+      ? error
+      : new Error('Failed to fetch test requests');
   }
 }
 
-async function TestRequestsContent({ projectId, filters }: { projectId: string; filters: PageProps['searchParams'] }) {
+async function TestRequestsContent({ projectId, filters }: { projectId: string; filters: { status?: string } }) {
   const tests = await getTestRequests(projectId, filters);
   
   return (
@@ -66,11 +67,16 @@ async function TestRequestsContent({ projectId, filters }: { projectId: string; 
   );
 }
 
-export default function TestRequestsPage({ params, searchParams }: PageProps) {
+export default async function TestRequestsPage({ params, searchParams }: PageProps) {
+  const [{ projectId }, filters] = await Promise.all([
+    params,
+    searchParams ?? Promise.resolve({}),
+  ]);
+
   return (
     <div className="container mx-auto py-6">
       <Suspense fallback={<TestRequestsTableSkeleton />}>
-        <TestRequestsContent projectId={params.projectId} filters={searchParams} />
+        <TestRequestsContent projectId={projectId} filters={filters ?? {}} />
       </Suspense>
     </div>
   );

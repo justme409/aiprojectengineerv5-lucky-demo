@@ -13,19 +13,20 @@ import { CreateSampleButton } from '@/components/quality/create-sample-button';
  */
 
 interface PageProps {
-  params: { projectId: string };
+  params: Promise<{ projectId: string }>;
 }
 
 async function getSamples(projectId: string): Promise<SampleNode[]> {
   try {
-    const samples = await neo4jClient.read<SampleNode>(
+    return await neo4jClient.read<SampleNode>(
       SAMPLE_QUERIES.getAllSamples,
       { projectId }
     );
-    return samples;
   } catch (error) {
     console.error('Failed to fetch samples:', error);
-    return [];
+    throw error instanceof Error
+      ? error
+      : new Error('Failed to fetch samples');
   }
 }
 
@@ -58,11 +59,13 @@ async function SamplesContent({ projectId }: { projectId: string }) {
   );
 }
 
-export default function SamplesPage({ params }: PageProps) {
+export default async function SamplesPage({ params }: PageProps) {
+  const { projectId } = await params;
+
   return (
     <div className="container mx-auto py-6">
       <Suspense fallback={<SamplesTableSkeleton />}>
-        <SamplesContent projectId={params.projectId} />
+        <SamplesContent projectId={projectId} />
       </Suspense>
     </div>
   );

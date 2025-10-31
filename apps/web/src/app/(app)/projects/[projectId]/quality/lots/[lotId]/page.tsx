@@ -7,7 +7,7 @@ import { LotDetailTabs } from '@/components/quality/lot-detail-tabs';
 import { Skeleton } from '@/components/ui/skeleton';
 
 interface PageProps {
-  params: { projectId: string; lotId: string };
+  params: Promise<{ projectId: string; lotId: string }>;
 }
 
 async function getLotDetail(lotId: string): Promise<LotWithRelationships | null> {
@@ -40,7 +40,9 @@ async function getLotDetail(lotId: string): Promise<LotWithRelationships | null>
     };
   } catch (error) {
     console.error('Failed to fetch lot detail:', error);
-    return null;
+    throw error instanceof Error
+      ? error
+      : new Error('Failed to fetch lot detail');
   }
 }
 
@@ -71,11 +73,13 @@ function LotDetailSkeleton() {
   );
 }
 
-export default function LotDetailPage({ params }: PageProps) {
+export default async function LotDetailPage({ params }: PageProps) {
+  const { projectId, lotId } = await params;
+
   return (
     <div className="container mx-auto py-6">
       <Suspense fallback={<LotDetailSkeleton />}>
-        <LotDetailContent projectId={params.projectId} lotId={params.lotId} />
+        <LotDetailContent projectId={projectId} lotId={lotId} />
       </Suspense>
     </div>
   );

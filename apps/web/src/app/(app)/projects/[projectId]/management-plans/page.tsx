@@ -23,19 +23,20 @@ import Link from 'next/link';
  */
 
 interface PageProps {
-  params: { projectId: string };
+  params: Promise<{ projectId: string }>;
 }
 
 async function getManagementPlans(projectId: string): Promise<ManagementPlanNode[]> {
   try {
-    const plans = await neo4jClient.read<ManagementPlanNode>(
+    return await neo4jClient.read<ManagementPlanNode>(
       MANAGEMENT_PLAN_QUERIES.getAllPlans,
       { projectId }
     );
-    return plans;
   } catch (error) {
     console.error('Failed to fetch management plans:', error);
-    return [];
+    throw error instanceof Error
+      ? error
+      : new Error('Failed to fetch management plans');
   }
 }
 
@@ -144,11 +145,13 @@ function ManagementPlansSkeleton() {
   );
 }
 
-export default function ManagementPlansPage({ params }: PageProps) {
+export default async function ManagementPlansPage({ params }: PageProps) {
+  const { projectId } = await params;
+
   return (
     <div className="container mx-auto py-6">
       <Suspense fallback={<ManagementPlansSkeleton />}>
-        <ManagementPlansContent projectId={params.projectId} />
+        <ManagementPlansContent projectId={projectId} />
       </Suspense>
     </div>
   );
