@@ -74,186 +74,140 @@ export default async function ProjectOverviewPage({ params }: PageProps) {
 				{/* Project Controls */}
 				<Card>
 					<CardHeader>
-						<CardTitle className="text-red-600">Project Controls</CardTitle>
-						<CardDescription className="text-red-600">Plans, schedule, and structure</CardDescription>
+						<CardTitle>Project Controls</CardTitle>
+						<CardDescription>Plans, schedule, and structure</CardDescription>
 					</CardHeader>
 					<CardContent className="space-y-3">
-						<Link href={`/projects/${projectId}/plans`}>
-							<Button variant="ghost" className="w-full justify-start text-red-600 hover:text-red-700">
+						<Link href={`/projects/${projectId}/management-plans`}>
+							<Button variant="ghost" className="w-full justify-start">
 								<FileText className="mr-2 h-4 w-4" />
 								Management Plans
 								<ChevronRight className="ml-auto h-4 w-4" />
 							</Button>
 						</Link>
-						<Link href={`/projects/${projectId}/wbs`}>
-							<Button variant="ghost" className="w-full justify-start text-red-600 hover:text-red-700">
+						<Link href={`/projects/${projectId}/structure/wbs`}>
+							<Button variant="ghost" className="w-full justify-start">
 								<FileText className="mr-2 h-4 w-4" />
-								Schedule & WBS
+								WBS
+								<ChevronRight className="ml-auto h-4 w-4" />
+							</Button>
+						</Link>
+						<Link href={`/projects/${projectId}/structure/lbs`}>
+							<Button variant="ghost" className="w-full justify-start">
+								<FileText className="mr-2 h-4 w-4" />
+								LBS
 								<ChevronRight className="ml-auto h-4 w-4" />
 							</Button>
 						</Link>
 					</CardContent>
 				</Card>
 
-				{/* Documents (only item left from original core) */}
-				<Card>
-                    <CardHeader>
-						<CardTitle className="text-red-600">Documents</CardTitle>
-						<CardDescription className="text-red-600">All project documentation</CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-3">
-                        <Link href={`/projects/${projectId}/documents`}>
-							<Button variant="ghost" className="w-full justify-start text-red-600 hover:text-red-700">
-                                <FileText className="mr-2 h-4 w-4" />
-                                Documents
-                                <ChevronRight className="ml-auto h-4 w-4" />
-                            </Button>
-                        </Link>
-                        <Link href={`/projects/${projectId}/settings`}>
-							<Button variant="ghost" className="w-full justify-start text-red-600 hover:text-red-700">
-                                <FileText className="mr-2 h-4 w-4" />
-                                Project Details
-                                <ChevronRight className="ml-auto h-4 w-4" />
-                            </Button>
-                        </Link>
-                    </CardContent>
-                </Card>
-
 				{/* Quality */}
 				<Card>
 					<CardHeader>
-						<CardTitle className="text-red-600">Quality</CardTitle>
-						<CardDescription className="text-red-600">Quality assurance and control</CardDescription>
+						<CardTitle>Quality</CardTitle>
+						<CardDescription>Quality assurance and control</CardDescription>
 					</CardHeader>
 					<CardContent className="space-y-3">
-						<Link href={`/projects/${projectId}/quality/itp-templates-register`}>
-							<Button variant="ghost" className="w-full justify-start text-red-600 hover:text-red-700">
-								<FileText className="mr-2 h-4 w-4" />
-								ITP Templates Register
-								<ChevronRight className="ml-auto h-4 w-4" />
-							</Button>
-						</Link>
-						<Link href={`/projects/${projectId}/quality/lot-register`}>
-							<Button variant="ghost" className="w-full justify-start text-red-600 hover:text-red-700">
+						<Link href={`/projects/${projectId}/quality/lots`}>
+							<Button variant="ghost" className="w-full justify-start">
 								<FileText className="mr-2 h-4 w-4" />
 								Lot Register
 								<ChevronRight className="ml-auto h-4 w-4" />
 							</Button>
 						</Link>
-						<Link href={`/projects/${projectId}/inspections`}>
-							<Button variant="ghost" className="w-full justify-start text-red-600 hover:text-red-700">
+						<Link href={`/projects/${projectId}/quality/itps/templates`}>
+							<Button variant="ghost" className="w-full justify-start">
 								<FileText className="mr-2 h-4 w-4" />
-								Inspections
+								ITP Templates
 								<ChevronRight className="ml-auto h-4 w-4" />
 							</Button>
 						</Link>
-						<Link href={`/projects/${projectId}/materials`}>
-							<Button variant="ghost" className="w-full justify-start text-red-600 hover:text-red-700">
+						<Link href={`/projects/${projectId}/quality/itps/instances`}>
+							<Button variant="ghost" className="w-full justify-start">
+								<FileText className="mr-2 h-4 w-4" />
+								ITP Instances
+								<ChevronRight className="ml-auto h-4 w-4" />
+							</Button>
+						</Link>
+						<Link href={`/projects/${projectId}/ncrs`}>
+							<Button variant="ghost" className="w-full justify-start">
+								<FileText className="mr-2 h-4 w-4" />
+								NCR Register
+								<ChevronRight className="ml-auto h-4 w-4" />
+							</Button>
+						</Link>
+						<Link href={`/projects/${projectId}/quality/tests`}>
+							<Button variant="ghost" className="w-full justify-start">
+								<FileText className="mr-2 h-4 w-4" />
+								Test Requests
+								<ChevronRight className="ml-auto h-4 w-4" />
+							</Button>
+						</Link>
+						<Link href={`/projects/${projectId}/quality/materials`}>
+							<Button variant="ghost" className="w-full justify-start">
 								<FileText className="mr-2 h-4 w-4" />
 								Materials
 								<ChevronRight className="ml-auto h-4 w-4" />
 							</Button>
 						</Link>
-                        {/* Tests temporarily removed */}
-						{showPrimaryTesting && (
-							<Link href={`/projects/${projectId}/quality/primary-testing`}>
-								<Button variant="ghost" className="w-full justify-start text-gray-300 hover:text-gray-300">
-									<FileText className="mr-2 h-4 w-4" />
-									Primary Testing (NSW)
-									<ChevronRight className="ml-auto h-4 w-4" />
-								</Button>
-							</Link>
-						)}
 					</CardContent>
 				</Card>
 
-				{/* HSE Section - Removed (Phase 2+) */}
-
-				{/* Site (formerly Field Operations) */}
+				{/* Progress & Payment */}
 				<Card>
 					<CardHeader>
-						<CardTitle className="text-gray-300">Site</CardTitle>
-						<CardDescription className="text-gray-300">Site operations and daily activities</CardDescription>
+						<CardTitle>Progress & Payment</CardTitle>
+						<CardDescription>Claims and variations</CardDescription>
 					</CardHeader>
 					<CardContent className="space-y-3">
-						<Link href={`/projects/${projectId}/field/daily-diaries`}>
-							<Button variant="ghost" className="w-full justify-start text-gray-300 hover:text-gray-300">
+						<Link href={`/projects/${projectId}/progress/schedule-items`}>
+							<Button variant="ghost" className="w-full justify-start">
 								<FileText className="mr-2 h-4 w-4" />
-								Daily Diaries
+								Schedule Items
 								<ChevronRight className="ml-auto h-4 w-4" />
 							</Button>
 						</Link>
-						<Link href={`/projects/${projectId}/field/site-instructions`}>
-							<Button variant="ghost" className="w-full justify-start text-gray-300 hover:text-gray-300">
+						<Link href={`/projects/${projectId}/progress/claims`}>
+							<Button variant="ghost" className="w-full justify-start">
 								<FileText className="mr-2 h-4 w-4" />
-								Site Instructions
+								Progress Claims
 								<ChevronRight className="ml-auto h-4 w-4" />
 							</Button>
 						</Link>
-						<Link href={`/projects/${projectId}/field/photos`}>
-							<Button variant="ghost" className="w-full justify-start text-gray-300 hover:text-gray-300">
+						<Link href={`/projects/${projectId}/progress/variations`}>
+							<Button variant="ghost" className="w-full justify-start">
 								<FileText className="mr-2 h-4 w-4" />
-								Photos
+								Variations
 								<ChevronRight className="ml-auto h-4 w-4" />
 							</Button>
 						</Link>
 					</CardContent>
 				</Card>
 
-				{/* Approvals & Communication */}
+				{/* Documents */}
 				<Card>
-					<CardHeader>
-						<CardTitle className="text-gray-300">Approvals & Communication</CardTitle>
-						<CardDescription className="text-gray-300">Workflow approvals and communication</CardDescription>
-					</CardHeader>
-					<CardContent className="space-y-3">
-						<Link href={`/projects/${projectId}/approvals/designer`}>
-							<Button variant="ghost" className="w-full justify-start text-gray-300 hover:text-gray-300">
-								<FileText className="mr-2 h-4 w-4" />
-								Approvals Designer
-								<ChevronRight className="ml-auto h-4 w-4" />
-							</Button>
-						</Link>
-						<Link href={`/projects/${projectId}/approvals/inbox`}>
-							<Button variant="ghost" className="w-full justify-start text-gray-300 hover:text-gray-300">
-								<Mail className="mr-2 h-4 w-4" />
-								Approvals Inbox
-								<ChevronRight className="ml-auto h-4 w-4" />
-							</Button>
-						</Link>
-						<Link href={`/projects/${projectId}/inbox`}>
-							<Button variant="ghost" className="w-full justify-start text-gray-300 hover:text-gray-300">
-								<Mail className="mr-2 h-4 w-4" />
-								Project Inbox
-								<ChevronRight className="ml-auto h-4 w-4" />
-							</Button>
-						</Link>
-					</CardContent>
-				</Card>
-
-				{/* Tools & Analytics */}
-				<Card>
-					<CardHeader>
-						<CardTitle className="text-gray-300">Tools & Analytics</CardTitle>
-						<CardDescription className="text-gray-300">Reports and project tools</CardDescription>
-					</CardHeader>
-					<CardContent className="space-y-3">
-						<Link href={`/projects/${projectId}/reports`}>
-							<Button variant="ghost" className="w-full justify-start text-gray-300 hover:text-gray-300">
-								<FileText className="mr-2 h-4 w-4" />
-								Reports
-								<ChevronRight className="ml-auto h-4 w-4" />
-							</Button>
-						</Link>
-						<Link href={`/projects/${projectId}/settings`}>
-							<Button variant="ghost" className="w-full justify-start text-gray-300 hover:text-gray-300">
-								<Settings className="mr-2 h-4 w-4" />
-								Settings
-								<ChevronRight className="ml-auto h-4 w-4" />
-							</Button>
-						</Link>
-					</CardContent>
-				</Card>
+                    <CardHeader>
+						<CardTitle>Documents</CardTitle>
+						<CardDescription>All project documentation</CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-3">
+                        <Link href={`/projects/${projectId}/documents`}>
+							<Button variant="ghost" className="w-full justify-start">
+                                <FileText className="mr-2 h-4 w-4" />
+                                Document Register
+                                <ChevronRight className="ml-auto h-4 w-4" />
+                            </Button>
+                        </Link>
+                        <Link href={`/projects/${projectId}/photos`}>
+							<Button variant="ghost" className="w-full justify-start">
+                                <FileText className="mr-2 h-4 w-4" />
+                                Photos
+                                <ChevronRight className="ml-auto h-4 w-4" />
+                            </Button>
+                        </Link>
+                    </CardContent>
+                </Card>
 			</div>
 		</div>
 	)
