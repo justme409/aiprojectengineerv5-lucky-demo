@@ -148,18 +148,7 @@ export function Sidebar({ className, onCollapseChange }: SidebarProps) {
           ...(showPrimaryTesting ? [{ label: 'Primary Testing (NSW)', href: `/projects/${projectId}/quality/primary-testing`, icon: FileText } as SectionLink] : []),
         ],
       },
-      {
-        id: 'hse',
-        title: 'Health, Safety & Environment',
-        links: [
-          { label: 'SWMS', href: `/projects/${projectId}/hse/swms`, icon: FileText },
-          { label: 'Permits', href: `/projects/${projectId}/hse/permits`, icon: FileText },
-          { label: 'Toolbox Talks', href: `/projects/${projectId}/hse/toolbox-talks`, icon: FileText },
-          { label: 'Safety Walks', href: `/projects/${projectId}/hse/safety-walks`, icon: FileText },
-          { label: 'Inductions', href: `/projects/${projectId}/hse/inductions`, icon: FileText },
-          { label: 'Incidents', href: `/projects/${projectId}/hse/incidents`, icon: FileText },
-        ],
-      },
+      // HSE section removed - Phase 2+ feature
       {
         id: 'site',
         title: 'Site',
@@ -182,7 +171,6 @@ export function Sidebar({ className, onCollapseChange }: SidebarProps) {
         id: 'tools',
         title: 'Tools & Analytics',
         links: [
-          { label: 'Map View', href: `/projects/${projectId}/map`, icon: Map },
           { label: 'Reports', href: `/projects/${projectId}/reports`, icon: FileText },
           { label: 'Settings', href: `/projects/${projectId}/settings`, icon: Settings },
         ],
