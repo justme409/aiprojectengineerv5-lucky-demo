@@ -36,8 +36,10 @@ export function DocumentsTable({ documents, projectId }: DocumentsTableProps) {
   
   const filteredDocuments = documents.filter((doc) => {
     const matchesSearch = 
-      doc.number.toLowerCase().includes(search.toLowerCase()) ||
-      doc.title.toLowerCase().includes(search.toLowerCase());
+      doc.number?.toLowerCase().includes(search.toLowerCase()) ||
+      doc.documentNumber?.toLowerCase().includes(search.toLowerCase()) ||
+      doc.title?.toLowerCase().includes(search.toLowerCase()) ||
+      false;
     
     const matchesType = typeFilter === 'all' || doc.type === typeFilter;
     const matchesStatus = statusFilter === 'all' || doc.status === statusFilter;
@@ -45,7 +47,7 @@ export function DocumentsTable({ documents, projectId }: DocumentsTableProps) {
     return matchesSearch && matchesType && matchesStatus;
   });
   
-  const uniqueTypes = Array.from(new Set(documents.map(d => d.type)));
+  const uniqueTypes = Array.from(new Set(documents.map(d => d.type).filter((t): t is string => t !== undefined)));
   
   return (
     <div className="space-y-4">

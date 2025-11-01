@@ -89,7 +89,7 @@ export async function DELETE(
   request: NextRequest,
   { params }: { params: Promise<{ projectId: string; lotId: string }> }
 ) {
-  const { lotId } = params;
+  const { lotId } = await params;
   
   if (!lotId) {
     return errorResponse('Lot ID is required', 400);

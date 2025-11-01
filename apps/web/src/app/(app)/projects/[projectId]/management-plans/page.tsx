@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
-import { FileText, CheckCircle, Clock } from 'lucide-react';
+import { FileText, CheckCircle, Clock, AlertCircle } from 'lucide-react';
 import { format } from 'date-fns';
 import Link from 'next/link';
 
@@ -114,8 +114,9 @@ async function ManagementPlansContent({ projectId }: { projectId: string }) {
 function ApprovalStatusBadge({ status }: { status: ManagementPlanNode['approvalStatus'] }) {
   const config: Record<ManagementPlanNode['approvalStatus'], { icon: any; variant: any; label: string }> = {
     draft: { icon: Clock, variant: 'secondary', label: 'Draft' },
-    submitted: { icon: Clock, variant: 'default', label: 'Submitted' },
+    in_review: { icon: Clock, variant: 'default', label: 'In Review' },
     approved: { icon: CheckCircle, variant: 'success', label: 'Approved' },
+    superseded: { icon: AlertCircle, variant: 'destructive', label: 'Superseded' },
   };
   
   const item = config[status];

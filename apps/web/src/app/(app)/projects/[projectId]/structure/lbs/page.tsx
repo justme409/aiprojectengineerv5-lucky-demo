@@ -92,7 +92,7 @@ async function LBSContent({ projectId }: { projectId: string }) {
                     {node.chainage || '-'}
                   </TableCell>
                   <TableCell className="text-sm text-muted-foreground font-mono">
-                    {node.coordinates || '-'}
+                    {node.coordinates ? `${node.coordinates.lat}, ${node.coordinates.lng}` : '-'}
                   </TableCell>
                 </TableRow>
               ))

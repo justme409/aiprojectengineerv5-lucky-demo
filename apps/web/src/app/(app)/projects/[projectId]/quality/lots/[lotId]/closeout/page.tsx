@@ -69,10 +69,10 @@ async function LotCloseoutContent({ projectId, lotId }: { projectId: string; lot
           </p>
         </div>
         <div className="flex items-center gap-2">
-          <Badge variant={lot.status === 'closed' ? 'success' : 'default'}>
+          <Badge variant={lot.status === 'closed' ? 'outline' : 'default'} className={lot.status === 'closed' ? 'bg-green-50 text-green-700 border-green-300' : ''}>
             {lot.status.replace('_', ' ').toUpperCase()}
           </Badge>
-          <Badge variant={lot.percentComplete === 100 ? 'success' : 'secondary'}>
+          <Badge variant={lot.percentComplete === 100 ? 'outline' : 'secondary'} className={lot.percentComplete === 100 ? 'bg-green-50 text-green-700 border-green-300' : ''}>
             {lot.percentComplete}% Complete
           </Badge>
         </div>

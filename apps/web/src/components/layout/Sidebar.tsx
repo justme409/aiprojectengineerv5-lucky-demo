@@ -5,7 +5,7 @@ import { usePathname, useParams } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { useState, useEffect } from "react"
-import { ChevronLeft, ChevronRight, ChevronDown, ChevronUp, FolderOpen, FileText, Map, Mail, Settings } from "lucide-react"
+import { ChevronLeft, ChevronRight, ChevronDown, ChevronUp, FolderOpen, FileText, Map, Mail, Settings, Building2, ClipboardList, CheckSquare, AlertTriangle, Camera, Users, BarChart3, Shield, Workflow } from "lucide-react"
 import { useAuth } from "@/lib/hooks/use-auth"
 
 interface Project {
@@ -119,30 +119,36 @@ export function Sidebar({ className, onCollapseChange }: SidebarProps) {
   type Section = { id: string; title: string; links: SectionLink[] }
 
   const getSectionsForProject = (projectId: string, jurisdiction?: string): Section[] => {
-    const showPrimaryTesting = (jurisdiction || '').toUpperCase() === 'NSW'
     const sections: Section[] = [
+      {
+        id: 'project-info',
+        title: 'Project Information',
+        links: [
+          { label: 'Project Details', href: `/projects/${projectId}/details`, icon: Building2 },
+        ],
+      },
       {
         id: 'project-controls',
         title: 'Project Controls',
         links: [
           { label: 'Management Plans', href: `/projects/${projectId}/management-plans`, icon: FileText },
-          { label: 'WBS', href: `/projects/${projectId}/structure/wbs`, icon: FileText },
-          { label: 'LBS', href: `/projects/${projectId}/structure/lbs`, icon: FileText },
+          { label: 'WBS', href: `/projects/${projectId}/structure/wbs`, icon: FolderOpen },
+          { label: 'LBS', href: `/projects/${projectId}/structure/lbs`, icon: Map },
         ],
       },
       {
         id: 'quality',
         title: 'Quality',
         links: [
-          { label: 'Lot Register', href: `/projects/${projectId}/quality/lots`, icon: FileText },
           { label: 'ITP Templates', href: `/projects/${projectId}/quality/itps/templates`, icon: FileText },
           { label: 'ITP Instances', href: `/projects/${projectId}/quality/itps/instances`, icon: FileText },
-          { label: 'Inspection Points', href: `/projects/${projectId}/quality/inspection-points`, icon: FileText },
-          { label: 'NCR Register', href: `/projects/${projectId}/ncrs`, icon: FileText },
-          { label: 'Test Requests', href: `/projects/${projectId}/quality/tests`, icon: FileText },
-          { label: 'Materials', href: `/projects/${projectId}/quality/materials`, icon: FileText },
-          { label: 'Samples', href: `/projects/${projectId}/quality/samples`, icon: FileText },
-          { label: 'Mix Designs', href: `/projects/${projectId}/quality/mix-designs`, icon: FileText },
+          { label: 'Lot Register', href: `/projects/${projectId}/quality/lots`, icon: FileText },
+          { label: 'Inspections', href: `/projects/${projectId}/inspections`, icon: CheckSquare },
+          { label: 'Test Requests', href: `/projects/${projectId}/tests`, icon: FileText },
+          { label: 'Samples', href: `/projects/${projectId}/samples`, icon: FileText },
+          { label: 'NCR Register', href: `/projects/${projectId}/ncrs`, icon: AlertTriangle },
+          { label: 'Materials', href: `/projects/${projectId}/materials`, icon: FileText },
+          { label: 'Mix Designs', href: `/projects/${projectId}/mix-designs`, icon: FileText },
         ],
       },
       {
@@ -159,16 +165,46 @@ export function Sidebar({ className, onCollapseChange }: SidebarProps) {
         title: 'Documents',
         links: [
           { label: 'Document Register', href: `/projects/${projectId}/documents`, icon: FileText },
-          { label: 'Photos', href: `/projects/${projectId}/photos`, icon: FileText },
+          { label: 'Photos', href: `/projects/${projectId}/photos`, icon: Camera },
+          { label: 'Certificates', href: `/projects/${projectId}/certificates`, icon: FileText },
+        ],
+      },
+      {
+        id: 'field-ops',
+        title: 'Field Operations',
+        links: [
+          { label: 'Daily Diaries', href: `/projects/${projectId}/field`, icon: FileText },
+          { label: 'Method Statements', href: `/projects/${projectId}/methods`, icon: FileText },
+        ],
+      },
+      {
+        id: 'reports',
+        title: 'Reports & Analytics',
+        links: [
+          { label: 'Reports', href: `/projects/${projectId}/reports`, icon: BarChart3 },
+        ],
+      },
+      {
+        id: 'approvals',
+        title: 'Approvals & Workflow',
+        links: [
+          { label: 'Approvals', href: `/projects/${projectId}/approvals`, icon: CheckSquare },
+          { label: 'Inbox', href: `/projects/${projectId}/inbox`, icon: Mail },
         ],
       },
       {
         id: 'reference',
-        title: 'Reference Data',
+        title: 'Reference & Standards',
         links: [
-          { label: 'Test Methods', href: `/projects/${projectId}/reference/test-methods`, icon: FileText },
-          { label: 'Work Types', href: `/projects/${projectId}/reference/work-types`, icon: FileText },
-          { label: 'Area Codes', href: `/projects/${projectId}/reference/area-codes`, icon: FileText },
+          { label: 'Reference Documents', href: `/projects/${projectId}/reference`, icon: Shield },
+          { label: 'Site Plans', href: `/projects/${projectId}/plans`, icon: Map },
+        ],
+      },
+      {
+        id: 'settings',
+        title: 'Settings',
+        links: [
+          { label: 'Project Settings', href: `/projects/${projectId}/settings`, icon: Settings },
         ],
       },
     ]
@@ -196,11 +232,11 @@ export function Sidebar({ className, onCollapseChange }: SidebarProps) {
   if (loading) {
     return (
       <div
-        className={cn("bg-white border-r border-gray-200 h-full flex flex-col", className)}
+        className={cn("bg-background border-r border-border h-full flex flex-col", className)}
         style={{ width: collapsed ? 64 : 256 }}
       >
         <div className="p-4">
-          <div className="h-4 bg-gray-200 rounded animate-pulse"></div>
+          <div className="h-4 bg-muted rounded animate-pulse"></div>
         </div>
       </div>
     )
@@ -208,39 +244,39 @@ export function Sidebar({ className, onCollapseChange }: SidebarProps) {
 
   return (
     <div
-      className={cn("bg-white border-r border-gray-200 h-full overflow-y-auto relative flex flex-col transition-all duration-300 ease-in-out", className)}
+      className={cn("bg-background border-r border-border h-full overflow-y-auto relative flex flex-col transition-all duration-300 ease-in-out", className)}
       style={{ width: collapsed ? 64 : 256 }}
     >
       {/* Header */}
       {!collapsed ? (
-        <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200 transition-all duration-300 ease-in-out">
+        <div className="flex items-center justify-between px-4 py-3 border-b border-border transition-all duration-300 ease-in-out">
           <div className="flex-1">
-            <h2 className="text-base font-semibold text-gray-900">Projects</h2>
+            <h2 className="text-base font-semibold text-foreground">Projects</h2>
           </div>
           <button
             onClick={() => {
               setCollapsed(true)
               onCollapseChange?.(true)
             }}
-            className="h-7 w-7 grid place-items-center rounded hover:bg-gray-100 transition-all duration-200 ease-in-out"
+            className="h-7 w-7 grid place-items-center rounded hover:bg-accent transition-all duration-200 ease-in-out"
             aria-label="Collapse sidebar"
             title="Collapse"
           >
-            <ChevronLeft className="h-4 w-4 text-gray-700 transition-transform duration-300 ease-in-out" />
+            <ChevronLeft className="h-4 w-4 text-foreground transition-transform duration-300 ease-in-out" />
           </button>
         </div>
       ) : (
-        <div className="flex justify-center py-3 border-b border-gray-200 transition-all duration-300 ease-in-out">
+        <div className="flex justify-center py-3 border-b border-border transition-all duration-300 ease-in-out">
           <button
             onClick={() => {
               setCollapsed(false)
               onCollapseChange?.(false)
             }}
-            className="h-7 w-7 grid place-items-center rounded hover:bg-gray-100 transition-all duration-200 ease-in-out"
+            className="h-7 w-7 grid place-items-center rounded hover:bg-accent transition-all duration-200 ease-in-out"
             aria-label="Expand sidebar"
             title="Expand"
           >
-            <ChevronRight className="h-4 w-4 text-gray-700 transition-transform duration-300 ease-in-out" />
+            <ChevronRight className="h-4 w-4 text-foreground transition-transform duration-300 ease-in-out" />
           </button>
         </div>
       )}
@@ -249,7 +285,7 @@ export function Sidebar({ className, onCollapseChange }: SidebarProps) {
       <div className="flex-1 p-2 transition-all duration-300 ease-in-out">
           <div className="space-y-1">
           {projects.length === 0 ? (
-            <div className="px-2 py-3 text-xs text-gray-500 text-center">
+            <div className="px-2 py-3 text-xs text-muted-foreground text-center">
               {collapsed ? 'No projects' : 'No projects found'}
             </div>
           ) : (
@@ -274,28 +310,28 @@ export function Sidebar({ className, onCollapseChange }: SidebarProps) {
                           href={`/projects/${project.id}/overview`}
                           title={displayName}
                           className={cn(
-                            "flex items-center gap-2 flex-1 min-w-0 p-1 hover:bg-gray-100 rounded",
+                            "flex items-center gap-2 flex-1 min-w-0 p-1 hover:bg-accent rounded",
                           )}
                         >
                           <div className="flex items-center gap-2 flex-1 min-w-0">
-                            <div className="flex items-center justify-center w-6 h-6 bg-gray-100 rounded text-xs font-medium text-gray-700 flex-shrink-0">
+                            <div className="flex items-center justify-center w-6 h-6 bg-muted rounded text-xs font-medium text-muted-foreground flex-shrink-0">
                               <FolderOpen className="h-3 w-3" />
                             </div>
-                            <span className="text-sm font-medium truncate text-gray-700">
+                            <span className="text-sm font-medium truncate text-foreground">
                               {displayName}
                             </span>
                           </div>
                         </Link>
                         <button
-                          className="h-7 w-7 grid place-items-center rounded hover:bg-gray-100"
+                          className="h-7 w-7 grid place-items-center rounded hover:bg-accent"
                           aria-label={isExpanded ? "Collapse project" : "Expand project"}
                           title={isExpanded ? "Collapse" : "Expand"}
                           onClick={() => setExpandedProjectId(prev => prev === project.id ? null : project.id)}
                         >
                           {isExpanded ? (
-                            <ChevronUp className="h-4 w-4 text-gray-700" />
+                            <ChevronUp className="h-4 w-4 text-foreground" />
                           ) : (
-                            <ChevronDown className="h-4 w-4 text-gray-700" />
+                            <ChevronDown className="h-4 w-4 text-foreground" />
                           )}
                         </button>
                       </div>
@@ -307,15 +343,15 @@ export function Sidebar({ className, onCollapseChange }: SidebarProps) {
                             return (
                               <div key={section.id} className="mb-1">
                                 <button
-                                  className="w-full flex items-center justify-between text-left text-sm font-semibold text-gray-700 px-2 py-1 rounded hover:bg-gray-100"
+                                  className="w-full flex items-center justify-between text-left text-sm font-semibold text-foreground px-2 py-1 rounded hover:bg-accent"
                                   onClick={() => toggleSection(project.id, section.id)}
                                   aria-expanded={sectionOpen}
                                 >
                                   <span className="truncate">{section.title}</span>
                                   {sectionOpen ? (
-                                    <ChevronUp className="h-3 w-3 text-gray-600" />
+                                    <ChevronUp className="h-3 w-3 text-muted-foreground" />
                                   ) : (
-                                    <ChevronDown className="h-3 w-3 text-gray-600" />
+                                    <ChevronDown className="h-3 w-3 text-muted-foreground" />
                                   )}
                                 </button>
                                 {sectionOpen && (
@@ -329,7 +365,7 @@ export function Sidebar({ className, onCollapseChange }: SidebarProps) {
                                             variant="ghost"
                                             className={cn(
                                               "w-full justify-start h-8 text-xs px-2",
-                                              selected ? "bg-gray-100" : ""
+                                              selected ? "bg-accent" : ""
                                             )}
                                           >
                                             {Icon ? <Icon className="mr-2 h-3 w-3" /> : null}
@@ -352,12 +388,12 @@ export function Sidebar({ className, onCollapseChange }: SidebarProps) {
                         variant="ghost"
                         size="icon"
                         className={cn(
-                          "w-full h-9 hover:bg-gray-100",
+                          "w-full h-9 hover:bg-accent",
                           active ? "bg-accent" : ""
                         )}
                         title={displayName}
                       >
-                        <span className="text-xs font-semibold text-gray-700">
+                        <span className="text-xs font-semibold text-foreground">
                           {abbrev}
                         </span>
                       </Button>

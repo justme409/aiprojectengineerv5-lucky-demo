@@ -37,7 +37,7 @@
         "src/hooks/*"
       ],
       "@/schemas/*": [
-        "../../../schemas/*"
+        "src/schemas/*"
       ]
     },
     "plugins": [
