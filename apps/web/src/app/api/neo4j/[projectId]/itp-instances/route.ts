@@ -26,7 +26,7 @@ export async function GET(
   
   const result = await neo4jRead<ITPInstanceNode>(
     ITP_INSTANCE_QUERIES.getAllInstances,
-    { projectId }
+    { projectId: projectId }
   );
   
   if (result.error) {
@@ -53,16 +53,17 @@ export async function POST(
   try {
     const body = await request.json();
     
-    if (!body.templateId || !body.lotId) {
-      return errorResponse('Template ID and Lot ID are required', 400);
+    if (!body.templateDocNo || !body.lotNumber) {
+      return errorResponse('Template docNo and Lot number are required', 400);
     }
     
     const result = await neo4jWriteOne<ITPInstanceNode>(
       ITP_INSTANCE_QUERIES.createInstance,
       {
         properties: body,
-        templateId: body.templateId,
-        lotId: body.lotId,
+        projectId: projectId,
+        templateDocNo: body.templateDocNo,
+        lotNumber: body.lotNumber,
       }
     );
     

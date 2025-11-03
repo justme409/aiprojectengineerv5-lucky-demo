@@ -115,23 +115,16 @@ export function MixDesignsTable({ mixDesigns, projectId }: MixDesignsTableProps)
                     <Badge variant="outline">{mix.type}</Badge>
                   </TableCell>
                   <TableCell className="text-sm text-muted-foreground">
-                    {mix.targetStrength ? `${mix.targetStrength} MPa` : '-'}
+                    {mix.strength || '-'}
                   </TableCell>
                   <TableCell className="text-sm text-muted-foreground">
-                    {mix.slump ? `${mix.slump} mm` : '-'}
+                    {mix.slump || '-'}
                   </TableCell>
                   <TableCell>
                     <ApprovalStatusBadge status={mix.approvalStatus} />
                   </TableCell>
                   <TableCell>
-                    {mix.certificateId ? (
-                      <Badge variant="success" className="gap-1">
-                        <CheckCircle className="h-3 w-3" />
-                        Available
-                      </Badge>
-                    ) : (
-                      <Badge variant="secondary">Not Uploaded</Badge>
-                    )}
+                    <Badge variant="secondary">-</Badge>
                   </TableCell>
                 </TableRow>
               ))
@@ -148,7 +141,6 @@ export function MixDesignsTable({ mixDesigns, projectId }: MixDesignsTableProps)
           <span>Pending: {mixDesigns.filter(m => m.approvalStatus === 'pending').length}</span>
           <span>Approved: {mixDesigns.filter(m => m.approvalStatus === 'approved').length}</span>
           <span>Rejected: {mixDesigns.filter(m => m.approvalStatus === 'rejected').length}</span>
-          <span>With Certificates: {mixDesigns.filter(m => m.certificateId).length}</span>
         </div>
       </div>
     </div>

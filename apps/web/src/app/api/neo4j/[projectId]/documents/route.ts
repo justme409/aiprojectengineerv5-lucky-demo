@@ -26,7 +26,7 @@ export async function GET(
   
   const result = await neo4jRead<DocumentNode>(
     DOCUMENT_QUERIES.getAllDocuments,
-    { projectId }
+    { projectId: projectId }
   );
   
   if (result.error) {
@@ -57,7 +57,7 @@ export async function POST(
       DOCUMENT_QUERIES.createDocument,
       {
         properties: body,
-        projectId,
+        projectId: projectId,
       }
     );
     

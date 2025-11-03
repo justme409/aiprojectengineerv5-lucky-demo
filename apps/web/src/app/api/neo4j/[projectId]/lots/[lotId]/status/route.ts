@@ -21,10 +21,10 @@ const UpdateStatusSchema = z.object({
 export const PATCH = createApiHandler<z.infer<typeof UpdateStatusSchema>, LotNode>({
   schema: UpdateStatusSchema,
   handler: async ({ body, params }) => {
-    const { lotId } = params;
+    const { projectId, lotId } = params;
     
-    if (!lotId) {
-      throw new Error('Lot ID is required');
+    if (!projectId || !lotId) {
+      throw new Error('Project ID and Lot number are required');
     }
     
     if (!body) {
@@ -34,7 +34,8 @@ export const PATCH = createApiHandler<z.infer<typeof UpdateStatusSchema>, LotNod
     const result = await neo4jWriteOne<LotNode>(
       LOT_QUERIES.updateLotStatus,
       {
-        lotId,
+        projectId,
+        number: lotId,
         status: body.status,
       }
     );

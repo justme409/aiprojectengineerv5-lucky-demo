@@ -26,7 +26,7 @@ export async function GET(
   
   const result = await neo4jRead<WorkTypeNode>(
     WORK_TYPE_QUERIES.getAllWorkTypes,
-    { projectId }
+    { projectId: projectId }
   );
   
   if (result.error) {
@@ -57,7 +57,7 @@ export async function POST(
       WORK_TYPE_QUERIES.createWorkType,
       {
         properties: body,
-        projectId,
+        projectId: projectId,
       }
     );
     

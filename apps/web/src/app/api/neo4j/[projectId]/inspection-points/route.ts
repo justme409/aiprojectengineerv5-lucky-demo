@@ -26,7 +26,7 @@ export async function GET(
   
   const result = await neo4jRead<InspectionPointNode>(
     INSPECTION_POINT_QUERIES.getAllPoints,
-    { projectId }
+    { projectId: projectId }
   );
   
   if (result.error) {
@@ -61,6 +61,7 @@ export async function POST(
       INSPECTION_POINT_QUERIES.createPoint,
       {
         properties: body,
+        projectId: projectId,
         itpInstanceId: body.itpInstanceId,
       }
     );

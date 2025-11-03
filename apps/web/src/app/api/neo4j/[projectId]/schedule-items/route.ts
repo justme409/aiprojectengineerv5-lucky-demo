@@ -26,7 +26,7 @@ export async function GET(
   
   const result = await neo4jRead<ScheduleItemNode>(
     SCHEDULE_ITEM_QUERIES.getAllItems,
-    { projectId }
+    { projectId: projectId }
   );
   
   if (result.error) {
@@ -57,7 +57,7 @@ export async function POST(
       SCHEDULE_ITEM_QUERIES.createItem,
       {
         properties: body,
-        projectId,
+        projectId: projectId,
       }
     );
     

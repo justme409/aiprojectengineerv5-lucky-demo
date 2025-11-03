@@ -22,15 +22,15 @@ export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ projectId: string; lotId: string }> }
 ) {
-  const { lotId } = await params;
+  const { projectId, lotId } = await params;
   
-  if (!lotId) {
-    return errorResponse('Lot ID is required', 400);
+  if (!projectId || !lotId) {
+    return errorResponse('Project ID and Lot number are required', 400);
   }
   
   const result = await neo4jReadOne<LotWithRelationships>(
     LOT_QUERIES.getLotDetail,
-    { lotId }
+    { projectId, number: lotId }
   );
   
   if (result.error) {
@@ -51,10 +51,10 @@ export async function GET(
 export const PATCH = createApiHandler<UpdateLotInput, LotNode>({
   schema: UpdateLotInputSchema,
   handler: async ({ body, params }) => {
-    const { lotId } = params;
+    const { projectId, lotId } = params;
     
-    if (!lotId) {
-      throw new Error('Lot ID is required');
+    if (!projectId || !lotId) {
+      throw new Error('Project ID and Lot number are required');
     }
     
     if (!body) {
@@ -64,7 +64,8 @@ export const PATCH = createApiHandler<UpdateLotInput, LotNode>({
     const result = await neo4jWriteOne<LotNode>(
       LOT_QUERIES.updateLot,
       {
-        lotId,
+        projectId,
+        number: lotId,
         properties: body,
       }
     );
@@ -89,15 +90,15 @@ export async function DELETE(
   request: NextRequest,
   { params }: { params: Promise<{ projectId: string; lotId: string }> }
 ) {
-  const { lotId } = await params;
+  const { projectId, lotId } = await params;
   
-  if (!lotId) {
-    return errorResponse('Lot ID is required', 400);
+  if (!projectId || !lotId) {
+    return errorResponse('Project ID and Lot number are required', 400);
   }
   
   const result = await neo4jWriteOne<LotNode>(
     LOT_QUERIES.deleteLot,
-    { lotId }
+    { projectId, number: lotId }
   );
   
   if (result.error) {

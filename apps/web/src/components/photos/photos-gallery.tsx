@@ -46,9 +46,9 @@ export function PhotosGallery({ photos, projectId }: PhotosGalleryProps) {
               className="border rounded-lg overflow-hidden hover:shadow-lg transition-shadow"
             >
               <div className="aspect-video bg-muted flex items-center justify-center">
-                {photo.url ? (
+                {photo.fileUrl ? (
                   <img
-                    src={photo.url}
+                    src={photo.fileUrl}
                     alt={photo.description || 'Project photo'}
                     className="w-full h-full object-cover"
                   />
@@ -70,20 +70,11 @@ export function PhotosGallery({ photos, projectId }: PhotosGalleryProps) {
                 )}
                 <div className="flex items-center gap-1 text-xs text-muted-foreground">
                   <Calendar className="h-3 w-3" />
-                  {format(new Date(photo.dateTaken), 'dd MMM yyyy')}
+                  {format(new Date(photo.date), 'dd MMM yyyy')}
                 </div>
                 {photo.takenBy && (
                   <div className="text-xs text-muted-foreground">
                     By: {photo.takenBy}
-                  </div>
-                )}
-                {photo.tags && photo.tags.length > 0 && (
-                  <div className="flex flex-wrap gap-1">
-                    {photo.tags.map((tag, idx) => (
-                      <Badge key={idx} variant="secondary" className="text-xs">
-                        {tag}
-                      </Badge>
-                    ))}
                   </div>
                 )}
               </div>

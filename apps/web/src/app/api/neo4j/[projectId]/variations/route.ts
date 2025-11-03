@@ -26,7 +26,7 @@ export async function GET(
   
   const result = await neo4jRead<VariationNode>(
     VARIATION_QUERIES.getAllVariations,
-    { projectId }
+    { projectId: projectId }
   );
   
   if (result.error) {
@@ -57,7 +57,7 @@ export async function POST(
       VARIATION_QUERIES.createVariation,
       {
         properties: body,
-        projectId,
+        projectId: projectId,
       }
     );
     

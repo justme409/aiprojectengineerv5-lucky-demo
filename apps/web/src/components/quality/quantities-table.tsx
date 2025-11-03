@@ -87,10 +87,9 @@ export function QuantitiesTable({ quantities, projectId, lotId }: QuantitiesTabl
 
 function StatusBadge({ status }: { status: QuantityNode['status'] }) {
   const variants: Record<QuantityNode['status'], { variant: any; label: string }> = {
-    planned: { variant: 'secondary', label: 'Planned' },
+    pending: { variant: 'secondary', label: 'Pending' },
     in_progress: { variant: 'default', label: 'In Progress' },
-    completed: { variant: 'success', label: 'Completed' },
-    claimed: { variant: 'success', label: 'Claimed' },
+    completed: { variant: 'outline', label: 'Completed' },
   };
   
   const config = variants[status];

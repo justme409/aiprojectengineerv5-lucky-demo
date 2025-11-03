@@ -167,7 +167,7 @@ function StatusBadge({ status }: { status: TestRequestNode['status'] }) {
 
 function ResultBadge({ passed }: { passed: boolean }) {
   return (
-    <Badge variant={passed ? 'success' : 'destructive'} className="gap-1">
+    <Badge variant={passed ? 'outline' : 'destructive'} className={passed ? 'gap-1 bg-green-50 text-green-700 border-green-300' : 'gap-1'}>
       {passed ? (
         <>
           <CheckCircle className="h-3 w-3" />

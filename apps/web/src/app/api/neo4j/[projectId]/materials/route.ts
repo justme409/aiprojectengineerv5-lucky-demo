@@ -29,7 +29,7 @@ export async function GET(
   const status = filters.status;
   
   let query = MATERIAL_QUERIES.getAllMaterials;
-  const queryParams: Record<string, any> = { projectId };
+  const queryParams: Record<string, any> = { projectId: projectId };
   
   if (status === 'approved') {
     query = MATERIAL_QUERIES.getApprovedMaterials;
@@ -65,7 +65,7 @@ export async function POST(
       MATERIAL_QUERIES.createMaterial,
       {
         properties: body,
-        projectId,
+        projectId: projectId,
       }
     );
     

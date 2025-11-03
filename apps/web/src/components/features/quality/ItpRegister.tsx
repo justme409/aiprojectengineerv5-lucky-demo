@@ -30,10 +30,24 @@ export default function ItpRegister({ projectId }: ItpRegisterProps) {
 
   const fetchItpRecords = useCallback(async () => {
     try {
-      const response = await fetch(`/api/v1/projects/${projectId}/quality/itp`)
+      const response = await fetch(`/api/neo4j/${projectId}/itp-templates`)
       if (response.ok) {
-        const data = await response.json()
-        setItpRecords(data.itp_register || data.data || [])
+        const result = await response.json()
+        // Transform Neo4j data to match component interface
+        const transformed = (result.data || []).map((item: any) => {
+          const props = item.t?.properties || item
+          return {
+            itp_asset_id: props.id || props.uuid || props.docNo,
+            name: props.title || props.workType || props.description,
+            type: props.workType || 'template',
+            approval_state: props.status || props.approvalStatus || 'pending',
+            version: parseInt(props.version || props.revisionNumber || '1'),
+            jurisdiction_coverage_status: props.jurisdiction || 'unknown',
+            required_points_present: true,
+            approvals: []
+          }
+        })
+        setItpRecords(transformed)
       }
     } catch (error) {
       console.error('Error fetching ITP records:', error)

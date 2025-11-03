@@ -26,7 +26,7 @@ export async function GET(
   
   const result = await neo4jRead<TestMethodNode>(
     TEST_METHOD_QUERIES.getAllMethods,
-    { projectId }
+    { projectId: projectId }
   );
   
   if (result.error) {
@@ -57,7 +57,7 @@ export async function POST(
       TEST_METHOD_QUERIES.createMethod,
       {
         properties: body,
-        projectId,
+        projectId: projectId,
       }
     );
     

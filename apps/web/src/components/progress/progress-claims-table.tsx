@@ -43,7 +43,7 @@ export function ProgressClaimsTable({ claims, projectId }: ProgressClaimsTablePr
   });
   
   const totalClaimed = filteredClaims.reduce((sum, claim) => sum + claim.claimedValue, 0);
-  const totalCertified = filteredClaims.reduce((sum, claim) => sum + claim.certifiedValue, 0);
+  const totalCertified = filteredClaims.reduce((sum, claim) => sum + (claim.certifiedValue || 0), 0);
   
   return (
     <div className="space-y-4">
@@ -112,7 +112,7 @@ export function ProgressClaimsTable({ claims, projectId }: ProgressClaimsTablePr
                     })}
                   </TableCell>
                   <TableCell className="text-right font-mono font-semibold text-green-600">
-                    ${claim.certifiedValue.toLocaleString(undefined, {
+                    ${(claim.certifiedValue || 0).toLocaleString(undefined, {
                       minimumFractionDigits: 2,
                       maximumFractionDigits: 2,
                     })}

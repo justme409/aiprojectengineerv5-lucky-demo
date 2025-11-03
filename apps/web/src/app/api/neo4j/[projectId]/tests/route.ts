@@ -29,7 +29,7 @@ export async function GET(
   const status = filters.status;
   
   let query = TEST_REQUEST_QUERIES.getAllTests;
-  const queryParams: Record<string, any> = { projectId };
+  const queryParams: Record<string, any> = { projectId: projectId };
   
   if (status === 'pending') {
     query = TEST_REQUEST_QUERIES.getPendingTests;
@@ -61,15 +61,16 @@ export async function POST(
   try {
     const body = await request.json();
     
-    if (!body.lotId) {
-      return errorResponse('Lot ID is required', 400);
+    if (!body.lotNumber) {
+      return errorResponse('Lot number is required', 400);
     }
     
     const result = await neo4jWriteOne<TestRequestNode>(
       TEST_REQUEST_QUERIES.createTest,
       {
         properties: body,
-        lotId: body.lotId,
+        projectId: projectId,
+        lotNumber: body.lotNumber,
       }
     );
     

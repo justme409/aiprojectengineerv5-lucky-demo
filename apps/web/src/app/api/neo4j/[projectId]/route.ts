@@ -25,7 +25,7 @@ export async function GET(
   
   const result = await neo4jRead<{ project: ProjectNode }>(
     PROJECT_QUERIES.getProject,
-    { projectId }
+    { projectId: projectId }
   );
   
   if (result.error) {

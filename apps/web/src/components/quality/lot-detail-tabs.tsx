@@ -288,7 +288,7 @@ export function LotDetailTabs({ lot, projectId }: LotDetailTabsProps) {
                         {material.type} - {material.supplier}
                       </div>
                     </div>
-                    <Badge variant={material.approvalStatus === 'approved' ? 'success' : 'secondary'}>
+                    <Badge variant={material.approvalStatus === 'approved' ? 'outline' : 'secondary'} className={material.approvalStatus === 'approved' ? 'bg-green-50 text-green-700 border-green-300' : ''}>
                       {material.approvalStatus}
                     </Badge>
                   </div>

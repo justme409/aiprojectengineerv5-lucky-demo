@@ -29,7 +29,7 @@ export async function GET(
   const status = filters.status;
   
   let query = MIX_DESIGN_QUERIES.getAllMixDesigns;
-  const queryParams: Record<string, any> = { projectId };
+  const queryParams: Record<string, any> = { projectId: projectId };
   
   if (status === 'approved') {
     query = MIX_DESIGN_QUERIES.getApprovedMixDesigns;
@@ -65,7 +65,7 @@ export async function POST(
       MIX_DESIGN_QUERIES.createMixDesign,
       {
         properties: body,
-        projectId,
+        projectId: projectId,
       }
     );
     

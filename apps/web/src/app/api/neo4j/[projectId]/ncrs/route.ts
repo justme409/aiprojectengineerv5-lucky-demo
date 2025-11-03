@@ -32,7 +32,7 @@ export async function GET(
   const status = filters.status;
   
   let query = NCR_QUERIES.getAllNCRs;
-  const queryParams: Record<string, any> = { projectId };
+  const queryParams: Record<string, any> = { projectId: projectId };
   
   if (status === 'open') {
     query = NCR_QUERIES.getOpenNCRs;
@@ -63,15 +63,16 @@ export const POST = createApiHandler<CreateNCRInput, NCRNode>({
     }
     
     // NCR must be linked to a lot
-    if (!body.lotId) {
-      throw new Error('Lot ID is required for NCR');
+    if (!body.lotNumber) {
+      throw new Error('Lot number is required for NCR');
     }
     
     const result = await neo4jWriteOne<NCRNode>(
       NCR_QUERIES.createNCR,
       {
         properties: body,
-        lotId: body.lotId,
+        projectId: projectId,
+        lotNumber: body.lotNumber,
       }
     );
     

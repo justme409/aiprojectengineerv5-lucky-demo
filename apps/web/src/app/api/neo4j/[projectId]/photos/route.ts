@@ -26,7 +26,7 @@ export async function GET(
   
   const result = await neo4jRead<PhotoNode>(
     PHOTO_QUERIES.getAllPhotos,
-    { projectId }
+    { projectId: projectId }
   );
   
   if (result.error) {
@@ -57,7 +57,7 @@ export async function POST(
       PHOTO_QUERIES.createPhoto,
       {
         properties: body,
-        projectId,
+        projectId: projectId,
       }
     );
     

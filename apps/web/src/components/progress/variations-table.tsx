@@ -43,7 +43,7 @@ export function VariationsTable({ variations, projectId }: VariationsTableProps)
   });
   
   const totalClaimed = filteredVariations.reduce((sum, v) => sum + v.claimedValue, 0);
-  const totalApproved = filteredVariations.reduce((sum, v) => sum + v.approvedValue, 0);
+  const totalApproved = filteredVariations.reduce((sum, v) => sum + (v.approvedValue || 0), 0);
   
   return (
     <div className="space-y-4">
@@ -118,7 +118,7 @@ export function VariationsTable({ variations, projectId }: VariationsTableProps)
                     })}
                   </TableCell>
                   <TableCell className="text-right font-mono font-semibold text-green-600">
-                    ${variation.approvedValue.toLocaleString(undefined, {
+                    ${(variation.approvedValue || 0).toLocaleString(undefined, {
                       minimumFractionDigits: 2,
                       maximumFractionDigits: 2,
                     })}
@@ -166,9 +166,10 @@ function StatusBadge({ status }: { status: VariationNode['status'] }) {
   const config: Record<VariationNode['status'], { icon: any; variant: any; label: string }> = {
     identified: { icon: Clock, variant: 'secondary', label: 'Identified' },
     notified: { icon: Clock, variant: 'default', label: 'Notified' },
-    under_review: { icon: Clock, variant: 'default', label: 'Under Review' },
-    approved: { icon: CheckCircle, variant: 'success', label: 'Approved' },
+    quoted: { icon: Clock, variant: 'default', label: 'Quoted' },
+    approved: { icon: CheckCircle, variant: 'outline', label: 'Approved' },
     rejected: { icon: XCircle, variant: 'destructive', label: 'Rejected' },
+    implemented: { icon: CheckCircle, variant: 'outline', label: 'Implemented' },
   };
   
   const item = config[status];

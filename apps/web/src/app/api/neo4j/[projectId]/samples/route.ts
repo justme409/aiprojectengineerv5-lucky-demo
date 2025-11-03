@@ -26,7 +26,7 @@ export async function GET(
   
   const result = await neo4jRead<SampleNode>(
     SAMPLE_QUERIES.getAllSamples,
-    { projectId }
+    { projectId: projectId }
   );
   
   if (result.error) {
@@ -53,15 +53,16 @@ export async function POST(
   try {
     const body = await request.json();
     
-    if (!body.lotId) {
-      return errorResponse('Lot ID is required', 400);
+    if (!body.lotNumber) {
+      return errorResponse('Lot number is required', 400);
     }
     
     const result = await neo4jWriteOne<SampleNode>(
       SAMPLE_QUERIES.createSample,
       {
         properties: body,
-        lotId: body.lotId,
+        projectId: projectId,
+        lotNumber: body.lotNumber,
       }
     );
     

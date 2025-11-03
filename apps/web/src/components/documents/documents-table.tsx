@@ -47,7 +47,7 @@ export function DocumentsTable({ documents, projectId }: DocumentsTableProps) {
     return matchesSearch && matchesType && matchesStatus;
   });
   
-  const uniqueTypes = Array.from(new Set(documents.map(d => d.type).filter((t): t is string => t !== undefined)));
+  const uniqueTypes = Array.from(new Set(documents.map(d => d.type).filter(t => t !== undefined)));
   
   return (
     <div className="space-y-4">
@@ -123,7 +123,7 @@ export function DocumentsTable({ documents, projectId }: DocumentsTableProps) {
                     <Badge variant="secondary">{doc.revision}</Badge>
                   </TableCell>
                   <TableCell className="text-sm text-muted-foreground">
-                    {format(new Date(doc.date), 'dd MMM yyyy')}
+                    {doc.date ? format(new Date(doc.date), 'dd MMM yyyy') : doc.issueDate ? format(new Date(doc.issueDate), 'dd MMM yyyy') : '-'}
                   </TableCell>
                   <TableCell>
                     <StatusBadge status={doc.status} />
@@ -154,7 +154,7 @@ export function DocumentsTable({ documents, projectId }: DocumentsTableProps) {
         </div>
         <div className="flex gap-4">
           <span>Draft: {documents.filter(d => d.status === 'draft').length}</span>
-          <span>For Review: {documents.filter(d => d.status === 'for_review').length}</span>
+          <span>In Review: {documents.filter(d => d.status === 'in_review').length}</span>
           <span>Approved: {documents.filter(d => d.status === 'approved').length}</span>
           <span>Superseded: {documents.filter(d => d.status === 'superseded').length}</span>
         </div>
@@ -166,9 +166,10 @@ export function DocumentsTable({ documents, projectId }: DocumentsTableProps) {
 function StatusBadge({ status }: { status: DocumentNode['status'] }) {
   const variants: Record<DocumentNode['status'], { variant: any; label: string }> = {
     draft: { variant: 'secondary', label: 'Draft' },
-    for_review: { variant: 'default', label: 'For Review' },
-    approved: { variant: 'success', label: 'Approved' },
+    in_review: { variant: 'default', label: 'In Review' },
+    approved: { variant: 'outline', label: 'Approved' },
     superseded: { variant: 'outline', label: 'Superseded' },
+    archived: { variant: 'outline', label: 'Archived' },
   };
   
   const config = variants[status];

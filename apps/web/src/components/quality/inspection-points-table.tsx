@@ -20,7 +20,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { format } from 'date-fns';
-import { CheckCircle2, Circle, AlertCircle } from 'lucide-react';
+import { CheckCircle2, Circle, AlertCircle, XCircle } from 'lucide-react';
 
 interface InspectionPointsTableProps {
   points: InspectionPointNode[];
@@ -151,6 +151,7 @@ function TypeBadge({ type }: { type: InspectionPointNode['type'] }) {
     hold: { icon: AlertCircle, variant: 'destructive', label: 'Hold Point' },
     witness: { icon: Circle, variant: 'default', label: 'Witness Point' },
     surveillance: { icon: Circle, variant: 'secondary', label: 'Surveillance' },
+    record: { icon: Circle, variant: 'outline', label: 'Record' },
   };
   
   const item = config[type];
@@ -167,8 +168,10 @@ function TypeBadge({ type }: { type: InspectionPointNode['type'] }) {
 function StatusBadge({ status }: { status: InspectionPointNode['status'] }) {
   const config: Record<InspectionPointNode['status'], { icon: any; variant: any; label: string }> = {
     pending: { icon: Circle, variant: 'secondary', label: 'Pending' },
-    completed: { icon: CheckCircle2, variant: 'default', label: 'Completed' },
-    approved: { icon: CheckCircle2, variant: 'success', label: 'Approved' },
+    in_progress: { icon: Circle, variant: 'default', label: 'In Progress' },
+    completed: { icon: CheckCircle2, variant: 'outline', label: 'Completed' },
+    approved: { icon: CheckCircle2, variant: 'outline', label: 'Approved' },
+    rejected: { icon: XCircle, variant: 'destructive', label: 'Rejected' },
   };
   
   const item = config[status];

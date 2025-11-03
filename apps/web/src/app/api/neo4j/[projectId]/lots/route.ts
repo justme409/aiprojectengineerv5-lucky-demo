@@ -36,7 +36,7 @@ export async function GET(
   
   // Choose query based on filters
   let query = LOT_QUERIES.getAllLots;
-  let queryParams: Record<string, any> = { projectId };
+  let queryParams: Record<string, any> = { projectId: projectId };
   
   if (status) {
     query = LOT_QUERIES.getLotsByStatus;
@@ -74,7 +74,7 @@ export const POST = createApiHandler<CreateLotInput, LotNode>({
       LOT_QUERIES.createLot,
       {
         properties: body,
-        projectId,
+        projectId: projectId,
       }
     );
     

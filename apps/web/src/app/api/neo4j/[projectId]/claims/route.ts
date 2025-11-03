@@ -26,7 +26,7 @@ export async function GET(
   
   const result = await neo4jRead<ProgressClaimNode>(
     PROGRESS_CLAIM_QUERIES.getAllClaims,
-    { projectId }
+    { projectId: projectId }
   );
   
   if (result.error) {
@@ -57,7 +57,7 @@ export async function POST(
       PROGRESS_CLAIM_QUERIES.createClaim,
       {
         properties: body,
-        projectId,
+        projectId: projectId,
       }
     );
     

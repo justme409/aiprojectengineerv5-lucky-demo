@@ -101,18 +101,10 @@ export function ITPInstancesTable({ instances, projectId }: ITPInstancesTablePro
                     <StatusBadge status={instance.status} />
                   </TableCell>
                   <TableCell className="text-right">
-                    <div className="flex items-center justify-end gap-2">
-                      <div className="w-24 h-2 bg-muted rounded-full overflow-hidden">
-                        <div
-                          className="h-full bg-primary transition-all"
-                          style={{ width: `${instance.percentComplete}%` }}
-                        />
-                      </div>
-                      <span className="font-mono text-sm">{instance.percentComplete}%</span>
-                    </div>
+                    <span className="text-sm text-muted-foreground">-</span>
                   </TableCell>
                   <TableCell className="text-sm text-muted-foreground">
-                    {instance.completedPoints || 0} / {instance.totalPoints || 0}
+                    -
                   </TableCell>
                 </TableRow>
               ))
@@ -126,7 +118,7 @@ export function ITPInstancesTable({ instances, projectId }: ITPInstancesTablePro
           Showing {filteredInstances.length} of {instances.length} ITP instances
         </div>
         <div className="flex gap-4">
-          <span>Not Started: {instances.filter(i => i.status === 'not_started').length}</span>
+          <span>Pending: {instances.filter(i => i.status === 'pending').length}</span>
           <span>In Progress: {instances.filter(i => i.status === 'in_progress').length}</span>
           <span>Completed: {instances.filter(i => i.status === 'completed').length}</span>
           <span>Approved: {instances.filter(i => i.status === 'approved').length}</span>
@@ -138,10 +130,10 @@ export function ITPInstancesTable({ instances, projectId }: ITPInstancesTablePro
 
 function StatusBadge({ status }: { status: ITPInstanceNode['status'] }) {
   const config: Record<ITPInstanceNode['status'], { icon: any; variant: any; label: string }> = {
-    not_started: { icon: Clock, variant: 'secondary', label: 'Not Started' },
+    pending: { icon: Clock, variant: 'secondary', label: 'Pending' },
     in_progress: { icon: Clock, variant: 'default', label: 'In Progress' },
-    completed: { icon: CheckCircle, variant: 'success', label: 'Completed' },
-    approved: { icon: CheckCircle, variant: 'success', label: 'Approved' },
+    completed: { icon: CheckCircle, variant: 'outline', label: 'Completed' },
+    approved: { icon: CheckCircle, variant: 'outline', label: 'Approved' },
   };
   
   const item = config[status];

@@ -33,7 +33,7 @@ export async function GET(
   const status = filters.status;
   
   let query = ITP_TEMPLATE_QUERIES.getAllTemplates;
-  let queryParams: Record<string, any> = { projectId };
+  let queryParams: Record<string, any> = { projectId: projectId };
   
   if (workType) {
     query = ITP_TEMPLATE_QUERIES.getTemplatesByWorkType;
@@ -72,7 +72,7 @@ export const POST = createApiHandler<CreateITPTemplateInput, ITPTemplateNode>({
       ITP_TEMPLATE_QUERIES.createTemplate,
       {
         properties: body,
-        projectId,
+        projectId: projectId,
       }
     );
     

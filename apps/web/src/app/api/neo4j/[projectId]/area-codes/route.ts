@@ -26,7 +26,7 @@ export async function GET(
   
   const result = await neo4jRead<AreaCodeNode>(
     AREA_CODE_QUERIES.getAllAreaCodes,
-    { projectId }
+    { projectId: projectId }
   );
   
   if (result.error) {
@@ -57,7 +57,7 @@ export async function POST(
       AREA_CODE_QUERIES.createAreaCode,
       {
         properties: body,
-        projectId,
+        projectId: projectId,
       }
     );
     

@@ -123,7 +123,7 @@ export function SamplesTable({ samples, projectId }: SamplesTableProps) {
                     {sample.takenBy}
                   </TableCell>
                   <TableCell className="text-sm text-muted-foreground">
-                    {sample.labName || '-'}
+                    -
                   </TableCell>
                   <TableCell>
                     <StatusBadge status={sample.status} />
@@ -155,7 +155,8 @@ function StatusBadge({ status }: { status: SampleNode['status'] }) {
     collected: { variant: 'secondary', label: 'Collected' },
     in_transit: { variant: 'default', label: 'In Transit' },
     at_lab: { variant: 'default', label: 'At Lab' },
-    tested: { variant: 'success', label: 'Tested' },
+    tested: { variant: 'outline', label: 'Tested' },
+    disposed: { variant: 'outline', label: 'Disposed' },
   };
   
   const config = variants[status];

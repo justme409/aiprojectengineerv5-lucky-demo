@@ -35,8 +35,7 @@ export function MaterialsTable({ materials, projectId }: MaterialsTableProps) {
   const filteredMaterials = materials.filter((material) => {
     const matchesSearch = 
       material.name.toLowerCase().includes(search.toLowerCase()) ||
-      material.supplier.toLowerCase().includes(search.toLowerCase()) ||
-      (material.productCode && material.productCode.toLowerCase().includes(search.toLowerCase()));
+      material.supplier.toLowerCase().includes(search.toLowerCase());
     
     const matchesStatus = statusFilter === 'all' || material.approvalStatus === statusFilter;
     const matchesType = typeFilter === 'all' || material.type === typeFilter;
@@ -116,7 +115,7 @@ export function MaterialsTable({ materials, projectId }: MaterialsTableProps) {
                   </TableCell>
                   <TableCell>{material.supplier}</TableCell>
                   <TableCell className="text-sm text-muted-foreground">
-                    {material.productCode || '-'}
+                    -
                   </TableCell>
                   <TableCell className="text-sm text-muted-foreground">
                     {material.specification}
@@ -126,7 +125,7 @@ export function MaterialsTable({ materials, projectId }: MaterialsTableProps) {
                   </TableCell>
                   <TableCell>
                     {material.certificateId ? (
-                      <Badge variant="success" className="gap-1">
+                      <Badge variant="outline" className="gap-1 bg-green-50 text-green-700 border-green-300">
                         <CheckCircle className="h-3 w-3" />
                         Available
                       </Badge>

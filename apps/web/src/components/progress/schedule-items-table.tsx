@@ -41,9 +41,9 @@ export function ScheduleItemsTable({ items, projectId }: ScheduleItemsTableProps
     return matchesSearch && matchesCategory;
   });
   
-  const uniqueCategories = Array.from(new Set(items.map(i => i.category)));
+  const uniqueCategories = Array.from(new Set(items.map(i => i.category).filter(c => c !== undefined)));
   
-  const totalValue = filteredItems.reduce((sum, item) => sum + (item.contractQuantity * item.rate), 0);
+  const totalValue = filteredItems.reduce((sum, item) => sum + (item.quantity * item.rate), 0);
   
   return (
     <div className="space-y-4">
@@ -105,13 +105,13 @@ export function ScheduleItemsTable({ items, projectId }: ScheduleItemsTableProps
                   </TableCell>
                   <TableCell>{item.unit}</TableCell>
                   <TableCell className="text-right font-mono">
-                    {item.contractQuantity.toLocaleString()}
+                    {item.quantity.toLocaleString()}
                   </TableCell>
                   <TableCell className="text-right font-mono">
                     ${item.rate.toFixed(2)}
                   </TableCell>
                   <TableCell className="text-right font-mono font-semibold">
-                    ${(item.contractQuantity * item.rate).toLocaleString(undefined, {
+                    ${(item.quantity * item.rate).toLocaleString(undefined, {
                       minimumFractionDigits: 2,
                       maximumFractionDigits: 2,
                     })}
