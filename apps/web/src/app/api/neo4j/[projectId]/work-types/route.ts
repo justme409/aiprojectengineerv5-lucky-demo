@@ -2,7 +2,7 @@ import { NextRequest } from 'next/server';
 import {
   WorkTypeNode,
   WORK_TYPE_QUERIES,
-} from '@/schemas/neo4j/work-type.schema';
+} from '@/schemas/neo4j';
 import {
   errorResponse,
   successResponse,

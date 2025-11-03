@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation'
 import { neo4jClient } from '@/lib/neo4j'
-import { ProjectNode, PROJECT_QUERIES } from '@/schemas/neo4j/project.schema'
+import { ProjectNode, PROJECT_QUERIES } from '@/schemas/neo4j'
 import { getEnrichedProjectById } from '@/lib/actions/project-actions'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'

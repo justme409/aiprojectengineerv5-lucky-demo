@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { SampleNode, SAMPLE_QUERIES } from '@/schemas/neo4j/sample.schema';
+import { SampleNode, SAMPLE_QUERIES } from '@/schemas/neo4j';
 import { neo4jClient } from '@/lib/neo4j';
 import { SamplesTable } from '@/components/quality/samples-table';
 import { SamplesTableSkeleton } from '@/components/quality/samples-table-skeleton';

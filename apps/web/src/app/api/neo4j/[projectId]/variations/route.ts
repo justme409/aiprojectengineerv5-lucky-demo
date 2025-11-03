@@ -2,7 +2,7 @@ import { NextRequest } from 'next/server';
 import {
   VariationNode,
   VARIATION_QUERIES,
-} from '@/schemas/neo4j/variation.schema';
+} from '@/schemas/neo4j';
 import {
   errorResponse,
   successResponse,

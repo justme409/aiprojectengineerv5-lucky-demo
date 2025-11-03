@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { MaterialNode, MATERIAL_QUERIES } from '@/schemas/neo4j/material.schema';
+import { MaterialNode, MATERIAL_QUERIES } from '@/schemas/neo4j';
 import { neo4jClient } from '@/lib/neo4j';
 import { MaterialsTable } from '@/components/quality/materials-table';
 import { MaterialsTableSkeleton } from '@/components/quality/materials-table-skeleton';

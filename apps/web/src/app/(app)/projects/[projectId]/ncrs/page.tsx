@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { NCRNode, NCR_QUERIES } from '@/schemas/neo4j/ncr.schema';
+import { NCRNode, NCR_QUERIES } from '@/schemas/neo4j';
 import { neo4jClient } from '@/lib/neo4j';
 import { NCRsTable } from '@/components/quality/ncrs-table';
 import { NCRsTableSkeleton } from '@/components/quality/ncrs-table-skeleton';

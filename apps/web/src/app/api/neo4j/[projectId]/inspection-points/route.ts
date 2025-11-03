@@ -2,7 +2,7 @@ import { NextRequest } from 'next/server';
 import {
   InspectionPointNode,
   INSPECTION_POINT_QUERIES,
-} from '@/schemas/neo4j/inspection-point.schema';
+} from '@/schemas/neo4j';
 import {
   errorResponse,
   successResponse,

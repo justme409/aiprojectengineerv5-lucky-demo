@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { LotNode, LOT_QUERIES } from '@/schemas/neo4j/lot.schema';
+import { LotNode, LOT_QUERIES } from '@/schemas/neo4j';
 import { neo4jClient } from '@/lib/neo4j';
 import { CloseoutChecklist } from '@/components/quality/closeout-checklist';
 import { Skeleton } from '@/components/ui/skeleton';

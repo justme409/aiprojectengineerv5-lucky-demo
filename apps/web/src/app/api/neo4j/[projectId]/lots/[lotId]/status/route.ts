@@ -4,7 +4,7 @@ import {
   LotNode,
   LOT_QUERIES,
   LotStatusEnum,
-} from '@/schemas/neo4j/lot.schema';
+} from '@/schemas/neo4j';
 import {
   createApiHandler,
 } from '@/lib/api/neo4j-handler';

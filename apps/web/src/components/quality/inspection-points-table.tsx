@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { InspectionPointNode } from '@/schemas/neo4j/inspection-point.schema';
+import { InspectionPointNode } from '@/schemas/neo4j';
 import {
   Table,
   TableBody,

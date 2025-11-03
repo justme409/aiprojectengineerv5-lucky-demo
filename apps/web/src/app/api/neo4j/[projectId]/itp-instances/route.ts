@@ -2,7 +2,7 @@ import { NextRequest } from 'next/server';
 import {
   ITPInstanceNode,
   ITP_INSTANCE_QUERIES,
-} from '@/schemas/neo4j/itp-instance.schema';
+} from '@/schemas/neo4j';
 import {
   errorResponse,
   successResponse,

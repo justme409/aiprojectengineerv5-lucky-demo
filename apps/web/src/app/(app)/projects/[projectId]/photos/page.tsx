@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { PhotoNode, PHOTO_QUERIES } from '@/schemas/neo4j/photo.schema';
+import { PhotoNode, PHOTO_QUERIES } from '@/schemas/neo4j';
 import { neo4jClient } from '@/lib/neo4j';
 import { PhotosGallery } from '@/components/photos/photos-gallery';
 import { PhotosGallerySkeleton } from '@/components/photos/photos-gallery-skeleton';

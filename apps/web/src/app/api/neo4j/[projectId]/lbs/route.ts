@@ -2,7 +2,7 @@ import { NextRequest } from 'next/server';
 import {
   LBSNodeType,
   LBS_NODE_QUERIES,
-} from '@/schemas/neo4j/lbs-node.schema';
+} from '@/schemas/neo4j';
 import {
   errorResponse,
   successResponse,

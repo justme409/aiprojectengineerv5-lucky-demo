@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { ProgressClaimNode } from '@/schemas/neo4j/progress-claim.schema';
+import { ProgressClaimNode } from '@/schemas/neo4j';
 import {
   Table,
   TableBody,

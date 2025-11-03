@@ -4,7 +4,7 @@ import {
   ITP_TEMPLATE_QUERIES,
   CreateITPTemplateInputSchema,
   CreateITPTemplateInput,
-} from '@/schemas/neo4j/itp-template.schema';
+} from '@/schemas/neo4j';
 import {
   createApiHandler,
   errorResponse,

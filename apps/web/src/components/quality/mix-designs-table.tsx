@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { MixDesignNode } from '@/schemas/neo4j/mix-design.schema';
+import { MixDesignNode } from '@/schemas/neo4j';
 import {
   Table,
   TableBody,

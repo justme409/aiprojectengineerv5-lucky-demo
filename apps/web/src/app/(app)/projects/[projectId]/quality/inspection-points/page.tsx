@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { InspectionPointNode, INSPECTION_POINT_QUERIES } from '@/schemas/neo4j/inspection-point.schema';
+import { InspectionPointNode, INSPECTION_POINT_QUERIES } from '@/schemas/neo4j';
 import { neo4jClient } from '@/lib/neo4j';
 import { InspectionPointsTable } from '@/components/quality/inspection-points-table';
 import { InspectionPointsTableSkeleton } from '@/components/quality/inspection-points-table-skeleton';

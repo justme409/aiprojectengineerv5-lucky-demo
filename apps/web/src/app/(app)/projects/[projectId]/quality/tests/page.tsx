@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { TestRequestNode, TEST_REQUEST_QUERIES } from '@/schemas/neo4j/test-request.schema';
+import { TestRequestNode, TEST_REQUEST_QUERIES } from '@/schemas/neo4j';
 import { neo4jClient } from '@/lib/neo4j';
 import { TestRequestsTable } from '@/components/quality/test-requests-table';
 import { TestRequestsTableSkeleton } from '@/components/quality/test-requests-table-skeleton';

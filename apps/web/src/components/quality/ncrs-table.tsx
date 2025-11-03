@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { NCRNode } from '@/schemas/neo4j/ncr.schema';
+import { NCRNode } from '@/schemas/neo4j';
 import {
   Table,
   TableBody,

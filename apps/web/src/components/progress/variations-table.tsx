@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { VariationNode } from '@/schemas/neo4j/variation.schema';
+import { VariationNode } from '@/schemas/neo4j';
 import {
   Table,
   TableBody,

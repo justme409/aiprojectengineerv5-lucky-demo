@@ -2,7 +2,7 @@ import { NextRequest } from 'next/server';
 import {
   ManagementPlanNode,
   MANAGEMENT_PLAN_QUERIES,
-} from '@/schemas/neo4j/management-plan.schema';
+} from '@/schemas/neo4j';
 import {
   errorResponse,
   successResponse,

@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { DocumentNode, DOCUMENT_QUERIES } from '@/schemas/neo4j/document.schema';
+import { DocumentNode, DOCUMENT_QUERIES } from '@/schemas/neo4j';
 import { neo4jClient } from '@/lib/neo4j';
 import { DocumentsTable } from '@/components/documents/documents-table';
 import { DocumentsTableSkeleton } from '@/components/documents/documents-table-skeleton';

@@ -1,6 +1,6 @@
 'use client';
 
-import { QuantityNode } from '@/schemas/neo4j/quantity.schema';
+import { QuantityNode } from '@/schemas/neo4j';
 import {
   Table,
   TableBody,

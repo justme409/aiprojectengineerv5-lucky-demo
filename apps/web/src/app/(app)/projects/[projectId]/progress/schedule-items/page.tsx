@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { ScheduleItemNode, SCHEDULE_ITEM_QUERIES } from '@/schemas/neo4j/schedule-item.schema';
+import { ScheduleItemNode, SCHEDULE_ITEM_QUERIES } from '@/schemas/neo4j';
 import { neo4jClient } from '@/lib/neo4j';
 import { ScheduleItemsTable } from '@/components/progress/schedule-items-table';
 import { ScheduleItemsTableSkeleton } from '@/components/progress/schedule-items-table-skeleton';

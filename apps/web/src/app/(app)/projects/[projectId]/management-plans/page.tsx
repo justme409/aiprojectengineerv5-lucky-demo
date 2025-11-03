@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { ManagementPlanNode, MANAGEMENT_PLAN_QUERIES } from '@/schemas/neo4j/management-plan.schema';
+import { ManagementPlanNode, MANAGEMENT_PLAN_QUERIES } from '@/schemas/neo4j';
 import { neo4jClient } from '@/lib/neo4j';
 import {
   Table,

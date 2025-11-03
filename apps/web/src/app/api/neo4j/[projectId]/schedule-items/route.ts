@@ -2,7 +2,7 @@ import { NextRequest } from 'next/server';
 import {
   ScheduleItemNode,
   SCHEDULE_ITEM_QUERIES,
-} from '@/schemas/neo4j/schedule-item.schema';
+} from '@/schemas/neo4j';
 import {
   errorResponse,
   successResponse,

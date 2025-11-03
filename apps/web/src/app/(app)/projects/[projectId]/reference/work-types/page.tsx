@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { WorkTypeNode, WORK_TYPE_QUERIES } from '@/schemas/neo4j/work-type.schema';
+import { WorkTypeNode, WORK_TYPE_QUERIES } from '@/schemas/neo4j';
 import { neo4jClient } from '@/lib/neo4j';
 import {
   Table,

@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
-import { QuantityNode } from '@/schemas/neo4j/quantity.schema';
-import { LotNode, LOT_QUERIES } from '@/schemas/neo4j/lot.schema';
+import { QuantityNode } from '@/schemas/neo4j';
+import { LotNode, LOT_QUERIES } from '@/schemas/neo4j';
 import { neo4jClient } from '@/lib/neo4j';
 import { QuantitiesTable } from '@/components/quality/quantities-table';
 import { Skeleton } from '@/components/ui/skeleton';

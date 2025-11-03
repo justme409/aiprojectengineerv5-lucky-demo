@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { LotWithRelationships } from '@/schemas/neo4j/lot.schema';
+import { LotWithRelationships } from '@/schemas/neo4j';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import {

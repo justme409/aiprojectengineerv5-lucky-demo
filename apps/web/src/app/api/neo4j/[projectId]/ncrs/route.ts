@@ -4,7 +4,7 @@ import {
   NCR_QUERIES,
   CreateNCRInputSchema,
   CreateNCRInput,
-} from '@/schemas/neo4j/ncr.schema';
+} from '@/schemas/neo4j';
 import {
   createApiHandler,
   errorResponse,

@@ -4,7 +4,7 @@ import {
   LOT_QUERIES,
   CreateLotInputSchema,
   CreateLotInput,
-} from '@/schemas/neo4j/lot.schema';
+} from '@/schemas/neo4j';
 import {
   createApiHandler,
   errorResponse,

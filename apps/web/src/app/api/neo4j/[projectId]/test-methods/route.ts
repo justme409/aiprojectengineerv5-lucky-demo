@@ -2,7 +2,7 @@ import { NextRequest } from 'next/server';
 import {
   TestMethodNode,
   TEST_METHOD_QUERIES,
-} from '@/schemas/neo4j/test-method.schema';
+} from '@/schemas/neo4j';
 import {
   errorResponse,
   successResponse,

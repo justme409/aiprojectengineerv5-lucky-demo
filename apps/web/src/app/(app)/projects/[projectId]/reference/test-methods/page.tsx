@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { TestMethodNode, TEST_METHOD_QUERIES } from '@/schemas/neo4j/test-method.schema';
+import { TestMethodNode, TEST_METHOD_QUERIES } from '@/schemas/neo4j';
 import { neo4jClient } from '@/lib/neo4j';
 import {
   Table,

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { PhotoNode } from '@/schemas/neo4j/photo.schema';
+import { PhotoNode } from '@/schemas/neo4j';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { format } from 'date-fns';

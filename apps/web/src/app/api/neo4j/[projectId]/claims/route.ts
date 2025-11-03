@@ -2,7 +2,7 @@ import { NextRequest } from 'next/server';
 import {
   ProgressClaimNode,
   PROGRESS_CLAIM_QUERIES,
-} from '@/schemas/neo4j/progress-claim.schema';
+} from '@/schemas/neo4j';
 import {
   errorResponse,
   successResponse,

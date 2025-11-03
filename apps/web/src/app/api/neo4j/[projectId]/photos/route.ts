@@ -2,7 +2,7 @@ import { NextRequest } from 'next/server';
 import {
   PhotoNode,
   PHOTO_QUERIES,
-} from '@/schemas/neo4j/photo.schema';
+} from '@/schemas/neo4j';
 import {
   errorResponse,
   successResponse,

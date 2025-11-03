@@ -1,6 +1,6 @@
 'use client';
 
-import { LotNode } from '@/schemas/neo4j/lot.schema';
+import { LotNode } from '@/schemas/neo4j';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { CheckCircle2, Circle, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';

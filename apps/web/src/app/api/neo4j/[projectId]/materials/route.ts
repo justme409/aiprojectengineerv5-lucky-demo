@@ -2,7 +2,7 @@ import { NextRequest } from 'next/server';
 import {
   MaterialNode,
   MATERIAL_QUERIES,
-} from '@/schemas/neo4j/material.schema';
+} from '@/schemas/neo4j';
 import {
   errorResponse,
   successResponse,

@@ -2,7 +2,7 @@ import { NextRequest } from 'next/server';
 import {
   SampleNode,
   SAMPLE_QUERIES,
-} from '@/schemas/neo4j/sample.schema';
+} from '@/schemas/neo4j';
 import {
   errorResponse,
   successResponse,

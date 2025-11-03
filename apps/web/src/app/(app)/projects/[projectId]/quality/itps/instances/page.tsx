@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { ITPInstanceNode, ITP_INSTANCE_QUERIES } from '@/schemas/neo4j/itp-instance.schema';
+import { ITPInstanceNode, ITP_INSTANCE_QUERIES } from '@/schemas/neo4j';
 import { neo4jClient } from '@/lib/neo4j';
 import { ITPInstancesTable } from '@/components/quality/itp-instances-table';
 import { ITPInstancesTableSkeleton } from '@/components/quality/itp-instances-table-skeleton';

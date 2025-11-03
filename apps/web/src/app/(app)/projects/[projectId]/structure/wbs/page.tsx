@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { WBSNodeType, WBS_NODE_QUERIES } from '@/schemas/neo4j/wbs-node.schema';
+import { WBSNodeType, WBS_NODE_QUERIES } from '@/schemas/neo4j';
 import { neo4jClient } from '@/lib/neo4j';
 import {
   Table,

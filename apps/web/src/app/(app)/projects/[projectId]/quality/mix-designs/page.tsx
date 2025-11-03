@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { MixDesignNode, MIX_DESIGN_QUERIES } from '@/schemas/neo4j/mix-design.schema';
+import { MixDesignNode, MIX_DESIGN_QUERIES } from '@/schemas/neo4j';
 import { neo4jClient } from '@/lib/neo4j';
 import { MixDesignsTable } from '@/components/quality/mix-designs-table';
 import { MixDesignsTableSkeleton } from '@/components/quality/mix-designs-table-skeleton';

@@ -2,7 +2,7 @@ import { NextRequest } from 'next/server';
 import {
   WBSNodeType,
   WBS_NODE_QUERIES,
-} from '@/schemas/neo4j/wbs-node.schema';
+} from '@/schemas/neo4j';
 import {
   errorResponse,
   successResponse,

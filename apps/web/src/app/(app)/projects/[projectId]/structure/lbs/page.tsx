@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { LBSNodeType, LBS_NODE_QUERIES } from '@/schemas/neo4j/lbs-node.schema';
+import { LBSNodeType, LBS_NODE_QUERIES } from '@/schemas/neo4j';
 import { neo4jClient } from '@/lib/neo4j';
 import {
   Table,

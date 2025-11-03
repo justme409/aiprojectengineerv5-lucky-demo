@@ -2,7 +2,7 @@ import { NextRequest } from 'next/server';
 import {
   AreaCodeNode,
   AREA_CODE_QUERIES,
-} from '@/schemas/neo4j/area-code.schema';
+} from '@/schemas/neo4j';
 import {
   errorResponse,
   successResponse,

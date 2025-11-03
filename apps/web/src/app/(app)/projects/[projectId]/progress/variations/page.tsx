@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { VariationNode, VARIATION_QUERIES } from '@/schemas/neo4j/variation.schema';
+import { VariationNode, VARIATION_QUERIES } from '@/schemas/neo4j';
 import { neo4jClient } from '@/lib/neo4j';
 import { VariationsTable } from '@/components/progress/variations-table';
 import { VariationsTableSkeleton } from '@/components/progress/variations-table-skeleton';

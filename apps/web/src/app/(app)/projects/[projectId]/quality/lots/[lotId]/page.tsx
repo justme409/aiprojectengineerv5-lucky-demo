@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import { notFound } from 'next/navigation';
-import { LotWithRelationships, LOT_QUERIES } from '@/schemas/neo4j/lot.schema';
+import { LotWithRelationships, LOT_QUERIES } from '@/schemas/neo4j';
 import { neo4jClient } from '@/lib/neo4j';
 import { LotDetailHeader } from '@/components/quality/lot-detail-header';
 import { LotDetailTabs } from '@/components/quality/lot-detail-tabs';

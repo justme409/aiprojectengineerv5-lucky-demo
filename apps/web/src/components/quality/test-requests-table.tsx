@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { TestRequestNode } from '@/schemas/neo4j/test-request.schema';
+import { TestRequestNode } from '@/schemas/neo4j';
 import {
   Table,
   TableBody,

@@ -2,7 +2,7 @@ import { NextRequest } from 'next/server';
 import {
   MixDesignNode,
   MIX_DESIGN_QUERIES,
-} from '@/schemas/neo4j/mix-design.schema';
+} from '@/schemas/neo4j';
 import {
   errorResponse,
   successResponse,

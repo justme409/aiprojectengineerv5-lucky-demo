@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { MaterialNode } from '@/schemas/neo4j/material.schema';
+import { MaterialNode } from '@/schemas/neo4j';
 import {
   Table,
   TableBody,

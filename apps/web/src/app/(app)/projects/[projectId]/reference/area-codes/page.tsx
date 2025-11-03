@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { AreaCodeNode, AREA_CODE_QUERIES } from '@/schemas/neo4j/area-code.schema';
+import { AreaCodeNode, AREA_CODE_QUERIES } from '@/schemas/neo4j';
 import { neo4jClient } from '@/lib/neo4j';
 import {
   Table,

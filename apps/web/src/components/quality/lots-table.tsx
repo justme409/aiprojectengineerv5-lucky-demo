@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { LotNode } from '@/schemas/neo4j/lot.schema';
+import { LotNode } from '@/schemas/neo4j';
 import {
   Table,
   TableBody,

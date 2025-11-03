@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { ProgressClaimNode, PROGRESS_CLAIM_QUERIES } from '@/schemas/neo4j/progress-claim.schema';
+import { ProgressClaimNode, PROGRESS_CLAIM_QUERIES } from '@/schemas/neo4j';
 import { neo4jClient } from '@/lib/neo4j';
 import { ProgressClaimsTable } from '@/components/progress/progress-claims-table';
 import { ProgressClaimsTableSkeleton } from '@/components/progress/progress-claims-table-skeleton';

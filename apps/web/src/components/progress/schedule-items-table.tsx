@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { ScheduleItemNode } from '@/schemas/neo4j/schedule-item.schema';
+import { ScheduleItemNode } from '@/schemas/neo4j';
 import {
   Table,
   TableBody,
