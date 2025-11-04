@@ -23,14 +23,14 @@ export default async function ProjectDetailsPage({ params }: PageProps) {
 	// Try to fetch detailed project data from Neo4j
 	const results = await neo4jClient.read<{ project: ProjectNode }>(
 		PROJECT_QUERIES.getProject,
-		{ projectUuid: projectId }
+		{ projectId: projectId }
 	)
 
 	const neo4jProject = results[0]?.project
 	
 	// If Neo4j data doesn't exist yet, use Postgres data as fallback
 	const project: Partial<ProjectNode> = neo4jProject || {
-		project_uuid: postgresProject.id,
+		project_id: postgresProject.id,
 		project_name: postgresProject.displayName,
 		project_description: postgresProject.description,
 		project_address: postgresProject.location,
