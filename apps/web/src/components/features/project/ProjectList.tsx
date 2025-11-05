@@ -126,50 +126,51 @@ export default function ProjectList() {
 
                   return (
                     <TableRow key={project.id}>
-                    <TableCell className="font-medium">
-                      <Link
-                        href={`/projects/${project.id}/overview`}
-                        className="hover:underline"
-                      >
-                        {project.displayName || project.name || `Project ${project.id.slice(0,8)}`}
-                      </Link>
-                    </TableCell>
-                    <TableCell>{location || 'Location not available'}</TableCell>
-                    <TableCell>
-                      {project.displayClient || project.client_name || 'Client unknown'}
-                    </TableCell>
-                    <TableCell>
-                      {new Date(project.created_at).toLocaleDateString()}
-                    </TableCell>
-                    <TableCell className="text-right">
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button variant="ghost" size="icon">
-                            <MoreVertical className="h-4 w-4" />
-                            <span className="sr-only">Open menu</span>
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                          <DropdownMenuItem asChild>
-                            <Link href={`/projects/${project.id}/overview`}>
-                              View Project
-                            </Link>
-                          </DropdownMenuItem>
-                          <DropdownMenuItem asChild>
-                            <Link href={`/projects/${project.id}/documents`}>
-                              Documents
-                            </Link>
-                          </DropdownMenuItem>
-                          <DropdownMenuItem asChild>
-                            <Link href={`/projects/${project.id}/settings`}>
-                              Settings
-                            </Link>
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </TableCell>
-                  </TableRow>
-                )})
+                      <TableCell className="font-medium">
+                        <Link
+                          href={`/projects/${project.id}/overview`}
+                          className="hover:underline"
+                        >
+                          {project.displayName || project.name || `Project ${project.id.slice(0, 8)}`}
+                        </Link>
+                      </TableCell>
+                      <TableCell>{location || 'Location not available'}</TableCell>
+                      <TableCell>
+                        {project.displayClient || project.client_name || 'Client unknown'}
+                      </TableCell>
+                      <TableCell>
+                        {new Date(project.created_at).toLocaleDateString()}
+                      </TableCell>
+                      <TableCell className="text-right">
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" size="icon">
+                              <MoreVertical className="h-4 w-4" />
+                              <span className="sr-only">Open menu</span>
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end">
+                            <DropdownMenuItem asChild>
+                              <Link href={`/projects/${project.id}/overview`}>
+                                View Project
+                              </Link>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem asChild>
+                              <Link href={`/projects/${project.id}/documents`}>
+                                Documents
+                              </Link>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem asChild>
+                              <Link href={`/projects/${project.id}/settings`}>
+                                Settings
+                              </Link>
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      </TableCell>
+                    </TableRow>
+                  )
+                })
               )}
             </TableBody>
           </Table>
