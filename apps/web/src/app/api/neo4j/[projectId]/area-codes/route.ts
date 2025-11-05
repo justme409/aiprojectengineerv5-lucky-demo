@@ -2,6 +2,7 @@ import { NextRequest } from 'next/server';
 import {
   AreaCodeNode,
   AREA_CODE_QUERIES,
+  CreateAreaCodeInputSchema,
 } from '@/schemas/neo4j';
 import {
   errorResponse,
@@ -52,11 +53,17 @@ export async function POST(
   
   try {
     const body = await request.json();
+    const parsed = CreateAreaCodeInputSchema.safeParse(body);
+
+    if (!parsed.success) {
+      console.error('Invalid area code payload:', parsed.error);
+      return errorResponse('Invalid area code payload', 422);
+    }
     
     const result = await neo4jWriteOne<AreaCodeNode>(
       AREA_CODE_QUERIES.createAreaCode,
       {
-        properties: body,
+        properties: parsed.data,
         projectId: projectId,
       }
     );

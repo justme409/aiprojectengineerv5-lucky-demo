@@ -2,6 +2,7 @@ import { NextRequest } from 'next/server';
 import {
   WorkTypeNode,
   WORK_TYPE_QUERIES,
+  CreateWorkTypeInputSchema,
 } from '@/schemas/neo4j';
 import {
   errorResponse,
@@ -52,11 +53,17 @@ export async function POST(
   
   try {
     const body = await request.json();
+    const parsed = CreateWorkTypeInputSchema.safeParse(body);
+
+    if (!parsed.success) {
+      console.error('Invalid work type payload:', parsed.error);
+      return errorResponse('Invalid work type payload', 422);
+    }
     
     const result = await neo4jWriteOne<WorkTypeNode>(
       WORK_TYPE_QUERIES.createWorkType,
       {
-        properties: body,
+        properties: parsed.data,
         projectId: projectId,
       }
     );
