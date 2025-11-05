@@ -36,7 +36,7 @@ export function SamplesTable({ samples, projectId }: SamplesTableProps) {
   const filteredSamples = samples.filter((sample) => {
     const matchesSearch = 
       sample.number.toLowerCase().includes(search.toLowerCase()) ||
-      sample.location.toLowerCase().includes(search.toLowerCase());
+      (sample.location || '').toLowerCase().includes(search.toLowerCase());
     
     const matchesType = typeFilter === 'all' || sample.type === typeFilter;
     const matchesStatus = statusFilter === 'all' || sample.status === statusFilter;
@@ -44,7 +44,7 @@ export function SamplesTable({ samples, projectId }: SamplesTableProps) {
     return matchesSearch && matchesType && matchesStatus;
   });
   
-  const uniqueTypes = Array.from(new Set(samples.map(s => s.type)));
+  const uniqueTypes = Array.from(new Set(samples.map(s => s.type).filter(Boolean)));
   
   return (
     <div className="space-y-4">
@@ -123,7 +123,7 @@ export function SamplesTable({ samples, projectId }: SamplesTableProps) {
                     {sample.takenBy}
                   </TableCell>
                   <TableCell className="text-sm text-muted-foreground">
-                    -
+                    {sample.labName || '-'}
                   </TableCell>
                   <TableCell>
                     <StatusBadge status={sample.status} />

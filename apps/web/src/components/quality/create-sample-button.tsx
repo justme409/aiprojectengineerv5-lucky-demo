@@ -29,9 +29,11 @@ export function CreateSampleButton({ projectId, lotId }: CreateSampleButtonProps
   const [formData, setFormData] = useState({
     type: '',
     location: '',
-    lotId: lotId || '',
+    lotNumber: lotId || '',
     takenBy: '',
     labName: '',
+    notes: '',
+    dateTaken: new Date().toISOString().split('T')[0],
   });
   
   const handleSubmit = async (e: React.FormEvent) => {
@@ -39,14 +41,17 @@ export function CreateSampleButton({ projectId, lotId }: CreateSampleButtonProps
     setLoading(true);
     
     try {
-      if (!formData.lotId) {
-        throw new Error('Lot ID is required');
+      if (!formData.lotNumber) {
+        throw new Error('Lot number is required');
       }
       
       const response = await fetch(`/api/neo4j/${projectId}/samples`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          dateTaken: formData.dateTaken,
+        }),
       });
       
       if (!response.ok) {
@@ -60,9 +65,11 @@ export function CreateSampleButton({ projectId, lotId }: CreateSampleButtonProps
       setFormData({
         type: '',
         location: '',
-        lotId: lotId || '',
+        lotNumber: lotId || '',
         takenBy: '',
         labName: '',
+        notes: '',
+        dateTaken: new Date().toISOString().split('T')[0],
       });
     } catch (error) {
       toast.error('Failed to create sample');
@@ -115,12 +122,12 @@ export function CreateSampleButton({ projectId, lotId }: CreateSampleButtonProps
             
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="lotId">Lot ID *</Label>
+                <Label htmlFor="lotNumber">Lot ID *</Label>
                 <Input
-                  id="lotId"
-                  value={formData.lotId}
-                  onChange={(e) => setFormData({ ...formData, lotId: e.target.value })}
-                  placeholder="Lot UUID"
+                  id="lotNumber"
+                  value={formData.lotNumber}
+                  onChange={(e) => setFormData({ ...formData, lotNumber: e.target.value })}
+                  placeholder="Lot number"
                   required
                   disabled={!!lotId}
                 />
@@ -144,6 +151,25 @@ export function CreateSampleButton({ projectId, lotId }: CreateSampleButtonProps
                 value={formData.labName}
                 onChange={(e) => setFormData({ ...formData, labName: e.target.value })}
                 placeholder="e.g., ALS Laboratory"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="dateTaken">Date Taken *</Label>
+              <Input
+                id="dateTaken"
+                type="date"
+                value={formData.dateTaken}
+                onChange={(e) => setFormData({ ...formData, dateTaken: e.target.value })}
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="notes">Notes</Label>
+              <Input
+                id="notes"
+                value={formData.notes}
+                onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
+                placeholder="Additional notes"
               />
             </div>
           </div>

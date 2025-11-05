@@ -5,27 +5,14 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
-
-interface ItpRecord {
-  itp_asset_id: string
-  name: string
-  type: string
-  approval_state: string
-  version: number
-  jurisdiction_coverage_status: string
-  required_points_present: boolean
-  approvals: Array<{
-    user_or_role: string
-    approved_at: string
-  }>
-}
+import { ITPTemplateNode } from '@/schemas/neo4j'
 
 interface ItpRegisterProps {
   projectId: string
 }
 
 export default function ItpRegister({ projectId }: ItpRegisterProps) {
-  const [itpRecords, setItpRecords] = useState<ItpRecord[]>([])
+  const [itpRecords, setItpRecords] = useState<ITPTemplateNode[]>([])
   const [loading, setLoading] = useState(true)
 
   const fetchItpRecords = useCallback(async () => {
@@ -33,21 +20,8 @@ export default function ItpRegister({ projectId }: ItpRegisterProps) {
       const response = await fetch(`/api/neo4j/${projectId}/itp-templates`)
       if (response.ok) {
         const result = await response.json()
-        // Transform Neo4j data to match component interface
-        const transformed = (result.data || []).map((item: any) => {
-          const props = item.t?.properties || item
-          return {
-            itp_asset_id: props.id || props.uuid || props.docNo,
-            name: props.title || props.workType || props.description,
-            type: props.workType || 'template',
-            approval_state: props.status || props.approvalStatus || 'pending',
-            version: parseInt(props.version || props.revisionNumber || '1'),
-            jurisdiction_coverage_status: props.jurisdiction || 'unknown',
-            required_points_present: true,
-            approvals: []
-          }
-        })
-        setItpRecords(transformed)
+        const templates: ITPTemplateNode[] = (result.data || []).map((item: ITPTemplateNode) => item)
+        setItpRecords(templates)
       }
     } catch (error) {
       console.error('Error fetching ITP records:', error)
@@ -73,14 +47,16 @@ export default function ItpRegister({ projectId }: ItpRegisterProps) {
     }
   }
 
-  const getCoverageColor = (status: string) => {
+  const getApprovalColor = (status: string) => {
     switch (status?.toLowerCase()) {
-      case 'compliant':
+      case 'approved':
         return 'bg-green-100 text-green-800'
-      case 'partial':
+      case 'pending':
         return 'bg-yellow-100 text-yellow-800'
-      case 'non-compliant':
+      case 'rejected':
         return 'bg-red-100 text-red-800'
+      case 'not_required':
+        return 'bg-blue-100 text-blue-800'
       default:
         return 'bg-gray-100 text-gray-800'
     }
@@ -133,41 +109,31 @@ export default function ItpRegister({ projectId }: ItpRegisterProps) {
               <TableHeader>
                 <TableRow>
                   <TableHead>Name</TableHead>
-                  <TableHead>Type</TableHead>
+                  <TableHead>Work Type</TableHead>
                   <TableHead>Status</TableHead>
-                  <TableHead>Version</TableHead>
-                  <TableHead>Coverage</TableHead>
-                  <TableHead>Points Present</TableHead>
-                  <TableHead>Approvals</TableHead>
+                  <TableHead>Approval</TableHead>
+                  <TableHead>Revision</TableHead>
+                  <TableHead>Spec Ref</TableHead>
                   <TableHead>Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {itpRecords.map((record) => (
-                  <TableRow key={record.itp_asset_id}>
-                    <TableCell className="font-medium">{record.name}</TableCell>
-                    <TableCell className="capitalize">{record.type.replace('_', ' ')}</TableCell>
+                  <TableRow key={record.docNo}>
+                    <TableCell className="font-medium">{record.description || record.docNo}</TableCell>
+                    <TableCell className="capitalize">{record.workType?.replace(/_/g, ' ') || 'template'}</TableCell>
                     <TableCell>
-                      <Badge className={getStatusColor(record.approval_state)}>
-                        {record.approval_state}
-                      </Badge>
-                    </TableCell>
-                    <TableCell>v{record.version}</TableCell>
-                    <TableCell>
-                      <Badge className={getCoverageColor(record.jurisdiction_coverage_status)}>
-                        {record.jurisdiction_coverage_status || 'Unknown'}
+                      <Badge className={getStatusColor(record.status)}>
+                        {record.status}
                       </Badge>
                     </TableCell>
                     <TableCell>
-                      {record.required_points_present ? (
-                        <span className="text-green-600">✓</span>
-                      ) : (
-                        <span className="text-red-600">✗</span>
-                      )}
+                      <Badge className={getApprovalColor(record.approvalStatus)}>
+                        {record.approvalStatus}
+                      </Badge>
                     </TableCell>
-                    <TableCell>
-                      {record.approvals?.length || 0} approvals
-                    </TableCell>
+                    <TableCell>v{record.revisionNumber}</TableCell>
+                    <TableCell>{record.specRef || '-'}</TableCell>
                     <TableCell>
                       <div className="flex space-x-2">
                         <Button variant="outline" size="sm">

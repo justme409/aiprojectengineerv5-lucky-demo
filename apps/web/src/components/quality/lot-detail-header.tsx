@@ -42,7 +42,7 @@ export function LotDetailHeader({ lot, projectId }: LotDetailHeaderProps) {
     setUpdatingStatus(true);
     try {
       const response = await fetch(
-        `/api/neo4j/${projectId}/lots/${lot.id}/status`,
+        `/api/neo4j/${projectId}/lots/${lot.number}/status`,
         {
           method: 'PATCH',
           headers: { 'Content-Type': 'application/json' },
@@ -66,7 +66,7 @@ export function LotDetailHeader({ lot, projectId }: LotDetailHeaderProps) {
     setDeleting(true);
     try {
       const response = await fetch(
-        `/api/neo4j/${projectId}/lots/${lot.id}`,
+        `/api/neo4j/${projectId}/lots/${lot.number}`,
         { method: 'DELETE' }
       );
       

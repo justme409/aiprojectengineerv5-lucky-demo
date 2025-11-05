@@ -43,7 +43,7 @@ export function MaterialsTable({ materials, projectId }: MaterialsTableProps) {
     return matchesSearch && matchesStatus && matchesType;
   });
   
-  const uniqueTypes = Array.from(new Set(materials.map(m => m.type)));
+  const uniqueTypes = Array.from(new Set(materials.map(m => m.type).filter(Boolean)));
   
   return (
     <div className="space-y-4">
@@ -115,7 +115,7 @@ export function MaterialsTable({ materials, projectId }: MaterialsTableProps) {
                   </TableCell>
                   <TableCell>{material.supplier}</TableCell>
                   <TableCell className="text-sm text-muted-foreground">
-                    -
+                    {material.productCode || '-'}
                   </TableCell>
                   <TableCell className="text-sm text-muted-foreground">
                     {material.specification}

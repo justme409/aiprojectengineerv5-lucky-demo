@@ -29,11 +29,11 @@ export function CreateTestRequestButton({ projectId, lotId }: CreateTestRequestB
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     testType: '',
-    lotId: lotId || '',
+    lotNumber: lotId || '',
     requestedBy: '',
     dueDate: '',
     labName: '',
-    sampleId: '',
+    sampleNumber: '',
     notes: '',
   });
   
@@ -42,8 +42,8 @@ export function CreateTestRequestButton({ projectId, lotId }: CreateTestRequestB
     setLoading(true);
     
     try {
-      if (!formData.lotId) {
-        throw new Error('Lot ID is required');
+      if (!formData.lotNumber) {
+        throw new Error('Lot number is required');
       }
       
       const response = await fetch(`/api/neo4j/${projectId}/tests`, {
@@ -62,11 +62,11 @@ export function CreateTestRequestButton({ projectId, lotId }: CreateTestRequestB
       
       setFormData({
         testType: '',
-        lotId: lotId || '',
+        lotNumber: lotId || '',
         requestedBy: '',
         dueDate: '',
         labName: '',
-        sampleId: '',
+        sampleNumber: '',
         notes: '',
       });
     } catch (error) {
@@ -107,12 +107,12 @@ export function CreateTestRequestButton({ projectId, lotId }: CreateTestRequestB
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="lotId">Lot ID *</Label>
+                <Label htmlFor="lotNumber">Lot ID *</Label>
                 <Input
-                  id="lotId"
-                  value={formData.lotId}
-                  onChange={(e) => setFormData({ ...formData, lotId: e.target.value })}
-                  placeholder="Lot UUID"
+                  id="lotNumber"
+                  value={formData.lotNumber}
+                  onChange={(e) => setFormData({ ...formData, lotNumber: e.target.value })}
+                  placeholder="Lot number"
                   required
                   disabled={!!lotId}
                 />
@@ -152,12 +152,12 @@ export function CreateTestRequestButton({ projectId, lotId }: CreateTestRequestB
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="sampleId">Sample ID</Label>
+                <Label htmlFor="sampleNumber">Sample ID</Label>
                 <Input
-                  id="sampleId"
-                  value={formData.sampleId}
-                  onChange={(e) => setFormData({ ...formData, sampleId: e.target.value })}
-                  placeholder="Sample UUID (optional)"
+                  id="sampleNumber"
+                  value={formData.sampleNumber}
+                  onChange={(e) => setFormData({ ...formData, sampleNumber: e.target.value })}
+                  placeholder="Sample number (optional)"
                 />
               </div>
             </div>

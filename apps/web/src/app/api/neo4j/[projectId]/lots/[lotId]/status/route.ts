@@ -31,7 +31,7 @@ export const PATCH = createApiHandler<z.infer<typeof UpdateStatusSchema>, LotNod
       throw new Error('Request body is required');
     }
     
-    const result = await neo4jWriteOne<LotNode>(
+    const result = await neo4jWriteOne(
       LOT_QUERIES.updateLotStatus,
       {
         projectId,

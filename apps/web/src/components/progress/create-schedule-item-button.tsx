@@ -30,9 +30,10 @@ export function CreateScheduleItemButton({ projectId }: CreateScheduleItemButton
     number: '',
     description: '',
     unit: '',
-    contractQuantity: '',
+    quantity: '',
     rate: '',
     category: '',
+    workTypeCode: '',
   });
   
   const handleSubmit = async (e: React.FormEvent) => {
@@ -40,14 +41,20 @@ export function CreateScheduleItemButton({ projectId }: CreateScheduleItemButton
     setLoading(true);
     
     try {
+      const payload = {
+        number: formData.number,
+        description: formData.description,
+        unit: formData.unit,
+        quantity: parseFloat(formData.quantity),
+        rate: parseFloat(formData.rate),
+        category: formData.category || undefined,
+        workTypeCode: formData.workTypeCode || undefined,
+      };
+
       const response = await fetch(`/api/neo4j/${projectId}/schedule-items`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...formData,
-          contractQuantity: parseFloat(formData.contractQuantity),
-          rate: parseFloat(formData.rate),
-        }),
+        body: JSON.stringify(payload),
       });
       
       if (!response.ok) {
@@ -62,9 +69,10 @@ export function CreateScheduleItemButton({ projectId }: CreateScheduleItemButton
         number: '',
         description: '',
         unit: '',
-        contractQuantity: '',
+        quantity: '',
         rate: '',
         category: '',
+        workTypeCode: '',
       });
     } catch (error) {
       toast.error('Failed to create schedule item');
@@ -139,13 +147,13 @@ export function CreateScheduleItemButton({ projectId }: CreateScheduleItemButton
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="contractQuantity">Contract Quantity *</Label>
+                <Label htmlFor="quantity">Quantity *</Label>
                 <Input
-                  id="contractQuantity"
+                  id="quantity"
                   type="number"
                   step="0.01"
-                  value={formData.contractQuantity}
-                  onChange={(e) => setFormData({ ...formData, contractQuantity: e.target.value })}
+                  value={formData.quantity}
+                  onChange={(e) => setFormData({ ...formData, quantity: e.target.value })}
                   placeholder="1000"
                   required
                 />
@@ -163,19 +171,28 @@ export function CreateScheduleItemButton({ projectId }: CreateScheduleItemButton
                 />
               </div>
             </div>
-            
-            {formData.contractQuantity && formData.rate && (
-              <div className="p-3 bg-muted rounded-md">
-                <div className="text-sm font-medium">Total Item Value</div>
-                <div className="text-2xl font-bold">
-                  ${(parseFloat(formData.contractQuantity) * parseFloat(formData.rate)).toLocaleString(undefined, {
+            <div className="space-y-2">
+              <Label htmlFor="workTypeCode">Work Type Code</Label>
+              <Input
+                id="workTypeCode"
+                value={formData.workTypeCode}
+                onChange={(e) => setFormData({ ...formData, workTypeCode: e.target.value })}
+                placeholder="e.g., WT-001"
+              />
+            </div>
+          </div>
+          
+          {formData.quantity && formData.rate && (
+            <div className="p-3 bg-muted rounded-md">
+              <div className="text-sm font-medium">Total Item Value</div>
+              <div className="text-2xl font-bold">
+                  ${(parseFloat(formData.quantity) * parseFloat(formData.rate)).toLocaleString(undefined, {
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 2,
                   })}
-                </div>
               </div>
-            )}
-          </div>
+            </div>
+          )}
           
           <DialogFooter>
             <Button type="button" variant="outline" onClick={() => setOpen(false)}>

@@ -2,6 +2,7 @@ import { NextRequest } from 'next/server';
 import {
   DocumentNode,
   DOCUMENT_QUERIES,
+  CreateDocumentInputSchema,
 } from '@/schemas/neo4j';
 import {
   errorResponse,
@@ -52,11 +53,17 @@ export async function POST(
   
   try {
     const body = await request.json();
+    const parsed = CreateDocumentInputSchema.safeParse(body);
+
+    if (!parsed.success) {
+      console.error('Invalid document payload:', parsed.error);
+      return errorResponse('Invalid document payload', 422);
+    }
     
     const result = await neo4jWriteOne<DocumentNode>(
       DOCUMENT_QUERIES.createDocument,
       {
-        properties: body,
+        properties: parsed.data,
         projectId: projectId,
       }
     );

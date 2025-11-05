@@ -2,10 +2,8 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { neo4jClient } from '@/lib/neo4j'
 import { ProjectNode, PROJECT_QUERIES } from '@/schemas/neo4j'
-import { getEnrichedProjectById } from '@/lib/actions/project-actions'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import {
   FileText,
   Mail,
@@ -21,8 +19,7 @@ import {
   BarChart3,
   FolderOpen,
   Shield,
-  Workflow,
-  Info
+  Workflow
 } from 'lucide-react'
 
 interface PageProps {
@@ -32,32 +29,25 @@ interface PageProps {
 export default async function ProjectOverviewPage({ params }: PageProps) {
 	const { projectId } = await params
 
-	// First, check if project exists in Postgres (source of truth for project UUIDs)
-	const postgresProject = await getEnrichedProjectById(projectId)
-	if (!postgresProject) {
-		// Project doesn't exist at all
+	const results = await neo4jClient.read<{ project: ProjectNode }>(
+		PROJECT_QUERIES.getProject,
+		{ projectId }
+	)
+
+	const project = results[0]?.project
+
+	if (!project) {
 		notFound()
 	}
 
-	// Try to fetch detailed project data from Neo4j
-	const results = await neo4jClient.read<{ project: ProjectNode }>(
-		PROJECT_QUERIES.getProject,
-		{ projectId: projectId }
-	)
-
-	const neo4jProject = results[0]?.project
-	
-	// If Neo4j data doesn't exist yet, use Postgres data as fallback
-	const project: Partial<ProjectNode> = neo4jProject || {
-		project_id: postgresProject.id,
-		project_name: postgresProject.displayName,
-		project_description: postgresProject.description,
-		project_address: postgresProject.location,
-		created_at: new Date(postgresProject.created_at),
-		updated_at: new Date(postgresProject.updated_at || postgresProject.created_at),
+	let parties
+	try {
+		parties = project.parties ? JSON.parse(project.parties) : null
+	} catch (error) {
+		parties = null
 	}
 
-	const jurisdiction = project.jurisdiction_code || project.jurisdiction || 'unknown'
+	const jurisdiction = project.jurisdictionCode || project.jurisdiction || 'unknown'
 
 	// Jurisdiction display logic
 	const getJurisdictionDisplayName = (jurisdiction: string) => {
@@ -76,24 +66,12 @@ export default async function ProjectOverviewPage({ params }: PageProps) {
 
 	return (
 		<div className="space-y-8">
-			{/* Info Banner - Show when Neo4j data is missing */}
-			{!neo4jProject && (
-				<Alert>
-					<Info className="h-4 w-4" />
-					<AlertTitle>Project Data Processing</AlertTitle>
-					<AlertDescription>
-						This project is showing basic information from the project registry. 
-						Detailed project data will be available once documents are uploaded and processed.
-					</AlertDescription>
-				</Alert>
-			)}
-
 			{/* Project Header */}
 			<div className="bg-card rounded-lg border shadow-sm p-6">
 				<div className="flex justify-between items-start">
 					<div className="flex-1">
-						<h1 className="text-3xl font-bold text-card-foreground">{project.project_name || 'Project'}</h1>
-						<p className="text-muted-foreground mt-2">{project.project_description || project.scope_summary}</p>
+						<h1 className="text-3xl font-bold text-card-foreground">{project.projectName || 'Project'}</h1>
+						<p className="text-muted-foreground mt-2">{project.projectDescription || project.scopeSummary}</p>
 					</div>
 					{jurisdiction !== 'unknown' && (
 						<div className="text-sm text-muted-foreground ml-4">
@@ -101,12 +79,12 @@ export default async function ProjectOverviewPage({ params }: PageProps) {
 						</div>
 					)}
 				</div>
-				<div className="mt-4 flex flex-wrap gap-4 text-sm text-muted-foreground">
-					{project.parties && <div><strong>Client:</strong> {JSON.parse(project.parties).client?.[0]?.organisation || 'N/A'}</div>}
-					{project.project_address && <div><strong>Location:</strong> {project.project_address}</div>}
-					{project.state_territory && <div><strong>State/Territory:</strong> {project.state_territory}</div>}
-					{project.local_council && <div><strong>Local Council:</strong> {project.local_council}</div>}
-					{project.contract_value && <div><strong>Contract Value:</strong> {project.contract_value}</div>}
+			<div className="mt-4 flex flex-wrap gap-4 text-sm text-muted-foreground">
+				{parties?.client?.[0] && <div><strong>Client:</strong> {parties.client[0]?.organisation || parties.client[0]?.name || 'N/A'}</div>}
+					{project.projectAddress && <div><strong>Location:</strong> {project.projectAddress}</div>}
+					{project.stateTerritory && <div><strong>State/Territory:</strong> {project.stateTerritory}</div>}
+					{project.localCouncil && <div><strong>Local Council:</strong> {project.localCouncil}</div>}
+					{project.contractValue && <div><strong>Contract Value:</strong> {project.contractValue}</div>}
 				</div>
 			</div>
 

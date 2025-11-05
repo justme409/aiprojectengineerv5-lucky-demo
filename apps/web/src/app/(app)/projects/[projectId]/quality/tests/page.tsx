@@ -25,7 +25,7 @@ async function getTestRequests(
     let query = TEST_REQUEST_QUERIES.getAllTests;
     const params: Record<string, any> = { projectId };
     
-    if (filters.status === 'pending') {
+    if (filters.status === 'pending' || filters.status === 'requested') {
       query = TEST_REQUEST_QUERIES.getPendingTests;
     }
     

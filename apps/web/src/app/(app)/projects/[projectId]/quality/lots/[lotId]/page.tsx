@@ -10,34 +10,16 @@ interface PageProps {
   params: Promise<{ projectId: string; lotId: string }>;
 }
 
-async function getLotDetail(lotId: string): Promise<LotWithRelationships | null> {
+async function getLotDetail(projectId: string, lotId: string): Promise<LotWithRelationships | null> {
   try {
-    const result = await neo4jClient.readOne<any>(
+    const result = await neo4jClient.readOne<LotWithRelationships>(
       LOT_QUERIES.getLotDetail,
-      { lotId }
+      { projectId, number: lotId }
     );
     
     if (!result) return null;
     
-    // Transform Neo4j result to LotWithRelationships
-    return {
-      ...result.l,
-      relationships: {
-        belongsToProject: result.l.projectId || '',
-        implements: result.itpInstances?.map((itp: any) => itp.id) || [],
-        hasNCR: result.ncrs?.map((ncr: any) => ncr.id) || [],
-        hasTest: result.tests?.map((test: any) => test.id) || [],
-        usesMaterial: result.materials?.map((mat: any) => mat.id) || [],
-        hasQuantity: result.quantities?.map((qty: any) => qty.id) || [],
-        relatedDocuments: result.documents?.map((doc: any) => doc.id) || [],
-        relatedPhotos: result.photos?.map((photo: any) => photo.id) || [],
-      },
-      itpInstances: result.itpInstances || [],
-      ncrs: result.ncrs || [],
-      tests: result.tests || [],
-      materials: result.materials || [],
-      quantities: result.quantities || [],
-    };
+    return result;
   } catch (error) {
     console.error('Failed to fetch lot detail:', error);
     throw error instanceof Error
@@ -47,7 +29,7 @@ async function getLotDetail(lotId: string): Promise<LotWithRelationships | null>
 }
 
 async function LotDetailContent({ projectId, lotId }: { projectId: string; lotId: string }) {
-  const lot = await getLotDetail(lotId);
+  const lot = await getLotDetail(projectId, lotId);
   
   if (!lot) {
     notFound();

@@ -94,7 +94,7 @@ export function LotsTable({ lots, projectId }: LotsTableProps) {
                 <TableRow key={lot.id}>
                   <TableCell className="font-medium">
                     <Link
-                      href={`/projects/${projectId}/quality/lots/${lot.id}`}
+                      href={`/projects/${projectId}/quality/lots/${lot.number}`}
                       className="hover:underline text-blue-600"
                     >
                       {lot.number}

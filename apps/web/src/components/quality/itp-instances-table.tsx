@@ -33,8 +33,8 @@ export function ITPInstancesTable({ instances, projectId }: ITPInstancesTablePro
   
   const filteredInstances = instances.filter((instance) => {
     const matchesSearch = 
-      instance.templateId.toLowerCase().includes(search.toLowerCase()) ||
-      instance.lotId.toLowerCase().includes(search.toLowerCase());
+      (instance.templateDocNo || '').toLowerCase().includes(search.toLowerCase()) ||
+      (instance.lotNumber || '').toLowerCase().includes(search.toLowerCase());
     
     const matchesStatus = statusFilter === 'all' || instance.status === statusFilter;
     
@@ -68,8 +68,8 @@ export function ITPInstancesTable({ instances, projectId }: ITPInstancesTablePro
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Template ID</TableHead>
-              <TableHead>Lot ID</TableHead>
+              <TableHead>Template</TableHead>
+              <TableHead>Lot</TableHead>
               <TableHead>Status</TableHead>
               <TableHead className="text-right">% Complete</TableHead>
               <TableHead>Completed Points</TableHead>
@@ -91,11 +91,11 @@ export function ITPInstancesTable({ instances, projectId }: ITPInstancesTablePro
                       className="hover:underline text-blue-600 flex items-center gap-2"
                     >
                       <FileCheck className="h-4 w-4" />
-                      {instance.templateId}
+                      {instance.templateDocNo || instance.templateId}
                     </Link>
                   </TableCell>
                   <TableCell className="text-sm text-muted-foreground">
-                    {instance.lotId}
+                    {instance.lotNumber || '-'}
                   </TableCell>
                   <TableCell>
                     <StatusBadge status={instance.status} />

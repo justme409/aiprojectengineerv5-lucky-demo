@@ -72,6 +72,8 @@ export function TestRequestsTable({ tests, projectId }: TestRequestsTableProps) 
             <TableRow>
               <TableHead>Test Number</TableHead>
               <TableHead>Test Type</TableHead>
+              <TableHead>Lot</TableHead>
+              <TableHead>Laboratory</TableHead>
               <TableHead>Status</TableHead>
               <TableHead>Result</TableHead>
               <TableHead>Requested Date</TableHead>
@@ -82,7 +84,7 @@ export function TestRequestsTable({ tests, projectId }: TestRequestsTableProps) 
           <TableBody>
             {filteredTests.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={7} className="text-center text-muted-foreground">
+                <TableCell colSpan={9} className="text-center text-muted-foreground">
                   No test requests found
                 </TableCell>
               </TableRow>
@@ -99,6 +101,12 @@ export function TestRequestsTable({ tests, projectId }: TestRequestsTableProps) 
                     </Link>
                   </TableCell>
                   <TableCell>{test.testType}</TableCell>
+                  <TableCell className="text-sm text-muted-foreground">
+                    {test.lotNumber || '-'}
+                  </TableCell>
+                  <TableCell className="text-sm text-muted-foreground">
+                    {test.labName || '-'}
+                  </TableCell>
                   <TableCell>
                     <StatusBadge status={test.status} />
                   </TableCell>

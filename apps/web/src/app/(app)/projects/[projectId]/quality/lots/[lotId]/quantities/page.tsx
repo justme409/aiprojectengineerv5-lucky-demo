@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import { QuantityNode } from '@/schemas/neo4j';
-import { LotNode, LOT_QUERIES } from '@/schemas/neo4j';
+import { LotWithRelationships, LOT_QUERIES } from '@/schemas/neo4j';
 import { neo4jClient } from '@/lib/neo4j';
 import { QuantitiesTable } from '@/components/quality/quantities-table';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -19,17 +19,17 @@ interface PageProps {
   params: Promise<{ projectId: string; lotId: string }>;
 }
 
-async function getLotWithQuantities(lotId: string): Promise<{ lot: LotNode; quantities: QuantityNode[] } | null> {
+async function getLotWithQuantities(projectId: string, lotId: string): Promise<{ lot: LotWithRelationships; quantities: QuantityNode[] } | null> {
   try {
-    const result = await neo4jClient.readOne<any>(
+    const result = await neo4jClient.readOne<LotWithRelationships>(
       LOT_QUERIES.getLotDetail,
-      { lotId }
+      { projectId, number: lotId }
     );
     
     if (!result) return null;
     
     return {
-      lot: result.l,
+      lot: result,
       quantities: result.quantities || [],
     };
   } catch (error) {
@@ -41,7 +41,7 @@ async function getLotWithQuantities(lotId: string): Promise<{ lot: LotNode; quan
 }
 
 async function LotQuantitiesContent({ projectId, lotId }: { projectId: string; lotId: string }) {
-  const data = await getLotWithQuantities(lotId);
+  const data = await getLotWithQuantities(projectId, lotId);
   
   if (!data) {
     return <div>Lot not found</div>;

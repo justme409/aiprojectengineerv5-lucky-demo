@@ -2,6 +2,7 @@ import { NextRequest } from 'next/server';
 import {
   ProgressClaimNode,
   PROGRESS_CLAIM_QUERIES,
+  CreateProgressClaimInputSchema,
 } from '@/schemas/neo4j';
 import {
   errorResponse,
@@ -52,11 +53,17 @@ export async function POST(
   
   try {
     const body = await request.json();
+    const parsed = CreateProgressClaimInputSchema.safeParse(body);
+
+    if (!parsed.success) {
+      console.error('Invalid progress claim payload:', parsed.error);
+      return errorResponse('Invalid progress claim payload', 422);
+    }
     
     const result = await neo4jWriteOne<ProgressClaimNode>(
       PROGRESS_CLAIM_QUERIES.createClaim,
       {
-        properties: body,
+        properties: parsed.data,
         projectId: projectId,
       }
     );

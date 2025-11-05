@@ -37,11 +37,13 @@ export async function GET(
     return result.error;
   }
   
-  if (!result.data) {
+  const detail = result.data;
+  
+  if (!detail) {
     return errorResponse('Lot not found', 404);
   }
   
-  return successResponse(result.data);
+  return successResponse(detail);
 }
 
 /**

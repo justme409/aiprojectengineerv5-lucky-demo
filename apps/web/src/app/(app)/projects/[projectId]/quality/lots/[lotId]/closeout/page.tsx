@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { LotNode, LOT_QUERIES } from '@/schemas/neo4j';
+import { LotWithRelationships, LOT_QUERIES } from '@/schemas/neo4j';
 import { neo4jClient } from '@/lib/neo4j';
 import { CloseoutChecklist } from '@/components/quality/closeout-checklist';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -19,16 +19,16 @@ interface PageProps {
   params: Promise<{ projectId: string; lotId: string }>;
 }
 
-async function getLot(lotId: string): Promise<LotNode | null> {
+async function getLot(projectId: string, lotId: string): Promise<LotWithRelationships | null> {
   try {
-    const result = await neo4jClient.readOne<any>(
+    const result = await neo4jClient.readOne<LotWithRelationships>(
       LOT_QUERIES.getLotDetail,
-      { lotId }
+      { projectId, number: lotId }
     );
     
     if (!result) return null;
     
-    return result.l;
+    return result;
   } catch (error) {
     console.error('Failed to fetch lot:', error);
     throw error instanceof Error
@@ -38,7 +38,7 @@ async function getLot(lotId: string): Promise<LotNode | null> {
 }
 
 async function LotCloseoutContent({ projectId, lotId }: { projectId: string; lotId: string }) {
-  const lot = await getLot(lotId);
+  const lot = await getLot(projectId, lotId);
   
   if (!lot) {
     return <div>Lot not found</div>;

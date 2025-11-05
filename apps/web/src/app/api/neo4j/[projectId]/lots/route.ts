@@ -73,8 +73,8 @@ export const POST = createApiHandler<CreateLotInput, LotNode>({
     const result = await neo4jWriteOne<LotNode>(
       LOT_QUERIES.createLot,
       {
-        properties: body,
-        projectId: projectId,
+        projectId,
+        ...body,
       }
     );
     

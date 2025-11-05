@@ -2,6 +2,7 @@ import { NextRequest } from 'next/server';
 import {
   VariationNode,
   VARIATION_QUERIES,
+  CreateVariationInputSchema,
 } from '@/schemas/neo4j';
 import {
   errorResponse,
@@ -52,11 +53,17 @@ export async function POST(
   
   try {
     const body = await request.json();
+    const parsed = CreateVariationInputSchema.safeParse(body);
+
+    if (!parsed.success) {
+      console.error('Invalid variation payload:', parsed.error);
+      return errorResponse('Invalid variation payload', 422);
+    }
     
     const result = await neo4jWriteOne<VariationNode>(
       VARIATION_QUERIES.createVariation,
       {
-        properties: body,
+        properties: parsed.data,
         projectId: projectId,
       }
     );

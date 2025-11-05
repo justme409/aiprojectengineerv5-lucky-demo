@@ -15,6 +15,13 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Plus } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -33,6 +40,8 @@ export function CreateITPTemplateButton({ projectId }: CreateITPTemplateButtonPr
     specRef: '',
     revisionNumber: 'A',
     revisionDate: new Date().toISOString().split('T')[0],
+    status: 'draft' as 'draft' | 'in_review' | 'approved' | 'superseded',
+    approvalStatus: 'pending' as 'not_required' | 'pending' | 'approved' | 'rejected',
   });
   
   const handleSubmit = async (e: React.FormEvent) => {
@@ -40,10 +49,15 @@ export function CreateITPTemplateButton({ projectId }: CreateITPTemplateButtonPr
     setLoading(true);
     
     try {
+      const payload = {
+        ...formData,
+        revisionDate: formData.revisionDate,
+      }
+
       const response = await fetch(`/api/neo4j/${projectId}/itp-templates`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       });
       
       if (!response.ok) {
@@ -61,6 +75,8 @@ export function CreateITPTemplateButton({ projectId }: CreateITPTemplateButtonPr
         specRef: '',
         revisionNumber: 'A',
         revisionDate: new Date().toISOString().split('T')[0],
+        status: 'draft',
+        approvalStatus: 'pending',
       });
     } catch (error) {
       toast.error('Failed to create ITP template');
@@ -99,16 +115,16 @@ export function CreateITPTemplateButton({ projectId }: CreateITPTemplateButtonPr
                   required
                 />
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="workType">Work Type *</Label>
-                <Input
-                  id="workType"
-                  value={formData.workType}
-                  onChange={(e) => setFormData({ ...formData, workType: e.target.value })}
-                  placeholder="e.g., SG, PV, BASE"
-                  required
-                />
-              </div>
+            <div className="space-y-2">
+              <Label htmlFor="workType">Work Type *</Label>
+              <Input
+                id="workType"
+                value={formData.workType}
+                onChange={(e) => setFormData({ ...formData, workType: e.target.value })}
+                placeholder="e.g., SG, PV, BASE"
+                required
+              />
+            </div>
             </div>
             
             <div className="space-y-2">
@@ -153,6 +169,47 @@ export function CreateITPTemplateButton({ projectId }: CreateITPTemplateButtonPr
                   onChange={(e) => setFormData({ ...formData, revisionDate: e.target.value })}
                   required
                 />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="status">Status *</Label>
+                <Select
+                  value={formData.status}
+                  onValueChange={(value: 'draft' | 'in_review' | 'approved' | 'superseded') =>
+                    setFormData({ ...formData, status: value })
+                  }
+                >
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="draft">Draft</SelectItem>
+                    <SelectItem value="in_review">In Review</SelectItem>
+                    <SelectItem value="approved">Approved</SelectItem>
+                    <SelectItem value="superseded">Superseded</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="approvalStatus">Approval Status *</Label>
+                <Select
+                  value={formData.approvalStatus}
+                  onValueChange={(value: 'not_required' | 'pending' | 'approved' | 'rejected') =>
+                    setFormData({ ...formData, approvalStatus: value })
+                  }
+                >
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="not_required">Not Required</SelectItem>
+                    <SelectItem value="pending">Pending</SelectItem>
+                    <SelectItem value="approved">Approved</SelectItem>
+                    <SelectItem value="rejected">Rejected</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
             </div>
           </div>

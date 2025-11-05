@@ -37,13 +37,13 @@ export function MixDesignsTable({ mixDesigns, projectId }: MixDesignsTableProps)
       mix.code.toLowerCase().includes(search.toLowerCase()) ||
       mix.description.toLowerCase().includes(search.toLowerCase());
     
-    const matchesStatus = statusFilter === 'all' || mix.approvalStatus === statusFilter;
+    const matchesStatus = statusFilter === 'all' || mix.status === statusFilter;
     const matchesType = typeFilter === 'all' || mix.type === typeFilter;
     
     return matchesSearch && matchesStatus && matchesType;
   });
   
-  const uniqueTypes = Array.from(new Set(mixDesigns.map(m => m.type)));
+  const uniqueTypes = Array.from(new Set(mixDesigns.map(m => m.type).filter(Boolean)));
   
   return (
     <div className="space-y-4">
@@ -60,7 +60,7 @@ export function MixDesignsTable({ mixDesigns, projectId }: MixDesignsTableProps)
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">All Statuses</SelectItem>
-            <SelectItem value="pending">Pending</SelectItem>
+            <SelectItem value="draft">Draft</SelectItem>
             <SelectItem value="approved">Approved</SelectItem>
             <SelectItem value="rejected">Rejected</SelectItem>
           </SelectContent>
@@ -115,13 +115,13 @@ export function MixDesignsTable({ mixDesigns, projectId }: MixDesignsTableProps)
                     <Badge variant="outline">{mix.type}</Badge>
                   </TableCell>
                   <TableCell className="text-sm text-muted-foreground">
-                    {mix.strength || '-'}
+                    {mix.targetStrength !== undefined ? `${mix.targetStrength} MPa` : '-'}
                   </TableCell>
                   <TableCell className="text-sm text-muted-foreground">
-                    {mix.slump || '-'}
+                    {mix.slump !== undefined ? `${mix.slump} mm` : '-'}
                   </TableCell>
                   <TableCell>
-                    <ApprovalStatusBadge status={mix.approvalStatus} />
+                    <ApprovalStatusBadge status={mix.status} />
                   </TableCell>
                   <TableCell>
                     <Badge variant="secondary">-</Badge>
@@ -138,18 +138,18 @@ export function MixDesignsTable({ mixDesigns, projectId }: MixDesignsTableProps)
           Showing {filteredMixDesigns.length} of {mixDesigns.length} mix designs
         </div>
         <div className="flex gap-4">
-          <span>Pending: {mixDesigns.filter(m => m.approvalStatus === 'pending').length}</span>
-          <span>Approved: {mixDesigns.filter(m => m.approvalStatus === 'approved').length}</span>
-          <span>Rejected: {mixDesigns.filter(m => m.approvalStatus === 'rejected').length}</span>
+          <span>Pending: {mixDesigns.filter(m => m.status === 'draft').length}</span>
+          <span>Approved: {mixDesigns.filter(m => m.status === 'approved').length}</span>
+          <span>Rejected: {mixDesigns.filter(m => m.status === 'rejected').length}</span>
         </div>
       </div>
     </div>
   );
 }
 
-function ApprovalStatusBadge({ status }: { status: MixDesignNode['approvalStatus'] }) {
-  const config: Record<MixDesignNode['approvalStatus'], { icon: any; variant: any; label: string }> = {
-    pending: { icon: Clock, variant: 'default', label: 'Pending' },
+function ApprovalStatusBadge({ status }: { status: MixDesignNode['status'] }) {
+  const config: Record<MixDesignNode['status'], { icon: any; variant: any; label: string }> = {
+    draft: { icon: Clock, variant: 'secondary', label: 'Draft' },
     approved: { icon: CheckCircle, variant: 'success', label: 'Approved' },
     rejected: { icon: XCircle, variant: 'destructive', label: 'Rejected' },
   };

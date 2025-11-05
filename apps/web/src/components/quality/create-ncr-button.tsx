@@ -37,7 +37,7 @@ export function CreateNCRButton({ projectId, lotId }: CreateNCRButtonProps) {
   const [formData, setFormData] = useState({
     description: '',
     severity: 'minor' as 'minor' | 'major' | 'critical',
-    lotId: lotId || '',
+    lotNumber: lotId || '',
     raisedBy: '',
     rootCause: '',
     proposedResolution: '',
@@ -48,8 +48,8 @@ export function CreateNCRButton({ projectId, lotId }: CreateNCRButtonProps) {
     setLoading(true);
     
     try {
-      if (!formData.lotId) {
-        throw new Error('Lot ID is required');
+      if (!formData.lotNumber) {
+        throw new Error('Lot number is required');
       }
       
       const response = await fetch(`/api/neo4j/${projectId}/ncrs`, {
@@ -69,7 +69,7 @@ export function CreateNCRButton({ projectId, lotId }: CreateNCRButtonProps) {
       setFormData({
         description: '',
         severity: 'minor',
-        lotId: lotId || '',
+        lotNumber: lotId || '',
         raisedBy: '',
         rootCause: '',
         proposedResolution: '',
@@ -131,12 +131,12 @@ export function CreateNCRButton({ projectId, lotId }: CreateNCRButtonProps) {
               </div>
               
               <div className="space-y-2">
-                <Label htmlFor="lotId">Lot ID *</Label>
+                <Label htmlFor="lotNumber">Lot Number *</Label>
                 <Input
-                  id="lotId"
-                  value={formData.lotId}
-                  onChange={(e) => setFormData({ ...formData, lotId: e.target.value })}
-                  placeholder="Lot UUID"
+                  id="lotNumber"
+                  value={formData.lotNumber}
+                  onChange={(e) => setFormData({ ...formData, lotNumber: e.target.value })}
+                  placeholder="Lot number"
                   required
                   disabled={!!lotId}
                 />

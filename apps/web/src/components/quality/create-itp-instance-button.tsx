@@ -27,8 +27,8 @@ export function CreateITPInstanceButton({ projectId, lotId }: CreateITPInstanceB
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    templateId: '',
-    lotId: lotId || '',
+    templateDocNo: '',
+    lotNumber: lotId || '',
   });
   
   const handleSubmit = async (e: React.FormEvent) => {
@@ -51,8 +51,8 @@ export function CreateITPInstanceButton({ projectId, lotId }: CreateITPInstanceB
       router.refresh();
       
       setFormData({
-        templateId: '',
-        lotId: lotId || '',
+        templateDocNo: '',
+        lotNumber: lotId || '',
       });
     } catch (error) {
       toast.error('Failed to create ITP instance');
@@ -81,23 +81,23 @@ export function CreateITPInstanceButton({ projectId, lotId }: CreateITPInstanceB
           
           <div className="grid gap-4 py-4">
             <div className="space-y-2">
-              <Label htmlFor="templateId">ITP Template ID *</Label>
+              <Label htmlFor="templateDocNo">ITP Template Doc No *</Label>
               <Input
-                id="templateId"
-                value={formData.templateId}
-                onChange={(e) => setFormData({ ...formData, templateId: e.target.value })}
-                placeholder="Template UUID"
+                id="templateDocNo"
+                value={formData.templateDocNo}
+                onChange={(e) => setFormData({ ...formData, templateDocNo: e.target.value })}
+                placeholder="Template Doc No"
                 required
               />
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="lotId">Lot ID *</Label>
+              <Label htmlFor="lotNumber">Lot Number *</Label>
               <Input
-                id="lotId"
-                value={formData.lotId}
-                onChange={(e) => setFormData({ ...formData, lotId: e.target.value })}
-                placeholder="Lot UUID"
+                id="lotNumber"
+                value={formData.lotNumber}
+                onChange={(e) => setFormData({ ...formData, lotNumber: e.target.value })}
+                placeholder="Lot number"
                 required
                 disabled={!!lotId}
               />

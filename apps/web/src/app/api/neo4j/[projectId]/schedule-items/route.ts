@@ -2,6 +2,7 @@ import { NextRequest } from 'next/server';
 import {
   ScheduleItemNode,
   SCHEDULE_ITEM_QUERIES,
+  CreateScheduleItemInputSchema,
 } from '@/schemas/neo4j';
 import {
   errorResponse,
@@ -52,11 +53,17 @@ export async function POST(
   
   try {
     const body = await request.json();
+    const parsed = CreateScheduleItemInputSchema.safeParse(body);
+
+    if (!parsed.success) {
+      console.error('Invalid schedule item payload:', parsed.error);
+      return errorResponse('Invalid schedule item payload', 422);
+    }
     
     const result = await neo4jWriteOne<ScheduleItemNode>(
       SCHEDULE_ITEM_QUERIES.createItem,
       {
-        properties: body,
+        properties: parsed.data,
         projectId: projectId,
       }
     );

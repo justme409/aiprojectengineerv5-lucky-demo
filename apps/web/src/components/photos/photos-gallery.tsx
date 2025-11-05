@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { PhotoNode } from '@/schemas/neo4j';
 import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
 import { format } from 'date-fns';
 import { Image as ImageIcon, MapPin, Calendar } from 'lucide-react';
 
@@ -46,9 +45,9 @@ export function PhotosGallery({ photos, projectId }: PhotosGalleryProps) {
               className="border rounded-lg overflow-hidden hover:shadow-lg transition-shadow"
             >
               <div className="aspect-video bg-muted flex items-center justify-center">
-                {photo.fileUrl ? (
+                {photo.url ? (
                   <img
-                    src={photo.fileUrl}
+                    src={photo.url}
                     alt={photo.description || 'Project photo'}
                     className="w-full h-full object-cover"
                   />
@@ -68,10 +67,12 @@ export function PhotosGallery({ photos, projectId }: PhotosGalleryProps) {
                     {photo.location}
                   </div>
                 )}
-                <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                  <Calendar className="h-3 w-3" />
-                  {format(new Date(photo.date), 'dd MMM yyyy')}
-                </div>
+                {(photo.capturedAt || photo.createdAt) && (
+                  <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                    <Calendar className="h-3 w-3" />
+                    {format(new Date(photo.capturedAt ?? photo.createdAt), 'dd MMM yyyy')}
+                  </div>
+                )}
                 {photo.takenBy && (
                   <div className="text-xs text-muted-foreground">
                     By: {photo.takenBy}
