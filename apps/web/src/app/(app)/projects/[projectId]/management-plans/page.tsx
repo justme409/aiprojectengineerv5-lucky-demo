@@ -42,6 +42,92 @@ async function getManagementPlans(projectId: string): Promise<ManagementPlanNode
 
 async function ManagementPlansContent({ projectId }: { projectId: string }) {
   const plans = await getManagementPlans(projectId);
+  const toNumber = (value: unknown): number => {
+    if (typeof value === 'number') return value;
+    if (typeof value === 'bigint') return Number(value);
+    if (
+      typeof value === 'object' &&
+      value !== null &&
+      'toNumber' in (value as Record<string, unknown>) &&
+      typeof (value as { toNumber?: () => number }).toNumber === 'function'
+    ) {
+      return (value as { toNumber: () => number }).toNumber();
+    }
+    return Number(value ?? 0);
+  };
+
+  const toDate = (value?: unknown): Date | null => {
+    if (!value) return null;
+    if (value instanceof Date) return value;
+    if (
+      typeof value === 'object' &&
+      value !== null &&
+      'year' in (value as Record<string, unknown>) &&
+      'month' in (value as Record<string, unknown>) &&
+      'day' in (value as Record<string, unknown>)
+    ) {
+      const temporal = value as { year: number; month: number; day: number; hour?: number; minute?: number; second?: number; nanosecond?: number };
+      return new Date(Date.UTC(
+        toNumber(temporal.year),
+        toNumber(temporal.month) - 1,
+        toNumber(temporal.day),
+        toNumber(temporal.hour ?? 0),
+        toNumber(temporal.minute ?? 0),
+        toNumber(temporal.second ?? 0),
+        temporal.nanosecond ? Math.floor(toNumber(temporal.nanosecond) / 1e6) : 0,
+      ));
+    }
+
+    const date = new Date(value as string | number);
+    return Number.isNaN(date.getTime()) ? null : date;
+  };
+
+  const formatDate = (value?: unknown) => {
+    try {
+      const date = toDate(value);
+      return date ? format(date, 'dd MMM yyyy') : '-';
+    } catch (error) {
+      console.warn('Unable to format date value', value, error);
+      return '-';
+    }
+  };
+
+  const statusPriority: Record<ManagementPlanNode['approvalStatus'], number> = {
+    draft: 4,
+    in_review: 3,
+    approved: 2,
+    superseded: 1,
+  };
+
+  const toEpoch = (value?: unknown) => {
+    const date = toDate(value);
+    return date ? date.getTime() : 0;
+  };
+
+  const dedupedPlans = Object.values(
+    plans.reduce<Record<string, ManagementPlanNode>>((acc, plan) => {
+      const key = plan.type;
+      const existing = acc[key];
+      if (!existing) {
+        acc[key] = plan;
+        return acc;
+      }
+
+      const existingPriority = statusPriority[existing.approvalStatus];
+      const currentPriority = statusPriority[plan.approvalStatus];
+
+      if (currentPriority > existingPriority) {
+        acc[key] = plan;
+        return acc;
+      }
+
+      if (currentPriority === existingPriority && toEpoch(plan.updatedAt) > toEpoch(existing.updatedAt)) {
+        acc[key] = plan;
+      }
+
+      return acc;
+    }, {})
+  ).sort((a, b) => a.type.localeCompare(b.type));
   
   return (
     <div className="space-y-6">
@@ -64,38 +150,35 @@ async function ManagementPlansContent({ projectId }: { projectId: string }) {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {plans.length === 0 ? (
+            {dedupedPlans.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={5} className="text-center text-muted-foreground">
                   No management plans found
                 </TableCell>
               </TableRow>
             ) : (
-              plans.map((plan) => (
-                <TableRow key={plan.id}>
+              dedupedPlans.map((plan) => (
+                <TableRow key={plan.id ?? `${plan.type}-${plan.version}`}>
                   <TableCell className="font-medium">
                     <Link
-                      href={`/projects/${projectId}/management-plans/${plan.id}`}
+                      href={`/projects/${projectId}/management-plans/${plan.id ?? plan.type}`}
                       className="hover:underline text-blue-600 flex items-center gap-2"
                     >
                       <FileText className="h-4 w-4" />
-                      {plan.type.replace('_', ' ').toUpperCase()}
+                      {plan.title || plan.type.replace('_', ' ').toUpperCase()}
                     </Link>
                   </TableCell>
                   <TableCell>
-                    <Badge variant="secondary">{plan.version}</Badge>
+                    <Badge variant="secondary">{plan.version || '—'}</Badge>
                   </TableCell>
                   <TableCell>
                     <ApprovalStatusBadge status={plan.approvalStatus} />
                   </TableCell>
                   <TableCell className="text-sm text-muted-foreground">
-                    {plan.approvedDate 
-                      ? format(new Date(plan.approvedDate), 'dd MMM yyyy')
-                      : '-'
-                    }
+                    {formatDate(plan.approvedDate)}
                   </TableCell>
                   <TableCell className="text-sm text-muted-foreground">
-                    {format(new Date(plan.updatedAt), 'dd MMM yyyy')}
+                    {formatDate(plan.updatedAt)}
                   </TableCell>
                 </TableRow>
               ))
@@ -105,7 +188,7 @@ async function ManagementPlansContent({ projectId }: { projectId: string }) {
       </div>
       
       <div className="text-sm text-muted-foreground">
-        Total: {plans.length} management plans
+        Total: {dedupedPlans.length} management plans
       </div>
     </div>
   );
