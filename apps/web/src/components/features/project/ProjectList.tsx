@@ -20,7 +20,7 @@ interface Project {
   location?: string
   client_name?: string
   created_at: string
-  organization_name: string
+  organization_name?: string
   projectAsset?: {
     name?: string
     content?: {
@@ -32,6 +32,7 @@ interface Project {
   }
   displayName?: string
   displayClient?: string
+  neo4jLocation?: string
 }
 
 export default function ProjectList() {
@@ -117,8 +118,14 @@ export default function ProjectList() {
                   </TableCell>
                 </TableRow>
               ) : (
-                projects.map((project) => (
-                  <TableRow key={project.id}>
+                projects.map((project) => {
+                  const normalize = (value?: string | null) =>
+                    typeof value === 'string' ? value.trim() : undefined
+
+                  const location = normalize(project.neo4jLocation)
+
+                  return (
+                    <TableRow key={project.id}>
                     <TableCell className="font-medium">
                       <Link
                         href={`/projects/${project.id}/overview`}
@@ -127,9 +134,7 @@ export default function ProjectList() {
                         {project.displayName || project.name || `Project ${project.id.slice(0,8)}`}
                       </Link>
                     </TableCell>
-                    <TableCell>
-                      {project.projectAsset?.content?.project_address || project.projectAsset?.content?.location || project.location || 'Location not specified'}
-                    </TableCell>
+                    <TableCell>{location || 'Location not available'}</TableCell>
                     <TableCell>
                       {project.displayClient || project.client_name || 'Client unknown'}
                     </TableCell>
@@ -164,7 +169,7 @@ export default function ProjectList() {
                       </DropdownMenu>
                     </TableCell>
                   </TableRow>
-                ))
+                )})
               )}
             </TableBody>
           </Table>

@@ -29,12 +29,12 @@ interface PageProps {
 export default async function ProjectOverviewPage({ params }: PageProps) {
 	const { projectId } = await params
 
-	const results = await neo4jClient.read<{ project: ProjectNode }>(
+	const results = await neo4jClient.read<ProjectNode>(
 		PROJECT_QUERIES.getProject,
 		{ projectId }
 	)
 
-	const project = results[0]?.project
+	const project = results[0]
 
 	if (!project) {
 		notFound()

@@ -12,21 +12,41 @@ interface PageProps {
 export default async function ProjectDetailsPage({ params }: PageProps) {
 	const { projectId } = await params
 
-	const results = await neo4jClient.read<{ project: ProjectNode }>(
+	const results = await neo4jClient.read<ProjectNode>(
 		PROJECT_QUERIES.getProject,
 		{ projectId }
 	)
 
-	const project = results[0]?.project
+	const project = results[0]
 
 	if (!project) {
 		notFound()
 	}
 
 	// Parse parties if exists
-	let parties
+	let parties: any = null
 	try {
-		parties = project.parties ? JSON.parse(project.parties) : null
+		const rawParties = project.parties ? JSON.parse(project.parties) : null
+		if (rawParties) {
+			const toArray = (value: any) => {
+				if (!value) return []
+				if (Array.isArray(value)) return value
+				if (typeof value === 'string') return [{ name: value }]
+				return [value]
+			}
+
+			parties = {
+				...rawParties,
+				client: toArray(rawParties.client),
+				principal: toArray(rawParties.principal),
+				consultants: toArray(rawParties.consultants),
+				partiesMentionedInDocs: Array.isArray(rawParties.partiesMentionedInDocs)
+					? rawParties.partiesMentionedInDocs
+					: rawParties.partiesMentionedInDocs
+						? [rawParties.partiesMentionedInDocs]
+						: [],
+			}
+		}
 	} catch (e) {
 		parties = null
 	}
