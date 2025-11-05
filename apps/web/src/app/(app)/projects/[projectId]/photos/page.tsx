@@ -45,7 +45,7 @@ async function PhotosContent({ projectId }: { projectId: string }) {
         <UploadPhotoButton projectId={projectId} />
       </div>
       
-      <PhotosGallery photos={photos} projectId={projectId} />
+      <PhotosGallery photos={photos} />
       
       {photos.length === 0 && (
         <div className="flex flex-col items-center justify-center py-12 text-center">

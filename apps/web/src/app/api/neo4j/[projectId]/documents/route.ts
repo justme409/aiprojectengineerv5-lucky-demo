@@ -59,11 +59,16 @@ export async function POST(
       console.error('Invalid document payload:', parsed.error);
       return errorResponse('Invalid document payload', 422);
     }
-    
+
+    const payload = {
+      ...parsed.data,
+      issueDate: parsed.data.issueDate ? parsed.data.issueDate.toISOString() : undefined,
+    };
+
     const result = await neo4jWriteOne<DocumentNode>(
       DOCUMENT_QUERIES.createDocument,
       {
-        properties: parsed.data,
+        properties: payload,
         projectId: projectId,
       }
     );

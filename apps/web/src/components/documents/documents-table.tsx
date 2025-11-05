@@ -36,10 +36,8 @@ export function DocumentsTable({ documents, projectId }: DocumentsTableProps) {
   
   const filteredDocuments = documents.filter((doc) => {
     const matchesSearch = 
-      doc.number?.toLowerCase().includes(search.toLowerCase()) ||
-      doc.documentNumber?.toLowerCase().includes(search.toLowerCase()) ||
-      doc.title?.toLowerCase().includes(search.toLowerCase()) ||
-      false;
+      doc.documentNumber.toLowerCase().includes(search.toLowerCase()) ||
+      doc.title.toLowerCase().includes(search.toLowerCase());
     
     const matchesType = typeFilter === 'all' || doc.type === typeFilter;
     const matchesStatus = statusFilter === 'all' || doc.status === statusFilter;
@@ -76,7 +74,7 @@ export function DocumentsTable({ documents, projectId }: DocumentsTableProps) {
           <SelectContent>
             <SelectItem value="all">All Statuses</SelectItem>
             <SelectItem value="draft">Draft</SelectItem>
-            <SelectItem value="for_review">For Review</SelectItem>
+            <SelectItem value="in_review">In Review</SelectItem>
             <SelectItem value="approved">Approved</SelectItem>
             <SelectItem value="superseded">Superseded</SelectItem>
           </SelectContent>
@@ -112,7 +110,7 @@ export function DocumentsTable({ documents, projectId }: DocumentsTableProps) {
                       className="hover:underline text-blue-600 flex items-center gap-2"
                     >
                       <FileText className="h-4 w-4" />
-                      {doc.number}
+                      {doc.documentNumber}
                     </Link>
                   </TableCell>
                   <TableCell className="max-w-md">{doc.title}</TableCell>
@@ -120,10 +118,10 @@ export function DocumentsTable({ documents, projectId }: DocumentsTableProps) {
                     <Badge variant="outline">{doc.type}</Badge>
                   </TableCell>
                   <TableCell>
-                    <Badge variant="secondary">{doc.revision}</Badge>
+                    <Badge variant="secondary">{doc.revisionCode}</Badge>
                   </TableCell>
                   <TableCell className="text-sm text-muted-foreground">
-                    {doc.date ? format(new Date(doc.date), 'dd MMM yyyy') : doc.issueDate ? format(new Date(doc.issueDate), 'dd MMM yyyy') : '-'}
+                    {doc.issueDate ? format(new Date(doc.issueDate), 'dd MMM yyyy') : '-'}
                   </TableCell>
                   <TableCell>
                     <StatusBadge status={doc.status} />

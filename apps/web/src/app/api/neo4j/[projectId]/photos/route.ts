@@ -59,11 +59,16 @@ export async function POST(
       console.error('Invalid photo payload:', parsed.error);
       return errorResponse('Invalid photo payload', 422);
     }
-    
+
+    const payload = {
+      ...parsed.data,
+      capturedAt: parsed.data.capturedAt ? parsed.data.capturedAt.toISOString() : undefined,
+    };
+
     const result = await neo4jWriteOne<PhotoNode>(
       PHOTO_QUERIES.createPhoto,
       {
-        properties: parsed.data,
+        properties: payload,
         projectId: projectId,
       }
     );

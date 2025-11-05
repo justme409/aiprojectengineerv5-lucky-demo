@@ -8,10 +8,9 @@ import { Image as ImageIcon, MapPin, Calendar } from 'lucide-react';
 
 interface PhotosGalleryProps {
   photos: PhotoNode[];
-  projectId: string;
 }
 
-export function PhotosGallery({ photos, projectId }: PhotosGalleryProps) {
+export function PhotosGallery({ photos }: PhotosGalleryProps) {
   const [search, setSearch] = useState('');
   
   const filteredPhotos = photos.filter((photo) => {

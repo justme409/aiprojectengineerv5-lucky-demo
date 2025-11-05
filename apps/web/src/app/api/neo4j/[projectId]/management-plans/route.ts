@@ -59,11 +59,16 @@ export async function POST(
       console.error('Invalid management plan payload:', parsed.error);
       return errorResponse('Invalid management plan payload', 422);
     }
-    
+
+    const payload = {
+      ...parsed.data,
+      approvedDate: parsed.data.approvedDate ? parsed.data.approvedDate.toISOString() : undefined,
+    };
+
     const result = await neo4jWriteOne<ManagementPlanNode>(
       MANAGEMENT_PLAN_QUERIES.createPlan,
       {
-        properties: parsed.data,
+        properties: payload,
         projectId: projectId,
       }
     );

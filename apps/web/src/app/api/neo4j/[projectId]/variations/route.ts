@@ -59,11 +59,17 @@ export async function POST(
       console.error('Invalid variation payload:', parsed.error);
       return errorResponse('Invalid variation payload', 422);
     }
-    
+
+    const payload = {
+      ...parsed.data,
+      dateIdentified: parsed.data.dateIdentified.toISOString(),
+      dateNotified: parsed.data.dateNotified ? parsed.data.dateNotified.toISOString() : undefined,
+    };
+
     const result = await neo4jWriteOne<VariationNode>(
       VARIATION_QUERIES.createVariation,
       {
-        properties: parsed.data,
+        properties: payload,
         projectId: projectId,
       }
     );

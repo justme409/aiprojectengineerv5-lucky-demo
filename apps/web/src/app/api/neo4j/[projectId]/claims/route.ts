@@ -59,11 +59,16 @@ export async function POST(
       console.error('Invalid progress claim payload:', parsed.error);
       return errorResponse('Invalid progress claim payload', 422);
     }
-    
+
+    const payload = {
+      ...parsed.data,
+      cutoffDate: parsed.data.cutoffDate.toISOString(),
+    };
+
     const result = await neo4jWriteOne<ProgressClaimNode>(
       PROGRESS_CLAIM_QUERIES.createClaim,
       {
-        properties: parsed.data,
+        properties: payload,
         projectId: projectId,
       }
     );
