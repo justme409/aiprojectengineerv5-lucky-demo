@@ -5,7 +5,9 @@ import {
   Background,
   BackgroundVariant,
   Controls,
+  Handle,
   MiniMap,
+  Position,
   ReactFlow,
   ReactFlowProvider,
   useReactFlow,
@@ -45,66 +47,80 @@ const WbsNode = memo(({ data }: NodeProps<WbsNodeData>) => {
   const gradient = `linear-gradient(135deg, ${accent} 0%, ${muted} 100%)`;
 
   return (
-    <div className="min-w-[260px] max-w-[300px] overflow-hidden rounded-2xl border border-border/60 bg-card shadow-xl ring-1 ring-black/5">
-      <div className="h-2 w-full" style={{ background: gradient }} />
-      <div className="space-y-3 px-4 py-3">
-        <div className="flex items-center justify-between gap-3">
-          <span className="rounded-full bg-muted px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
-            {data.code}
-          </span>
-          <span className="rounded-full bg-muted/60 px-2 py-0.5 text-[11px] font-medium text-muted-foreground">
-            Level {data.level}
-          </span>
-        </div>
+    <div className="relative">
+      <Handle
+        type="target"
+        position={Position.Top}
+        className="h-3 w-3 border-2 border-background bg-primary"
+        isConnectable={false}
+      />
+      <div className="min-w-[260px] max-w-[300px] overflow-hidden rounded-2xl border border-border/60 bg-card shadow-xl ring-1 ring-black/5">
+        <div className="h-2 w-full" style={{ background: gradient }} />
+        <div className="space-y-3 px-4 py-3">
+          <div className="flex items-center justify-between gap-3">
+            <span className="rounded-full bg-muted px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
+              {data.code}
+            </span>
+            <span className="rounded-full bg-muted/60 px-2 py-0.5 text-[11px] font-medium text-muted-foreground">
+              Level {data.level}
+            </span>
+          </div>
 
-        <div>
-          <h3 className="text-sm font-semibold leading-tight text-foreground">{data.name}</h3>
-          <span
-            className="mt-2 inline-flex items-center rounded-full px-2 py-0.5 text-[11px] font-semibold"
-            style={{
-              color: accent,
-              backgroundColor: `${muted}26`,
-            }}
-          >
-            {data.statusLabel}
-          </span>
-        </div>
-
-        <div className="grid grid-cols-2 gap-3 text-xs">
-          <div className="space-y-0.5">
-            <p className="font-medium text-foreground/70">Deliverable</p>
-            <p className="capitalize text-foreground">{data.deliverable}</p>
-          </div>
-          <div className="space-y-0.5">
-            <p className="font-medium text-foreground/70">Category</p>
-            <p className="capitalize text-foreground">{data.category}</p>
-          </div>
-          <div className="space-y-0.5">
-            <p className="font-medium text-foreground/70">Planned Start</p>
-            <p className="text-foreground">{data.plannedStart}</p>
-          </div>
-          <div className="space-y-0.5">
-            <p className="font-medium text-foreground/70">Planned Finish</p>
-            <p className="text-foreground">{data.plannedEnd}</p>
-          </div>
-        </div>
-
-        <div className="space-y-1">
-          <div className="flex items-center justify-between text-[11px] text-muted-foreground">
-            <span>Progress</span>
-            <span className="font-medium text-foreground">{data.progressDisplay}</span>
-          </div>
-          <div className="h-2 w-full rounded-full bg-muted">
-            <div
-              className="h-full rounded-full"
+          <div>
+            <h3 className="text-sm font-semibold leading-tight text-foreground">{data.name}</h3>
+            <span
+              className="mt-2 inline-flex items-center rounded-full px-2 py-0.5 text-[11px] font-semibold"
               style={{
-                width: `${Math.min(100, Math.max(0, data.progressValue))}%`,
-                background: gradient,
+                color: accent,
+                backgroundColor: `${muted}26`,
               }}
-            />
+            >
+              {data.statusLabel}
+            </span>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3 text-xs">
+            <div className="space-y-0.5">
+              <p className="font-medium text-foreground/70">Deliverable</p>
+              <p className="capitalize text-foreground">{data.deliverable}</p>
+            </div>
+            <div className="space-y-0.5">
+              <p className="font-medium text-foreground/70">Category</p>
+              <p className="capitalize text-foreground">{data.category}</p>
+            </div>
+            <div className="space-y-0.5">
+              <p className="font-medium text-foreground/70">Planned Start</p>
+              <p className="text-foreground">{data.plannedStart}</p>
+            </div>
+            <div className="space-y-0.5">
+              <p className="font-medium text-foreground/70">Planned Finish</p>
+              <p className="text-foreground">{data.plannedEnd}</p>
+            </div>
+          </div>
+
+          <div className="space-y-1">
+            <div className="flex items-center justify-between text-[11px] text-muted-foreground">
+              <span>Progress</span>
+              <span className="font-medium text-foreground">{data.progressDisplay}</span>
+            </div>
+            <div className="h-2 w-full rounded-full bg-muted">
+              <div
+                className="h-full rounded-full"
+                style={{
+                  width: `${Math.min(100, Math.max(0, data.progressValue))}%`,
+                  background: gradient,
+                }}
+              />
+            </div>
           </div>
         </div>
       </div>
+      <Handle
+        type="source"
+        position={Position.Bottom}
+        className="h-3 w-3 border-2 border-background bg-primary"
+        isConnectable={false}
+      />
     </div>
   );
 });

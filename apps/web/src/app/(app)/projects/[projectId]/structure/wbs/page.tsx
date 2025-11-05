@@ -141,6 +141,13 @@ const buildHierarchy = (nodes: WBSNodeType[]): HierarchyDatum[] => {
   return roots;
 };
 
+const NODE_WIDTH = 240;
+const NODE_HEIGHT = 440;
+const SIBLING_SPACING = 1.35;
+const CROSS_LEVEL_SPACING = 1.7;
+const HORIZONTAL_PADDING = 180;
+const VERTICAL_PADDING = 220;
+
 const createGraphData = (nodes: WBSNodeType[]): { graphNodes: FlowNode<WbsNodeData>[]; graphEdges: FlowEdge[] } => {
   const roots = buildHierarchy(nodes);
 
@@ -153,10 +160,10 @@ const createGraphData = (nodes: WBSNodeType[]): { graphNodes: FlowNode<WbsNodeDa
     children: roots,
   };
 
-  const nodeSize: [number, number] = [240, 190];
+  const nodeSize: [number, number] = [NODE_WIDTH, NODE_HEIGHT];
   const layout = tree<HierarchyDatum>()
     .nodeSize(nodeSize)
-    .separation((a, b) => (a.parent === b.parent ? 1.2 : 1.45))(
+    .separation((a, b) => (a.parent === b.parent ? SIBLING_SPACING : CROSS_LEVEL_SPACING))(
       hierarchy(virtualRoot, (datum) => datum.children),
     );
 
@@ -167,8 +174,8 @@ const createGraphData = (nodes: WBSNodeType[]): { graphNodes: FlowNode<WbsNodeDa
   }
 
   const minX = Math.min(...descendants.map((d) => d.x));
-  const paddingX = 180;
-  const paddingY = 100;
+  const paddingX = HORIZONTAL_PADDING;
+  const paddingY = VERTICAL_PADDING;
 
   const graphNodes: FlowNode<WbsNodeData>[] = descendants.map((descendant) => {
     const node = descendant.data.node as WBSNodeType;
@@ -206,7 +213,7 @@ const createGraphData = (nodes: WBSNodeType[]): { graphNodes: FlowNode<WbsNodeDa
       sourcePosition: 'bottom',
       targetPosition: 'top',
       style: {
-        width: 280,
+        width: NODE_WIDTH - 24,
       },
     } satisfies FlowNode<WbsNodeData>;
   });
@@ -232,8 +239,8 @@ const createGraphData = (nodes: WBSNodeType[]): { graphNodes: FlowNode<WbsNodeDa
         labelBgPadding: [8, 4],
         labelBgBorderRadius: 4,
         labelBgStyle: {
-          fill: 'rgba(15, 23, 42, 0.82)',
-          color: '#f8fafc',
+          fill: 'rgba(15, 23, 42, 0.12)',
+          color: '#0f172a',
         },
         style: {
           strokeWidth: 3,
