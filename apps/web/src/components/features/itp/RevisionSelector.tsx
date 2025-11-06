@@ -64,12 +64,17 @@ export default function RevisionSelector({
     setLoading(true);
     try {
       const res = await fetch(`/api/v1/assets/${encodeURIComponent(templateId)}/revisions`, { cache: 'no-store' });
-      if (!res.ok) throw new Error(`Failed to load revisions (${res.status})`);
+      if (!res.ok) {
+        console.warn(`Revision history unavailable (${res.status})`);
+        setRevisions([]);
+        return;
+      }
+
       const json = await res.json();
       setRevisions(json.revisions || []);
     } catch (error) {
-      console.error('Error loading revision history:', error);
-      toast.error('Failed to load revision history');
+      console.warn('Error loading revision history:', error);
+      setRevisions([]);
     } finally {
       setLoading(false);
     }

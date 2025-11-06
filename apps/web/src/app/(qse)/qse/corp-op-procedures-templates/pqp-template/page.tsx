@@ -58,7 +58,7 @@ const defaultHtml = `
     <li><strong>ITP Templates:</strong> Based on project specifications and industry standards</li>
     <li><strong>Digital Execution:</strong> ITPs executed using tablets with real-time data entry</li>
     <li><strong>Hold Points:</strong> Automatic notifications to relevant parties for sign-off</li>
-    <li><strong>Records Management:</strong> ITP Templates are maintained under /projects/[projectId]/quality/itp-templates-register; Lot Register holds per‑lot ITP instances.</li>
+    <li><strong>Records Management:</strong> ITP Templates are maintained under /projects/[projectId]/quality/itps/templates; Lot Register holds per‑lot ITP instances.</li>
   </ul>
   <h3 class="mt-8 mb-4">5.0 Quality Risks & Mitigation</h3>
   <div class="overflow-x-auto mb-8">

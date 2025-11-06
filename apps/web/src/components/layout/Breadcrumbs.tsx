@@ -39,19 +39,46 @@ export function Breadcrumbs() {
           breadcrumbs.push({ label: 'Overview', href: `/portal/projects/${projectId}/dashboard`, isActive: !pathSegments[3] })
 
           if (pathSegments[3]) {
-            const sub = pathSegments.slice(3).join('/')
-            const map: Record<string, string> = {
-              'documents': 'Documents',
-              'pending-approvals': 'Pending Approvals',
-              'management-plans': 'Management Plans',
-              'wbs': 'WBS',
-              'lots': 'Lots',
-              'itp-templates-register': 'ITP Templates Register',
-              'details': 'Details'
+            // Handle nested quality ITP routes
+            if (pathSegments[3] === 'quality' && pathSegments[4] === 'itps') {
+              const leaf = pathSegments[5];
+              const segment = pathSegments[6];
+              const baseHref = `/portal/projects/${projectId}/quality/itps`;
+              breadcrumbs[breadcrumbs.length - 1].isActive = false;
+
+              if (leaf === 'templates') {
+                const templatesHref = `${baseHref}/templates`;
+                const isDetail = Boolean(segment);
+                breadcrumbs.push({ label: 'ITP Templates', href: templatesHref, isActive: !isDetail });
+                if (isDetail) {
+                  breadcrumbs[breadcrumbs.length - 1].isActive = false;
+                  breadcrumbs.push({ label: 'Template Details', href: pathname, isActive: true });
+                }
+              } else if (leaf === 'instances') {
+                const instancesHref = `${baseHref}/instances`;
+                const isDetail = Boolean(segment);
+                breadcrumbs.push({ label: 'ITP Instances', href: instancesHref, isActive: !isDetail });
+                if (isDetail) {
+                  breadcrumbs[breadcrumbs.length - 1].isActive = false;
+                  breadcrumbs.push({ label: 'Instance Details', href: pathname, isActive: true });
+                }
+              } else {
+                breadcrumbs.push({ label: 'Quality', href: `${baseHref}`, isActive: true });
+              }
+            } else {
+              const sub = pathSegments.slice(3).join('/')
+              const map: Record<string, string> = {
+                'documents': 'Documents',
+                'pending-approvals': 'Pending Approvals',
+                'management-plans': 'Management Plans',
+                'wbs': 'WBS',
+                'lots': 'Lots',
+                'details': 'Details'
+              }
+              const label = map[pathSegments[3]] || pathSegments[3]
+              breadcrumbs[breadcrumbs.length - 1].isActive = false
+              breadcrumbs.push({ label, href: `/portal/projects/${projectId}/${sub}`, isActive: true })
             }
-            const label = map[pathSegments[3]] || pathSegments[3]
-            breadcrumbs[breadcrumbs.length - 1].isActive = false
-            breadcrumbs.push({ label, href: `/portal/projects/${projectId}/${sub}`, isActive: true })
           }
         } else {
           breadcrumbs[breadcrumbs.length - 1].isActive = true
@@ -78,22 +105,32 @@ export function Breadcrumbs() {
 
           // Add specific sub-route if we're not on overview
           if (pathSegments[2] && pathSegments[2] !== 'overview') {
-            if (pathSegments[2] === 'quality' && pathSegments[3] === 'itp-templates-register') {
-              // Handle ITP Templates routes - skip to overview since quality isn't a standalone page
+            if (pathSegments[2] === 'quality' && pathSegments[3] === 'itps') {
               breadcrumbs[breadcrumbs.length - 1].isActive = false
-              breadcrumbs.push({ label: 'ITP Templates Register', href: `/projects/${projectId}/quality/itp-templates-register` })
 
-              if (pathSegments[4]) {
-                // Individual template detail page
-                breadcrumbs[breadcrumbs.length - 1].isActive = false
-                breadcrumbs.push({
-                  label: 'Template Details',
-                  href: pathname,
-                  isActive: true
-                })
+              const resource = pathSegments[4]
+              const detailId = pathSegments[5]
+
+              if (resource === 'templates') {
+                const templatesHref = `/projects/${projectId}/quality/itps/templates`
+                const isDetail = Boolean(detailId)
+                breadcrumbs.push({ label: 'ITP Templates', href: templatesHref, isActive: !isDetail })
+
+                if (isDetail) {
+                  breadcrumbs[breadcrumbs.length - 1].isActive = false
+                  breadcrumbs.push({ label: 'Template Details', href: pathname, isActive: true })
+                }
+              } else if (resource === 'instances') {
+                const instancesHref = `/projects/${projectId}/quality/itps/instances`
+                const isDetail = Boolean(detailId)
+                breadcrumbs.push({ label: 'ITP Instances', href: instancesHref, isActive: !isDetail })
+
+                if (isDetail) {
+                  breadcrumbs[breadcrumbs.length - 1].isActive = false
+                  breadcrumbs.push({ label: 'Instance Details', href: pathname, isActive: true })
+                }
               } else {
-                // ITP Templates Register list page
-                breadcrumbs[breadcrumbs.length - 1].isActive = true
+                breadcrumbs.push({ label: 'Quality', href: `/projects/${projectId}/quality`, isActive: true })
               }
             } else if (pathSegments[2] === 'quality' && pathSegments[3] === 'lot-register') {
               breadcrumbs[breadcrumbs.length - 1].isActive = false

@@ -153,20 +153,29 @@ export function ItpTemplateEditorEnhanced({
   const [committing, setCommitting] = useState(false);
   const [rowAttachments, setRowAttachments] = useState<Record<string, any[]>>({});
 
-  const [columnSizingState, setColumnSizingState] = useState<Record<string, number>>(() => {
-    try {
-      if (typeof window === 'undefined') return {} as any;
-      const saved = window.localStorage.getItem('itpTableSizingPreferences');
-      return saved ? JSON.parse(saved) : {};
-    } catch (e) {
-      return {} as any;
-    }
-  });
+  const [columnSizingState, setColumnSizingState] = useState<Record<string, number>>({});
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    if (Object.keys(columnSizingState as any).length > 0) {
-      window.localStorage.setItem('itpTableSizingPreferences', JSON.stringify(columnSizingState));
+    try {
+      const saved = window.localStorage.getItem('itpTableSizingPreferences');
+      if (saved) {
+        const parsed = JSON.parse(saved) as Record<string, number>;
+        setColumnSizingState(parsed);
+      }
+    } catch (error) {
+      console.warn('Failed to load table sizing preferences', error);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (Object.keys(columnSizingState).length > 0) {
+      try {
+        window.localStorage.setItem('itpTableSizingPreferences', JSON.stringify(columnSizingState));
+      } catch (error) {
+        console.warn('Failed to persist table sizing preferences', error);
+      }
     }
   }, [columnSizingState]);
 
@@ -554,12 +563,12 @@ export function ItpTemplateEditorEnhanced({
       columnSizing: columnSizingState,
     },
     onColumnSizingChange: (updater) => {
-      if (typeof window === 'undefined') return // Prevent hydration issues
-      const next = typeof updater === 'function' ? (updater as any)(columnSizingState) : updater
-      // normalize widths to integers to avoid SSR hydration diffs
-      const normalized: Record<string, number> = {}
-      Object.entries(next || {}).forEach(([k, v]) => { normalized[k] = Math.round(Number(v) || 0) })
-      setColumnSizingState(normalized)
+      const next = typeof updater === 'function' ? (updater as any)(columnSizingState) : updater;
+      const normalized: Record<string, number> = {};
+      Object.entries(next || {}).forEach(([key, value]) => {
+        normalized[key] = Math.round(Number(value) || 0);
+      });
+      setColumnSizingState(normalized);
     },
     defaultColumn: {
       minSize: 80,
@@ -571,16 +580,18 @@ export function ItpTemplateEditorEnhanced({
   });
 
   const isSectionRow = (row: any) => row.original.isSection;
+  const totalTableSize = table.getTotalSize();
+  const isResizingColumn = Boolean(table.getState().columnSizingInfo?.isResizingColumn);
 
   return (
     <div className="bg-background rounded-lg shadow-sm w-full">
       <table
         className="w-full border-collapse"
         style={{
-          width: typeof window !== 'undefined' ? Number(table.getTotalSize() || 0) : 1460,
+          width: totalTableSize ? Number(totalTableSize) : undefined,
           minWidth: '100%'
         }}
-        data-resizing={typeof window !== 'undefined' ? (Object.keys((table as any).getState().columnSizingInfo || {}).length > 0).toString() : 'false'}
+        data-resizing={isResizingColumn ? 'true' : 'false'}
       >
         <thead>
           <tr>
@@ -589,7 +600,7 @@ export function ItpTemplateEditorEnhanced({
                 key={header.id}
                 className="bg-blue-700 dark:bg-muted text-white dark:text-primary-foreground font-medium border-r border-blue-600/20 dark:border-border text-left"
                 style={{
-                  width: typeof window !== 'undefined' ? header.getSize() : 120,
+                  width: header.getSize(),
                   position: 'relative',
                   fontSize: '0.875rem',
                   fontFamily: 'inherit',
@@ -600,9 +611,9 @@ export function ItpTemplateEditorEnhanced({
                 {flexRender(header.column.columnDef.header, header.getContext())}
                 {header.column.getCanResize() && (
                   <div
-                    onMouseDown={typeof window !== 'undefined' ? header.getResizeHandler() : undefined}
-                    onTouchStart={typeof window !== 'undefined' ? header.getResizeHandler() : undefined}
-                    className={`absolute top-0 right-0 h-full w-5 cursor-col-resize select-none touch-none z-10 ${typeof window !== 'undefined' && header.column.getIsResizing() ? 'bg-blue-500 dark:bg-accent resizing' : 'bg-blue-900 dark:bg-secondary opacity-0 hover:opacity-100'}`}
+                    onMouseDown={header.getResizeHandler()}
+                    onTouchStart={header.getResizeHandler()}
+                    className={`absolute top-0 right-0 h-full w-5 cursor-col-resize select-none touch-none z-10 ${header.column.getIsResizing() ? 'bg-blue-500 dark:bg-accent resizing' : 'bg-blue-900 dark:bg-secondary opacity-0 hover:opacity-100'}`}
                     data-resizer
                     title="Resize column"
                   />

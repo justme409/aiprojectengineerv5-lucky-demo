@@ -211,7 +211,7 @@ export default function CorpOpProceduresTemplatesPage() {
                 <li><strong>ITP Templates:</strong> Based on project specifications and industry standards</li>
                 <li><strong>Digital Execution:</strong> ITPs executed using tablets with real-time data entry</li>
                 <li><strong>Hold Points:</strong> Automatic notifications to relevant parties for sign-off</li>
-                <li><strong>Records Management:</strong> All ITP templates are managed in <code>/projects/[projectId]/quality/itp-templates-register</code>; per‑lot ITP instances live in the Lot Register.</li>
+                <li><strong>Records Management:</strong> All ITP templates are managed in <code>/projects/[projectId]/quality/itps/templates</code>; per‑lot ITP instances live in the Lot Register.</li>
               </ul>
 
               <h3 className="mt-8 mb-4">5.0 Quality Risks & Mitigation</h3>
