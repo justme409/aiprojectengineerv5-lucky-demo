@@ -2,6 +2,7 @@ import { Suspense, type ReactNode } from 'react';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { format } from 'date-fns';
+import { HelpCircle } from 'lucide-react';
 
 import { neo4jClient } from '@/lib/neo4j';
 import {
@@ -212,7 +213,11 @@ function formatPropertyValue(value: unknown): ReactNode {
   return String(value);
 }
 
-function ApprovalStatusBadge({ status }: { status: ManagementPlanNode['approvalStatus'] }) {
+function ApprovalStatusBadge({
+  status,
+}: {
+  status?: ManagementPlanNode['approvalStatus'] | null;
+}) {
   const config: Record<ManagementPlanNode['approvalStatus'], { label: string; variant: 'secondary' | 'default' | 'success' | 'destructive' }> = {
     draft: { label: 'Draft', variant: 'secondary' },
     in_review: { label: 'In Review', variant: 'default' },
@@ -220,7 +225,26 @@ function ApprovalStatusBadge({ status }: { status: ManagementPlanNode['approvalS
     superseded: { label: 'Superseded', variant: 'destructive' },
   };
 
+  if (!status) {
+    return (
+      <Badge variant="outline" className="gap-1 border-amber-300 text-amber-700">
+        <HelpCircle className="h-3 w-3" />
+        Status not set
+      </Badge>
+    );
+  }
+
   const item = config[status];
+
+  if (!item) {
+    console.warn('Unknown management plan approval status encountered', status);
+    return (
+      <Badge variant="outline" className="gap-1 border-amber-300 text-amber-700">
+        <HelpCircle className="h-3 w-3" />
+        {status.replace(/_/g, ' ')}
+      </Badge>
+    );
+  }
 
   return <Badge variant={item.variant}>{item.label}</Badge>;
 }
@@ -433,8 +457,13 @@ async function ManagementPlanContent({
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {sortedItps.map((template) => (
-                    <TableRow key={template.docNo}>
+                  {sortedItps.map((template, index) => {
+                    const templateKey = template.id
+                      ? String(template.id)
+                      : `${template.docNo}-${template.revisionNumber}-${index}`;
+
+                    return (
+                      <TableRow key={templateKey}>
                       <TableCell className="font-medium text-sm">
                         {template.docNo}
                       </TableCell>
@@ -469,8 +498,9 @@ async function ManagementPlanContent({
                       <TableCell className="text-sm text-foreground">
                         {template.approvedBy || '—'}
                       </TableCell>
-                    </TableRow>
-                  ))}
+                      </TableRow>
+                    );
+                  })}
                 </TableBody>
               </Table>
             </div>

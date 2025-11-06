@@ -1,5 +1,4 @@
 import { Suspense } from 'react';
-import { hierarchy, tree } from 'd3-hierarchy';
 import { MarkerType, type Edge as FlowEdge, type Node as FlowNode } from '@xyflow/react';
 
 import { WBSNodeType, WBS_NODE_QUERIES } from '@/schemas/neo4j';
@@ -96,89 +95,88 @@ const statusColorMap: Record<NonNullable<WBSNodeType['status']>, { primary: stri
   on_hold: { primary: '#b45309', muted: '#fcd34d' },
 };
 
-type HierarchyDatum = {
-  node: WBSNodeType | null;
-  children: HierarchyDatum[];
-};
+const NODE_WIDTH = 240;
+const NODE_HEIGHT = 440;
+const LEVEL_SPACING_Y = 500;
+const NODE_SPACING_X = 280;
 
-const buildHierarchy = (nodes: WBSNodeType[]): HierarchyDatum[] => {
-  const nodeMap = new Map<string, HierarchyDatum>();
+/**
+ * Build hierarchy and calculate positions using simple tree layout
+ * No D3 - just pure positioning logic
+ */
+const createGraphData = (nodes: WBSNodeType[]): { graphNodes: FlowNode<WbsNodeData>[]; graphEdges: FlowEdge[] } => {
+  if (nodes.length === 0) {
+    return { graphNodes: [], graphEdges: [] };
+  }
+
+  // Build parent-child map
+  const nodesByCode = new Map<string, WBSNodeType>();
+  const childrenByParent = new Map<string, WBSNodeType[]>();
+  const rootNodes: WBSNodeType[] = [];
 
   nodes.forEach((node) => {
-    nodeMap.set(node.code, {
-      node,
-      children: [],
-    });
-  });
-
-  const roots: HierarchyDatum[] = [];
-
-  nodeMap.forEach((entry) => {
-    const parentCode = entry.node?.parentCode;
-    if (parentCode && nodeMap.has(parentCode)) {
-      nodeMap.get(parentCode)?.children.push(entry);
+    nodesByCode.set(node.code, node);
+    if (!node.parentCode) {
+      rootNodes.push(node);
     } else {
-      roots.push(entry);
+      if (!childrenByParent.has(node.parentCode)) {
+        childrenByParent.set(node.parentCode, []);
+      }
+      childrenByParent.get(node.parentCode)!.push(node);
     }
   });
 
-  const sortBranch = (branch: HierarchyDatum) => {
-    branch.children.sort((a, b) => {
-      const codeA = a.node?.code ?? '';
-      const codeB = b.node?.code ?? '';
-      return codeA.localeCompare(codeB, undefined, { numeric: true, sensitivity: 'base' });
-    });
-    branch.children.forEach(sortBranch);
-  };
-
-  roots.sort((a, b) => {
-    const codeA = a.node?.code ?? '';
-    const codeB = b.node?.code ?? '';
-    return codeA.localeCompare(codeB, undefined, { numeric: true, sensitivity: 'base' });
+  // Sort children by code for consistent ordering
+  childrenByParent.forEach((children) => {
+    children.sort((a, b) => a.code.localeCompare(b.code, undefined, { numeric: true }));
   });
-  roots.forEach(sortBranch);
+  rootNodes.sort((a, b) => a.code.localeCompare(b.code, undefined, { numeric: true }));
 
-  return roots;
-};
-
-const NODE_WIDTH = 240;
-const NODE_HEIGHT = 440;
-const SIBLING_SPACING = 1.35;
-const CROSS_LEVEL_SPACING = 1.7;
-const HORIZONTAL_PADDING = 180;
-const VERTICAL_PADDING = 220;
-
-const createGraphData = (nodes: WBSNodeType[]): { graphNodes: FlowNode<WbsNodeData>[]; graphEdges: FlowEdge[] } => {
-  const roots = buildHierarchy(nodes);
-
-  if (roots.length === 0) {
-    return { graphNodes: [], graphEdges: [] };
+  // Calculate positions using simple tree layout
+  interface PositionedNode {
+    node: WBSNodeType;
+    x: number;
+    y: number;
   }
 
-  const virtualRoot: HierarchyDatum = {
-    node: null,
-    children: roots,
+  const positionedNodes: PositionedNode[] = [];
+  let currentXOffset = 0;
+
+  const positionSubtree = (node: WBSNodeType, level: number, xOffset: number): number => {
+    const children = childrenByParent.get(node.code) || [];
+    const y = level * LEVEL_SPACING_Y;
+
+    if (children.length === 0) {
+      // Leaf node - position at current x offset
+      positionedNodes.push({ node, x: xOffset, y });
+      return xOffset + NODE_SPACING_X;
+    }
+
+    // Position children first
+    let childX = xOffset;
+    const childPositions: number[] = [];
+    children.forEach((child) => {
+      const childCenter = childX + NODE_WIDTH / 2;
+      childPositions.push(childCenter);
+      childX = positionSubtree(child, level + 1, childX);
+    });
+
+    // Position parent centered over children
+    const leftmostChild = childPositions[0];
+    const rightmostChild = childPositions[childPositions.length - 1];
+    const parentX = (leftmostChild + rightmostChild) / 2 - NODE_WIDTH / 2;
+
+    positionedNodes.push({ node, x: parentX, y });
+    return childX;
   };
 
-  const nodeSize: [number, number] = [NODE_WIDTH, NODE_HEIGHT];
-  const layout = tree<HierarchyDatum>()
-    .nodeSize(nodeSize)
-    .separation((a, b) => (a.parent === b.parent ? SIBLING_SPACING : CROSS_LEVEL_SPACING))(
-      hierarchy(virtualRoot, (datum) => datum.children),
-    );
+  // Position each root tree
+  rootNodes.forEach((root) => {
+    currentXOffset = positionSubtree(root, 0, currentXOffset);
+  });
 
-  const descendants = layout.descendants().filter((d) => d.data.node !== null);
-
-  if (descendants.length === 0) {
-    return { graphNodes: [], graphEdges: [] };
-  }
-
-  const minX = Math.min(...descendants.map((d) => d.x));
-  const paddingX = HORIZONTAL_PADDING;
-  const paddingY = VERTICAL_PADDING;
-
-  const graphNodes: FlowNode<WbsNodeData>[] = descendants.map((descendant) => {
-    const node = descendant.data.node as WBSNodeType;
+  // Create XYFlow nodes
+  const graphNodes: FlowNode<WbsNodeData>[] = positionedNodes.map(({ node, x, y }) => {
     const statusKey = (node.status ?? 'not_started') as keyof typeof statusConfig;
     const statusMeta = statusConfig[statusKey] ?? {
       label: 'Status Unknown',
@@ -186,12 +184,10 @@ const createGraphData = (nodes: WBSNodeType[]): { graphNodes: FlowNode<WbsNodeDa
     };
     const colors = statusColorMap[statusKey] ?? { primary: '#334155', muted: '#94a3b8' };
     const progressValue = typeof node.percentComplete === 'number' ? node.percentComplete : 0;
+
     return {
       id: node.code,
-      position: {
-        x: descendant.x - minX + paddingX,
-        y: descendant.y + paddingY,
-      },
+      position: { x, y },
       data: {
         code: node.code,
         name: node.name,
@@ -218,25 +214,22 @@ const createGraphData = (nodes: WBSNodeType[]): { graphNodes: FlowNode<WbsNodeDa
     } satisfies FlowNode<WbsNodeData>;
   });
 
-  const graphEdges: FlowEdge[] = layout
-    .links()
-    .filter((link) => link.source.data.node && link.target.data.node)
-    .map((link) => {
-      const sourceNode = link.source.data.node as WBSNodeType;
-      const targetNode = link.target.data.node as WBSNodeType;
-
-      const label = targetNode.deliverableType
-        ? targetNode.deliverableType.replace(/_/g, ' ')
+  // Create edges from parent-child relationships
+  const graphEdges: FlowEdge[] = [];
+  nodes.forEach((node) => {
+    if (node.parentCode && nodesByCode.has(node.parentCode)) {
+      const label = node.deliverableType
+        ? node.deliverableType.replace(/_/g, ' ')
         : undefined;
 
-      return {
-        id: `${sourceNode.code}-${targetNode.code}`,
-        source: sourceNode.code,
-        target: targetNode.code,
+      graphEdges.push({
+        id: `${node.parentCode}-${node.code}`,
+        source: node.parentCode,
+        target: node.code,
         type: 'smoothstep',
         animated: true,
         label,
-        labelBgPadding: [8, 4],
+        labelBgPadding: [8, 4] as [number, number],
         labelBgBorderRadius: 4,
         labelBgStyle: {
           fill: 'rgba(15, 23, 42, 0.12)',
@@ -253,8 +246,9 @@ const createGraphData = (nodes: WBSNodeType[]): { graphNodes: FlowNode<WbsNodeDa
           width: 22,
           height: 22,
         },
-      };
-    });
+      });
+    }
+  });
 
   return { graphNodes, graphEdges };
 };

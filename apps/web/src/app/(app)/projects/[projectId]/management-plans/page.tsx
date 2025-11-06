@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
-import { FileText, CheckCircle, Clock, AlertCircle } from 'lucide-react';
+import { FileText, CheckCircle, Clock, AlertCircle, HelpCircle } from 'lucide-react';
 import { format } from 'date-fns';
 import Link from 'next/link';
 
@@ -99,6 +99,16 @@ async function ManagementPlansContent({ projectId }: { projectId: string }) {
     superseded: 1,
   };
 
+  const getStatusPriority = (
+    status?: ManagementPlanNode['approvalStatus'] | null,
+  ): number => {
+    if (!status) {
+      return Number.NEGATIVE_INFINITY;
+    }
+
+    return statusPriority[status] ?? Number.NEGATIVE_INFINITY;
+  };
+
   const toEpoch = (value?: unknown) => {
     const date = toDate(value);
     return date ? date.getTime() : 0;
@@ -108,13 +118,21 @@ async function ManagementPlansContent({ projectId }: { projectId: string }) {
     plans.reduce<Record<string, ManagementPlanNode>>((acc, plan) => {
       const key = plan.type;
       const existing = acc[key];
+
+      if (!plan.approvalStatus) {
+        console.warn('Management plan missing approvalStatus', {
+          planId: plan.id,
+          planType: plan.type,
+        });
+      }
+
       if (!existing) {
         acc[key] = plan;
         return acc;
       }
 
-      const existingPriority = statusPriority[existing.approvalStatus];
-      const currentPriority = statusPriority[plan.approvalStatus];
+      const existingPriority = getStatusPriority(existing.approvalStatus);
+      const currentPriority = getStatusPriority(plan.approvalStatus);
 
       if (currentPriority > existingPriority) {
         acc[key] = plan;
@@ -194,17 +212,41 @@ async function ManagementPlansContent({ projectId }: { projectId: string }) {
   );
 }
 
-function ApprovalStatusBadge({ status }: { status: ManagementPlanNode['approvalStatus'] }) {
+function ApprovalStatusBadge({
+  status,
+}: {
+  status?: ManagementPlanNode['approvalStatus'] | null;
+}) {
   const config: Record<ManagementPlanNode['approvalStatus'], { icon: any; variant: any; label: string }> = {
     draft: { icon: Clock, variant: 'secondary', label: 'Draft' },
     in_review: { icon: Clock, variant: 'default', label: 'In Review' },
     approved: { icon: CheckCircle, variant: 'success', label: 'Approved' },
     superseded: { icon: AlertCircle, variant: 'destructive', label: 'Superseded' },
   };
-  
+
+  if (!status) {
+    return (
+      <Badge variant="outline" className="gap-1 border-amber-300 text-amber-700">
+        <HelpCircle className="h-3 w-3" />
+        Status not set
+      </Badge>
+    );
+  }
+
   const item = config[status];
+
+  if (!item) {
+    console.warn('Unknown management plan approval status encountered', status);
+    return (
+      <Badge variant="outline" className="gap-1 border-amber-300 text-amber-700">
+        <HelpCircle className="h-3 w-3" />
+        {status}
+      </Badge>
+    );
+  }
+
   const Icon = item.icon;
-  
+
   return (
     <Badge variant={item.variant as any} className="gap-1">
       <Icon className="h-3 w-3" />
