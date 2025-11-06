@@ -10,7 +10,7 @@ interface PageProps {
 function humanizeSection(value: string): string {
   return value
     .replace(/[_-]+/g, ' ')
-    .replace(/\w/g, (char) => char.toUpperCase())
+    .replace(/\b\w/g, (char) => char.toUpperCase())
     .trim();
 }
 
@@ -54,10 +54,11 @@ function mapInspectionPointsToItpItems(points: InspectionPointNode[]) {
     const holdWitness = holdWitnessParts.join(' / ');
 
     const sequenceValue = point.sequence ?? index + 1;
+    const itemNumber = (index + 1).toString().padStart(2, '0');
 
     items.push({
       id: point.id ?? `point-${index}`,
-      item_no: sequenceValue.toString().padStart(2, '0'),
+      item_no: itemNumber,
       parentId: sectionId ?? 'root',
       section_name: point.section ? humanizeSection(point.section) : undefined,
       type: point.type,

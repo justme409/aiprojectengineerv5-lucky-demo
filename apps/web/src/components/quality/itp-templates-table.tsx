@@ -48,6 +48,7 @@ function buildDisplayFields(template: ITPTemplateNode): Pick<TemplateRow, 'displ
   const trimmedScope = template.scopeOfWork?.trim();
   const trimmedDescription = template.description?.trim();
   const trimmedSpec = template.specRef?.trim();
+  const trimmedParentSpec = template.parentSpec?.trim();
   const trimmedAgency = template.agency?.trim();
   const trimmedJurisdiction = template.jurisdiction?.trim();
 
@@ -64,6 +65,12 @@ function buildDisplayFields(template: ITPTemplateNode): Pick<TemplateRow, 'displ
 
   if (trimmedScope && trimmedDescription && trimmedScope !== trimmedDescription) {
     metaPieces.push(trimmedDescription);
+  }
+
+  if (trimmedParentSpec) {
+    metaPieces.push(`Spec: ${trimmedParentSpec}`);
+  } else if (trimmedSpec) {
+    metaPieces.push(`Spec: ${trimmedSpec}`);
   }
 
   if (trimmedAgency) {
@@ -110,6 +117,7 @@ export function ITPTemplatesTable({ templates, projectId }: ITPTemplatesTablePro
         template.scopeOfWork,
         template.workType,
         template.specRef,
+        template.parentSpec,
         template.agency,
         template.jurisdiction,
         template.applicableStandards?.join(' '),
@@ -150,7 +158,7 @@ export function ITPTemplatesTable({ templates, projectId }: ITPTemplatesTablePro
             className="h-auto p-0 font-semibold hover:bg-transparent"
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
           >
-            Doc No
+            Template Ref
             {column.getIsSorted() === 'asc' ? (
               <ArrowUp className="ml-2 h-4 w-4" />
             ) : column.getIsSorted() === 'desc' ? (
