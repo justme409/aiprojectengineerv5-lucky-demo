@@ -7,7 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
-    "db:migrate": "tsx scripts/migrate.ts"
+    "db:migrate": "tsx scripts/migrate.ts",
+    "check:types": "tsc --noEmit",
+    "check:lint": "eslint .",
+    "check:all": "pnpm run check:types && pnpm run check:lint"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.10.0",

@@ -40,9 +40,13 @@ export default async function ProjectOverviewPage({ params }: PageProps) {
 		notFound()
 	}
 
-	let parties
+	let parties: any = null
 	try {
-		parties = project.parties ? JSON.parse(project.parties) : null
+		if (typeof project.parties === 'string') {
+			parties = project.parties ? JSON.parse(project.parties) : null
+		} else if (project.parties && typeof project.parties === 'object') {
+			parties = project.parties as Record<string, unknown>
+		}
 	} catch (error) {
 		parties = null
 	}

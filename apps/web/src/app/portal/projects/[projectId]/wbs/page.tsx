@@ -3,7 +3,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { WBSNodeType, WBS_NODE_QUERIES } from '@/schemas/neo4j';
 import { neo4jClient } from '@/lib/neo4j';
 import { MarkerType, type Edge as FlowEdge, type Node as FlowNode } from '@xyflow/react';
-import WbsGraph, { type WbsNodeData } from '@/app/(app)/projects/[projectId]/structure/wbs/WbsGraph';
+import WbsGraph, { type WbsNodeData } from '../../../../(app)/projects/[projectId]/structure/wbs/WbsGraph';
 
 const toNumber = (value: unknown): number => {
   if (typeof value === 'number') return value;

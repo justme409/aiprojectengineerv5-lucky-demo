@@ -7,21 +7,21 @@ import { Badge } from '@/components/ui/badge'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 
 interface Lot {
-  lot_asset_id: string
-  lot_name: string
-  lot_number: string
-  lot_status: string
-  itp_document_asset_id: string
-  inspection_points: Array<{
-    inspection_point_id: string
+  lotAssetId: string
+  lotName: string
+  lotNumber: string
+  lotStatus: string
+  itpInstanceId: string | null
+  inspectionPoints: Array<{
+    inspectionPointId: string
     code: string
     title: string
-    point_type: string
-    sla_due_at: string
-    released_at: string
-    approval_state: string
+    pointType: string
+    slaDueAt: string
+    releasedAt: string
+    approvalState: string
   }>
-  test_results: any[]
+  testResults: any[]
 }
 
 interface WorkLotRegisterProps {
@@ -81,13 +81,13 @@ export default function WorkLotRegister({ projectId }: WorkLotRegisterProps) {
 
   const getInspectionStatus = (points: any[]) => {
     const total = points.length
-    const released = points.filter(p => p.released_at).length
+    const released = points.filter((p) => p.releasedAt).length
     return `${released}/${total}`
   }
 
   const canCloseLot = (lot: Lot) => {
-    return lot.inspection_points.every(point =>
-      point.approval_state === 'approved' && point.released_at
+    return lot.inspectionPoints.every((point) =>
+      point.approvalState === 'approved' && point.releasedAt
     )
   }
 
@@ -148,37 +148,37 @@ export default function WorkLotRegister({ projectId }: WorkLotRegisterProps) {
               </TableHeader>
               <TableBody>
                 {lots.map((lot) => (
-                  <TableRow key={lot.lot_asset_id}>
-                    <TableCell className="font-medium">{lot.lot_number}</TableCell>
-                    <TableCell>{lot.lot_name}</TableCell>
+                  <TableRow key={lot.lotAssetId}>
+                    <TableCell className="font-medium">{lot.lotNumber}</TableCell>
+                    <TableCell>{lot.lotName}</TableCell>
                     <TableCell>
-                      <Badge className={getStatusColor(lot.lot_status)}>
-                        {lot.lot_status}
+                      <Badge className={getStatusColor(lot.lotStatus)}>
+                        {lot.lotStatus}
                       </Badge>
                     </TableCell>
                     <TableCell>
-                      {lot.itp_document_asset_id ? (
+                      {lot.itpInstanceId ? (
                         <span className="text-green-600">✓ Linked</span>
                       ) : (
                         <span className="text-red-600">Not linked</span>
                       )}
                     </TableCell>
                     <TableCell>
-                      {getInspectionStatus(lot.inspection_points)}
+                      {getInspectionStatus(lot.inspectionPoints)}
                     </TableCell>
                     <TableCell>
-                      {lot.test_results?.length || 0} results
+                      {lot.testResults?.length || 0} results
                     </TableCell>
                     <TableCell>
                       <div className="flex space-x-2">
                         <Button variant="outline" size="sm">
                           View
                         </Button>
-                        {canCloseLot(lot) && lot.lot_status !== 'closed' && (
+                        {canCloseLot(lot) && lot.lotStatus !== 'closed' && (
                           <Button
                             variant="outline"
                             size="sm"
-                            onClick={() => handleCloseLot(lot.lot_asset_id)}
+                            onClick={() => handleCloseLot(lot.lotAssetId)}
                           >
                             Close Lot
                           </Button>

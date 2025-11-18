@@ -83,7 +83,9 @@ export const POST = createApiHandler<CreateLotInput, LotNode>({
     }
     
     if (!result.data) {
-      throw new Error('Lot creation returned no data');
+      const notFoundError: any = new Error('Template or location not found for project');
+      notFoundError.status = 404;
+      throw notFoundError;
     }
     
     return result.data;

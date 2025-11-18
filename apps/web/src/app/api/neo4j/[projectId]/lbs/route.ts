@@ -25,7 +25,7 @@ export async function GET(
   }
   
   const result = await neo4jRead<LBSNodeType>(
-    LBS_NODE_QUERIES.getAllNodes,
+    LBS_NODE_QUERIES.getAll,
     { projectId: projectId }
   );
   

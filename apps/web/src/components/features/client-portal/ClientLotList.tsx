@@ -7,15 +7,28 @@ import { Badge } from '@/components/ui/badge'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { CheckCircle, XCircle, Clock, AlertTriangle } from 'lucide-react'
 
-interface Lot {
+interface GraphLot {
+  lotAssetId: string
+  lotName: string
+  lotNumber: string
+  lotStatus: string
+  inspectionPoints: Array<{
+    approvalState: string
+    releasedAt: string | null
+  }>
+  testResults: any[]
+  createdAt?: string
+}
+
+interface LotSummary {
   id: string
   name: string
-  lot_number: string
+  lotNumber: string
   status: string
-  approval_state: string
-  created_at: string
-  inspection_points_count?: number
-  test_results_count?: number
+  approvalState: string
+  createdAt: string
+  inspectionPointsCount: number
+  testResultsCount: number
 }
 
 interface ClientLotListProps {
@@ -23,7 +36,7 @@ interface ClientLotListProps {
 }
 
 export default function ClientLotList({ projectId }: ClientLotListProps) {
-  const [lots, setLots] = useState<Lot[]>([])
+  const [lots, setLots] = useState<LotSummary[]>([])
   const [loading, setLoading] = useState(true)
 
   const fetchLots = useCallback(async () => {
@@ -31,7 +44,26 @@ export default function ClientLotList({ projectId }: ClientLotListProps) {
       const response = await fetch(`/api/v1/projects/${projectId}/quality/lots`)
       if (response.ok) {
         const data = await response.json()
-        setLots(data.lots || [])
+        const graphLots: GraphLot[] = data.lots || []
+        const mapped: LotSummary[] = graphLots.map((lot) => {
+          const approvalState = lot.inspectionPoints.every((point) => point.approvalState === 'approved')
+            ? 'approved'
+            : lot.inspectionPoints.some((point) => point.approvalState === 'rejected')
+            ? 'rejected'
+            : 'pending_review'
+
+          return {
+            id: lot.lotAssetId,
+            name: lot.lotName,
+            lotNumber: lot.lotNumber,
+            status: lot.lotStatus,
+            approvalState,
+            createdAt: lot.createdAt || new Date().toISOString(),
+            inspectionPointsCount: lot.inspectionPoints.length,
+            testResultsCount: lot.testResults?.length || 0,
+          }
+        })
+        setLots(mapped)
       }
     } catch (error) {
       console.error('Error fetching lots:', error)
@@ -100,7 +132,7 @@ export default function ClientLotList({ projectId }: ClientLotListProps) {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-green-600">
-              {lots.filter(l => l.status === 'completed').length}
+              {lots.filter((l) => l.status === 'closed' || l.status === 'conformed').length}
             </div>
           </CardContent>
         </Card>
@@ -110,7 +142,7 @@ export default function ClientLotList({ projectId }: ClientLotListProps) {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-primary">
-              {lots.filter(l => l.status === 'in_progress').length}
+              {lots.filter((l) => l.status === 'in_progress').length}
             </div>
           </CardContent>
         </Card>
@@ -120,7 +152,7 @@ export default function ClientLotList({ projectId }: ClientLotListProps) {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-yellow-600">
-              {lots.filter(l => l.status === 'on_hold').length}
+              {lots.filter((l) => l.status === 'on_hold').length}
             </div>
           </CardContent>
         </Card>
@@ -152,13 +184,13 @@ export default function ClientLotList({ projectId }: ClientLotListProps) {
               <TableBody>
                 {lots.map((lot) => (
                   <TableRow key={lot.id}>
-                    <TableCell className="font-medium">{lot.lot_number}</TableCell>
+                    <TableCell className="font-medium">{lot.lotNumber}</TableCell>
                     <TableCell>{lot.name}</TableCell>
                     <TableCell>{getStatusBadge(lot.status)}</TableCell>
-                    <TableCell>{getApprovalBadge(lot.approval_state)}</TableCell>
-                    <TableCell>{lot.inspection_points_count || 0}</TableCell>
-                    <TableCell>{lot.test_results_count || 0}</TableCell>
-                    <TableCell>{new Date(lot.created_at).toLocaleDateString()}</TableCell>
+                    <TableCell>{getApprovalBadge(lot.approvalState)}</TableCell>
+                    <TableCell>{lot.inspectionPointsCount}</TableCell>
+                    <TableCell>{lot.testResultsCount}</TableCell>
+                    <TableCell>{new Date(lot.createdAt).toLocaleDateString()}</TableCell>
                     <TableCell>
                       <div className="flex gap-2">
                         <Button variant="outline" size="sm">

@@ -20,7 +20,7 @@ import {
 
 import '@xyflow/react/dist/style.css';
 
-export interface LbsNodeData extends Record<string, unknown> {
+export interface LbsNodeData {
   code: string;
   name: string;
   level: number;

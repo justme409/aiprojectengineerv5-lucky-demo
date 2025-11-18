@@ -40,54 +40,19 @@ interface ITPTemplatesTableProps {
 }
 
 type TemplateRow = ITPTemplateNode & {
-  displayDescription: string;
-  displayMeta?: string;
+  summary: string;
 };
 
-function buildDisplayFields(template: ITPTemplateNode): Pick<TemplateRow, 'displayDescription' | 'displayMeta'> {
+function buildDisplayFields(template: ITPTemplateNode): Pick<TemplateRow, 'summary'> {
   const trimmedScope = template.scopeOfWork?.trim();
   const trimmedDescription = template.description?.trim();
-  const trimmedSpec = template.specRef?.trim();
-  const trimmedParentSpec = template.parentSpec?.trim();
-  const trimmedAgency = template.agency?.trim();
-  const trimmedJurisdiction = template.jurisdiction?.trim();
+  const fallback = template.specRef?.trim() || template.docNo?.trim() || 'Untitled template';
 
-  let primary = trimmedScope || '';
-
-  if (!primary) {
-    const primaryPieces = Array.from(
-      new Set([trimmedDescription, trimmedSpec, trimmedAgency].filter(Boolean) as string[])
-    );
-    primary = primaryPieces.length > 0 ? primaryPieces.join(' • ') : (trimmedDescription || 'Untitled template');
-  }
-
-  const metaPieces = [] as string[];
-
-  if (trimmedScope && trimmedDescription && trimmedScope !== trimmedDescription) {
-    metaPieces.push(trimmedDescription);
-  }
-
-  if (trimmedParentSpec) {
-    metaPieces.push(`Spec: ${trimmedParentSpec}`);
-  } else if (trimmedSpec) {
-    metaPieces.push(`Spec: ${trimmedSpec}`);
-  }
-
-  if (trimmedAgency) {
-    metaPieces.push(trimmedAgency);
-  }
-
-  if (trimmedJurisdiction) {
-    metaPieces.push(trimmedJurisdiction);
-  }
-
-  if (template.applicableStandards && template.applicableStandards.length > 0) {
-    metaPieces.push(`Standards: ${template.applicableStandards.join(', ')}`);
-  }
+  const rawSummary = trimmedScope || trimmedDescription || fallback;
+  const summary = rawSummary.length > 160 ? `${rawSummary.slice(0, 157)}…` : rawSummary;
 
   return {
-    displayDescription: primary,
-    displayMeta: metaPieces.length > 0 ? metaPieces.join(' • ') : undefined,
+    summary,
   };
 }
 
@@ -113,7 +78,7 @@ export function ITPTemplatesTable({ templates, projectId }: ITPTemplatesTablePro
       const haystack = [
         template.docNo,
         template.description,
-        template.displayDescription,
+        template.summary,
         template.scopeOfWork,
         template.workType,
         template.specRef,
@@ -200,16 +165,9 @@ export function ITPTemplatesTable({ templates, projectId }: ITPTemplatesTablePro
           </Button>
         ),
         cell: ({ row }) => (
-          <div className="space-y-1">
-            <span className="whitespace-pre-wrap text-sm font-medium text-foreground">
-              {row.original.displayDescription}
-            </span>
-            {row.original.displayMeta && (
-              <span className="block text-xs text-muted-foreground">
-                {row.original.displayMeta}
-              </span>
-            )}
-          </div>
+          <span className="block whitespace-pre-wrap text-sm leading-5 text-foreground" title={row.original.scopeOfWork ?? row.original.description}>
+            {row.original.summary}
+          </span>
         ),
         enableSorting: true,
         sortingFn: 'alphanumeric',
