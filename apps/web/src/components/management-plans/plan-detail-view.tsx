@@ -116,14 +116,45 @@ function HtmlContent({ html, className }: { html?: string | null; className?: st
     return null;
   }
 
+  // Clean up literal \n sequences that should be actual newlines (already handled by HTML tags)
+  // and remove excessive whitespace between tags
+  const cleanedHtml = html
+    .replace(/\\n/g, '') // Remove literal \n (backslash-n) - HTML tags handle structure
+    .replace(/>\s+</g, '><') // Remove whitespace between tags
+    .trim();
+
   return (
     <div
       className={cn(
-        'prose prose-sm max-w-none text-foreground prose-headings:text-foreground prose-a:text-primary prose-strong:text-foreground',
-        'prose-table:text-foreground prose-th:text-foreground prose-td:text-foreground [&_*]:max-w-full',
+        // Base typography
+        'max-w-none text-foreground text-sm leading-relaxed',
+        // Headings
+        '[&_h1]:text-2xl [&_h1]:font-bold [&_h1]:mt-6 [&_h1]:mb-4 [&_h1]:text-foreground',
+        '[&_h2]:text-xl [&_h2]:font-bold [&_h2]:mt-6 [&_h2]:mb-3 [&_h2]:text-foreground',
+        '[&_h3]:text-lg [&_h3]:font-semibold [&_h3]:mt-4 [&_h3]:mb-2 [&_h3]:text-foreground',
+        '[&_h4]:text-base [&_h4]:font-semibold [&_h4]:mt-3 [&_h4]:mb-2 [&_h4]:text-foreground',
+        // Paragraphs
+        '[&_p]:my-2 [&_p]:leading-relaxed',
+        // Links
+        '[&_a]:text-primary [&_a]:underline',
+        // Strong/Bold
+        '[&_strong]:font-semibold [&_strong]:text-foreground',
+        // Lists
+        '[&_ul]:my-3 [&_ul]:pl-6 [&_ul]:list-disc',
+        '[&_ol]:my-3 [&_ol]:pl-6 [&_ol]:list-decimal',
+        '[&_li]:my-1',
+        // Table styling with borders
+        '[&_table]:w-full [&_table]:my-4 [&_table]:border-collapse [&_table]:border [&_table]:border-border [&_table]:rounded-md [&_table]:overflow-hidden',
+        '[&_thead]:bg-muted/50',
+        '[&_th]:border [&_th]:border-border [&_th]:px-3 [&_th]:py-2 [&_th]:text-left [&_th]:font-semibold [&_th]:text-foreground [&_th]:bg-muted/30',
+        '[&_td]:border [&_td]:border-border [&_td]:px-3 [&_td]:py-2 [&_td]:text-foreground',
+        '[&_tr]:border-b [&_tr]:border-border',
+        '[&_tbody_tr:hover]:bg-muted/20',
+        // Max width
+        '[&_*]:max-w-full',
         className,
       )}
-      dangerouslySetInnerHTML={{ __html: html }}
+      dangerouslySetInnerHTML={{ __html: cleanedHtml }}
     />
   );
 }
@@ -235,7 +266,21 @@ export function ManagementPlanDetailView({
     })
     .map(([key, value]) => ({ key, value }));
 
-  const requiredItps = Array.isArray(plan.requiredItps) ? plan.requiredItps : [];
+  // requiredItps may be stored as JSON string in Neo4j (can't store arrays of objects natively)
+  const requiredItps = (() => {
+    if (Array.isArray(plan.requiredItps)) {
+      return plan.requiredItps;
+    }
+    if (typeof plan.requiredItps === 'string' && plan.requiredItps.trim()) {
+      try {
+        const parsed = JSON.parse(plan.requiredItps);
+        return Array.isArray(parsed) ? parsed : [];
+      } catch {
+        return [];
+      }
+    }
+    return [];
+  })();
   const sortedItps = [...itpTemplates].sort((a, b) => a.docNo.localeCompare(b.docNo));
   const templatesWithAdditionalDetails = sortedItps.filter(
     (template) =>
