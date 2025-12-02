@@ -4,18 +4,9 @@ import { pool } from '@/lib/db';
 import { neo4jClient } from '@/lib/neo4j';
 
 /**
- * Increment version string (e.g., "1.0" -> "1.1", "2.5" -> "2.6")
+ * POST /api/v1/projects/[projectId]/plans/[planType]/update
+ * Update management plan metadata in Neo4j
  */
-function incrementVersion(version: string): string {
-  const parts = version.split('.');
-  if (parts.length === 2) {
-    const minor = parseInt(parts[1], 10);
-    return `${parts[0]}.${minor + 1}`;
-  }
-  // Fallback: just append .1
-  return `${version}.1`;
-}
-
 export async function POST(
   req: Request,
   { params }: { params: Promise<{ projectId: string; planType: string }> }
@@ -27,6 +18,7 @@ export async function POST(
     }
 
     const { projectId, planType } = await params;
+    const body = await req.json();
 
     // Access check via org membership OR project membership
     const userId = (session.user as any).id;
@@ -49,39 +41,44 @@ export async function POST(
     // Normalize plan type to uppercase
     const normalizedPlanType = planType.toUpperCase();
 
-    // Get current plan from Neo4j and increment version
+    // Build the update query dynamically based on provided fields
+    const allowedFields = ['title', 'summary', 'notes', 'approvalStatus'];
+    const updates: string[] = [];
+    const updateParams: Record<string, unknown> = {
+      projectId,
+      planType: normalizedPlanType,
+    };
+
+    for (const field of allowedFields) {
+      if (body[field] !== undefined) {
+        updates.push(`m.${field} = $${field}`);
+        updateParams[field] = body[field];
+      }
+    }
+
+    if (updates.length === 0) {
+      return NextResponse.json({ error: 'No valid fields to update' }, { status: 400 });
+    }
+
+    // Update the management plan in Neo4j
     const query = `
       MATCH (m:ManagementPlan {projectId: $projectId, type: $planType})
       WHERE COALESCE(m.isDeleted, false) = false
-      WITH m, COALESCE(m.version, '1.0') AS currentVersion
-      SET m.version = CASE
-            WHEN currentVersion CONTAINS '.' THEN
-              split(currentVersion, '.')[0] + '.' + toString(toInteger(split(currentVersion, '.')[1]) + 1)
-            ELSE
-              currentVersion + '.1'
-          END,
+      SET ${updates.join(', ')},
           m.updatedAt = datetime()
-      RETURN m.version AS version, m.title AS title
+      RETURN m
     `;
 
-    const result = await neo4jClient.write(query, {
-      projectId,
-      planType: normalizedPlanType,
-    });
+    const result = await neo4jClient.write(query, updateParams);
 
     if (!result || result.length === 0) {
       return NextResponse.json({ error: 'Plan not found' }, { status: 404 });
     }
 
-    const newVersion = result[0].version;
-
-    return NextResponse.json({
-      success: true,
-      version: newVersion,
-      message: `Committed revision ${newVersion}`,
-    });
+    return NextResponse.json({ success: true, plan: result[0] });
   } catch (error) {
-    console.error('Error committing plan revision:', error);
+    console.error('Error updating plan:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
+

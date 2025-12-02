@@ -419,11 +419,11 @@ function ITPStatusBadge({ status }: { status: ITPTemplateNode['status'] }) {
     superseded: { variant: 'outline', label: 'Superseded' },
   };
   
-  const config = variants[status];
+  const config = status ? variants[status] : undefined;
   
   return (
-    <Badge variant={config.variant as any}>
-      {config.label}
+    <Badge variant={(config?.variant as any) ?? 'outline'}>
+      {config?.label ?? 'Unknown'}
     </Badge>
   );
 }
@@ -436,13 +436,13 @@ function ApprovalStatusBadge({ status }: { status: ITPTemplateNode['approvalStat
     rejected: { icon: XCircle, variant: 'destructive', label: 'Rejected' },
   };
   
-  const item = config[status];
-  const Icon = item.icon;
+  const item = status ? config[status] : undefined;
+  const Icon = item?.icon;
   
   return (
-    <Badge variant={item.variant as any} className="gap-1">
+    <Badge variant={(item?.variant as any) ?? 'outline'} className="gap-1">
       {Icon && <Icon className="h-3 w-3" />}
-      {item.label}
+      {item?.label ?? 'Unknown'}
     </Badge>
   );
 }

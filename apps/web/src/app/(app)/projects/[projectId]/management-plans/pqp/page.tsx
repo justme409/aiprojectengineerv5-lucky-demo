@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import { notFound } from 'next/navigation';
 
-import { ManagementPlanDetailView } from '@/components/management-plans/plan-detail-view';
+import { PlanDocumentView } from '@/components/management-plans/plan-document-view';
 import { ManagementPlanSkeleton } from '@/components/management-plans/plan-skeleton';
 import { loadPlanContext, type ManagementPlanType } from '@/lib/management-plans/plan-utils';
 
@@ -11,23 +11,6 @@ interface PageProps {
 
 const PLAN_TYPE: ManagementPlanType = 'PQP';
 
-const COPY = {
-  title: 'Project Quality Plan',
-  subtitle:
-    'Quality governance, inspection checkpoints, and evidence requirements captured for this project.',
-  summaryTitle: 'Quality Overview',
-  notesTitle: 'Quality Notes',
-  sectionsTitle: 'Quality Workflow Sections',
-  sectionsDescription:
-    'Each section outlines the quality controls, responsibilities, and inspection points structured for delivery.',
-  itpTitle: 'Linked Inspection & Test Plans',
-  itpSubtitle: 'Quality-aligned ITP templates referenced by this project plan.',
-  additionalPropertiesTitle: 'Quality-Specific Properties',
-  relationshipsTitle: 'Quality Relationships',
-  relationshipsSubtitle:
-    'Downstream quality assets and dependencies linked from this Project Quality Plan.',
-} as const;
-
 async function PQPContent({ projectId }: { projectId: string }) {
   const context = await loadPlanContext(projectId, PLAN_TYPE);
 
@@ -35,7 +18,14 @@ async function PQPContent({ projectId }: { projectId: string }) {
     notFound();
   }
 
-  return <ManagementPlanDetailView projectId={projectId} copy={COPY} {...context} />;
+  return (
+    <PlanDocumentView
+      projectId={projectId}
+      plan={context.plan}
+      sections={context.sections}
+      planTypeSlug="pqp"
+    />
+  );
 }
 
 export default async function PQPPage({ params }: PageProps) {
@@ -49,6 +39,3 @@ export default async function PQPPage({ params }: PageProps) {
     </div>
   );
 }
-
-
-

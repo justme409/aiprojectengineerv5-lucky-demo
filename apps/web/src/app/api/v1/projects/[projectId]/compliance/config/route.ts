@@ -2,6 +2,17 @@ import { NextRequest, NextResponse } from 'next/server'
 import { auth } from '@/lib/auth'
 import { pool } from '@/lib/db'
 
+async function resolveAuthUserId(email?: string | null) {
+  if (!email) return null
+
+  const { rows } = await pool.query<{ id: string }>(
+    `SELECT id FROM auth.users WHERE email = $1 LIMIT 1`,
+    [email]
+  )
+
+  return rows[0]?.id ?? null
+}
+
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ projectId: string }> }
@@ -13,13 +24,17 @@ export async function GET(
     }
 
     const { projectId } = await params
+    const authUserId = await resolveAuthUserId(session.user.email)
+    if (!authUserId) {
+      return NextResponse.json({ error: 'User not linked to auth record' }, { status: 403 })
+    }
 
     // Check access
     const accessCheck = await pool.query(`
       SELECT 1 FROM public.projects p
       JOIN public.organization_users ou ON ou.organization_id = p.organization_id
       WHERE p.id = $1 AND ou.user_id = $2
-    `, [projectId, (session.user as any).id])
+    `, [projectId, authUserId])
 
     if (accessCheck.rows.length === 0) {
       return NextResponse.json({ error: 'Access denied' }, { status: 403 })
@@ -69,12 +84,17 @@ export async function POST(
     const body = await request.json()
     const { jurisdiction, packId } = body
 
+    const authUserId = await resolveAuthUserId(session.user.email)
+    if (!authUserId) {
+      return NextResponse.json({ error: 'User not linked to auth record' }, { status: 403 })
+    }
+
     // Check access
     const accessCheck = await pool.query(`
       SELECT 1 FROM public.projects p
       JOIN public.organization_users ou ON ou.organization_id = p.organization_id
       WHERE p.id = $1 AND ou.user_id = $2
-    `, [projectId, (session.user as any).id])
+    `, [projectId, authUserId])
 
     if (accessCheck.rows.length === 0) {
       return NextResponse.json({ error: 'Access denied' }, { status: 403 })
@@ -119,12 +139,17 @@ export async function PUT(
     const body = await request.json()
     const { flags } = body
 
+    const authUserId = await resolveAuthUserId(session.user.email)
+    if (!authUserId) {
+      return NextResponse.json({ error: 'User not linked to auth record' }, { status: 403 })
+    }
+
     // Check access
     const accessCheck = await pool.query(`
       SELECT 1 FROM public.projects p
       JOIN public.organization_users ou ON ou.organization_id = p.organization_id
       WHERE p.id = $1 AND ou.user_id = $2
-    `, [projectId, (session.user as any).id])
+    `, [projectId, authUserId])
 
     if (accessCheck.rows.length === 0) {
       return NextResponse.json({ error: 'Access denied' }, { status: 403 })

@@ -1,7 +1,11 @@
 import { notFound } from 'next/navigation';
-import { InspectionPointNode, ITPTemplateNode, ITP_TEMPLATE_QUERIES } from '@/schemas/neo4j';
+import { 
+  InspectionPointNode, 
+  ITPTemplateNode, 
+  ITP_TEMPLATE_QUERIES,
+} from '@/schemas/neo4j';
 import { neo4jClient } from '@/lib/neo4j';
-import ItpTemplateDetailClient from '@/components/features/itp/ItpTemplateDetailClient';
+import ItpTemplateDetailClientTabbed from '@/components/features/itp/ItpTemplateDetailClientTabbed';
 
 interface PageProps {
   params: Promise<{ projectId: string; templateId: string }>;
@@ -17,96 +21,103 @@ function humanizeSection(value: string): string {
 function mapInspectionPointsToItpItems(points: InspectionPointNode[]) {
   const items: any[] = [];
   const sorted = [...points].sort((a, b) => (a.sequence ?? 0) - (b.sequence ?? 0));
-  const sectionAdded = new Set<string>();
 
-  sorted.forEach((point, index) => {
-    const sectionKey = point.section ? point.section.toLowerCase() : null;
-    const sectionId = sectionKey ? `section-${sectionKey.replace(/[^a-z0-9]+/g, '-')}` : null;
-
-    if (sectionId && !sectionAdded.has(sectionId)) {
-      sectionAdded.add(sectionId);
-      items.push({
-        id: sectionId,
-        item_no: '',
-        parentId: null,
-        section_name: humanizeSection(point.section!),
-        inspection_test_point: '',
-        acceptance_criteria: '',
-        specification_clause: '',
-        inspection_test_method: '',
-        frequency: '',
-        responsibility: '',
-        hold_witness_point: '',
-        standards_reference: [],
-        'Inspection/Test Point': '',
-        'Acceptance Criteria': '',
-        'Specification Clause': '',
-        'Inspection/Test Method': '',
-        Frequency: '',
-        Responsibility: '',
-        'Hold/Witness Point': '',
-      });
+  // Filter out section-type entries and only process actual inspection points
+  const inspectionPoints = sorted.filter(point => point.type !== 'section');
+  
+  // Group points by section
+  const sectionOrder: string[] = [];
+  const sectionPoints: Record<string, InspectionPointNode[]> = {};
+  
+  inspectionPoints.forEach((point) => {
+    const sectionKey = point.section ? point.section.toLowerCase() : 'other';
+    if (!sectionPoints[sectionKey]) {
+      sectionPoints[sectionKey] = [];
+      sectionOrder.push(sectionKey);
     }
+    sectionPoints[sectionKey].push(point);
+  });
 
-    const holdWitnessParts = [];
-    if (point.isHoldPoint) holdWitnessParts.push('Hold');
-    if (point.isWitnessPoint) holdWitnessParts.push('Witness');
-    const holdWitness = holdWitnessParts.join(' / ');
-
-    const sequenceValue = point.sequence ?? index + 1;
-    const itemNumber = (index + 1).toString().padStart(2, '0');
-
+  // Build items with proper numbering: Section 1, 2, 3... Items 1.1, 1.2, 2.1, etc.
+  sectionOrder.forEach((sectionKey, sectionIndex) => {
+    const sectionNumber = sectionIndex + 1;
+    const pointsInSection = sectionPoints[sectionKey];
+    const firstPoint = pointsInSection[0];
+    const sectionName = firstPoint?.section ? humanizeSection(firstPoint.section) : 'Other';
+    
+    // Add section header
     items.push({
-      id: point.id ?? `point-${index}`,
-      item_no: itemNumber,
-      parentId: sectionId ?? 'root',
-      section_name: point.section ? humanizeSection(point.section) : undefined,
-      type: point.type,
-      inspection_test_point: point.description ?? '',
-      acceptance_criteria: point.acceptanceCriteria ?? '',
-      specification_clause: point.requirement ?? '',
-      inspection_test_method: point.testMethod ?? '',
-      frequency: point.testFrequency ?? '',
-      responsibility: point.responsibleParty ?? '',
-      hold_witness_point: holdWitness,
-      standards_reference: point.standardsRef ?? [],
-      isHoldPoint: point.isHoldPoint,
-      isWitnessPoint: point.isWitnessPoint,
-      'Inspection/Test Point': point.description ?? '',
-      'Acceptance Criteria': point.acceptanceCriteria ?? '',
-      'Specification Clause': point.requirement ?? '',
-      'Inspection/Test Method': point.testMethod ?? '',
-      Frequency: point.testFrequency ?? '',
-      Responsibility: point.responsibleParty ?? '',
-      'Hold/Witness Point': holdWitness,
+      id: `section-${sectionKey.replace(/[^a-z0-9]+/g, '-')}`,
+      itemNumber: `${sectionNumber}`,
+      sequence: 0,
+      section: sectionName,
+      isSection: true,
+      description: sectionName,
+      acceptanceCriteria: '',
+      requirement: '',
+      testMethod: '',
+      testFrequency: '',
+      responsibleParty: '',
+      isHoldPoint: false,
+      isWitnessPoint: false,
+    });
+
+    // Add items with sub-numbering
+    pointsInSection.forEach((point, itemIndex) => {
+      const itemNumber = `${sectionNumber}.${itemIndex + 1}`;
+
+      items.push({
+        id: point.id ?? `point-${sectionNumber}-${itemIndex}`,
+        itemNumber,
+        sequence: point.sequence,
+        section: sectionName,
+        isSection: false,
+        description: point.description ?? '',
+        acceptanceCriteria: point.acceptanceCriteria ?? '',
+        embeddedTablesJson: (point as any).embeddedTablesJson ?? '',
+        embeddedTables: (point as any).embeddedTables ?? [], // backward compatibility
+        requirement: point.requirement ?? '',
+        testMethod: point.testMethod ?? '',
+        testFrequency: point.testFrequency ?? '',
+        responsibleParty: point.responsibleParty ?? '',
+        isHoldPoint: point.isHoldPoint ?? false,
+        isWitnessPoint: point.isWitnessPoint ?? false,
+        standardsRef: point.standardsRef ?? [],
+      });
     });
   });
 
   return items;
 }
 
-async function getTemplate(projectId: string, templateId: string): Promise<{ template: ITPTemplateNode; points: InspectionPointNode[] } | null> {
+interface TemplateData {
+  template: ITPTemplateNode;
+  points: InspectionPointNode[];
+}
+
+async function getTemplateWithPoints(projectId: string, templateId: string): Promise<TemplateData | null> {
   const docNo = decodeURIComponent(templateId);
 
-  const result = await neo4jClient.readOne<{ template: ITPTemplateNode; points: InspectionPointNode[] }>(
+  // Fetch template with points
+  const templateResult = await neo4jClient.readOne<{ template: ITPTemplateNode; points: InspectionPointNode[] }>(
     ITP_TEMPLATE_QUERIES.getTemplateWithPoints,
     { projectId, docNo }
   );
 
-  if (!result || !result.template) {
+  if (!templateResult || !templateResult.template) {
     return null;
   }
 
   return {
-    template: result.template,
-    points: Array.isArray(result.points) ? (result.points.filter(Boolean) as InspectionPointNode[]) : [],
+    template: templateResult.template,
+    points: Array.isArray(templateResult.points) ? templateResult.points.filter(Boolean) : [],
   };
 }
 
 export default async function TemplateDetailPage({ params }: PageProps) {
   const { projectId, templateId } = await params;
 
-  const data = await getTemplate(projectId, templateId);
+  const data = await getTemplateWithPoints(projectId, templateId);
 
   if (!data) {
     notFound();
@@ -124,13 +135,13 @@ export default async function TemplateDetailPage({ params }: PageProps) {
     name: template.description ?? template.docNo,
     content: {
       ...baseContent,
-      itp_items: mapInspectionPointsToItpItems(points),
+      items: mapInspectionPointsToItpItems(points),
       revision: template.revisionNumber,
     },
   };
 
   return (
-    <ItpTemplateDetailClient
+    <ItpTemplateDetailClientTabbed
       template={templateWithContent}
       projectId={projectId}
       templateId={template.id ?? decodeURIComponent(templateId)}
@@ -138,4 +149,3 @@ export default async function TemplateDetailPage({ params }: PageProps) {
     />
   );
 }
-
