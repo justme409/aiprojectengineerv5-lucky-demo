@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from 'react';
-import { ChevronDown, ChevronRight, Table2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface EmbeddedTable {
@@ -19,64 +18,33 @@ interface EmbeddedTableRendererProps {
 
 /**
  * Renders embedded specification tables within acceptance criteria.
- * Tables are collapsible to save space in the ITP view.
+ * Clean document-style tables without collapsible UI.
  */
 export function EmbeddedTableRenderer({ tables, className }: EmbeddedTableRendererProps) {
-  const [expandedTables, setExpandedTables] = React.useState<Set<number>>(new Set([0])); // First table expanded by default
-
   if (!tables || tables.length === 0) return null;
 
-  const toggleTable = (index: number) => {
-    setExpandedTables(prev => {
-      const next = new Set(prev);
-      if (next.has(index)) {
-        next.delete(index);
-      } else {
-        next.add(index);
-      }
-      return next;
-    });
-  };
-
   return (
-    <div className={cn("mt-2 space-y-2", className)}>
-      {tables.map((table, index) => {
-        const isExpanded = expandedTables.has(index);
-        
-        return (
-          <div 
-            key={index} 
-            className="border border-gray-200 rounded-md overflow-hidden bg-gray-50"
-          >
-            {/* Table Header - Clickable to expand/collapse */}
-            <button
-              onClick={() => toggleTable(index)}
-              className="w-full flex items-center justify-between px-3 py-2 bg-gray-100 hover:bg-gray-150 transition-colors text-left"
-            >
-              <div className="flex items-center gap-2">
-                {isExpanded ? (
-                  <ChevronDown className="h-4 w-4 text-gray-500" />
-                ) : (
-                  <ChevronRight className="h-4 w-4 text-gray-500" />
-                )}
-                <Table2 className="h-4 w-4 text-blue-600" />
-                <span className="font-medium text-sm text-gray-800">{table.title}</span>
-              </div>
+    <div className={cn("mt-2 space-y-3", className)}>
+      {tables.map((table, index) => (
+        <div key={index} className="text-xs">
+          {/* Simple title */}
+          {table.title && (
+            <div className="font-semibold text-gray-700 mb-1">
+              {table.title}
               {table.source && (
-                <span className="text-xs text-gray-500">{table.source}</span>
+                <span className="font-normal text-gray-500 ml-1">({table.source})</span>
               )}
-            </button>
+            </div>
+          )}
 
-            {/* Table Content */}
-            {isExpanded && (
-              <div className="overflow-x-auto">
-                <table className="w-full text-xs">
+          {/* Table */}
+          <table className="w-full border-collapse border border-gray-300">
                   <thead>
-                    <tr className="bg-blue-50 border-b border-gray-200">
+              <tr>
                       {table.columns.map((col, colIndex) => (
                         <th 
                           key={colIndex}
-                          className="px-3 py-2 text-left font-semibold text-gray-700 whitespace-nowrap"
+                    className="border border-gray-300 px-2 py-1 text-left font-semibold text-gray-700 bg-gray-100"
                         >
                           {col}
                         </th>
@@ -85,17 +53,11 @@ export function EmbeddedTableRenderer({ tables, className }: EmbeddedTableRender
                   </thead>
                   <tbody>
                     {table.rows.map((row, rowIndex) => (
-                      <tr 
-                        key={rowIndex}
-                        className={cn(
-                          "border-b border-gray-100",
-                          rowIndex % 2 === 0 ? "bg-white" : "bg-gray-50"
-                        )}
-                      >
+                <tr key={rowIndex}>
                         {row.map((cell, cellIndex) => (
                           <td 
                             key={cellIndex}
-                            className="px-3 py-1.5 text-gray-700 whitespace-nowrap"
+                      className="border border-gray-300 px-2 py-1 text-gray-700"
                           >
                             {cell}
                           </td>
@@ -105,17 +67,14 @@ export function EmbeddedTableRenderer({ tables, className }: EmbeddedTableRender
                   </tbody>
                 </table>
                 
-                {/* Table Footer */}
+          {/* Footer note */}
                 {table.footer && (
-                  <div className="px-3 py-2 bg-gray-100 border-t border-gray-200 text-xs text-gray-600 italic">
+            <div className="text-[10px] text-gray-500 italic mt-1">
                     {table.footer}
                   </div>
                 )}
               </div>
-            )}
-          </div>
-        );
-      })}
+      ))}
     </div>
   );
 }

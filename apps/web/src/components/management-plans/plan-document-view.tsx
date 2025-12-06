@@ -7,11 +7,75 @@ import { Edit2, FileDown } from 'lucide-react';
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { formatDateValue, PlanSectionWithChildren } from '@/lib/management-plans/plan-utils';
 import type { ManagementPlanNode } from '@/schemas/neo4j';
 import { PlanSectionEditor } from './plan-section-editor';
+import { IMSLinkRenderer, parseIMSLinks, type IMSLink } from './IMSLinkRenderer';
+
+/**
+ * Extract IMS references from section body text (e.g., "QSE-10.2-PROC-01")
+ * and convert them to clickable links
+ */
+function extractIMSReferencesFromBody(body: string | null | undefined): IMSLink[] {
+  if (!body) return [];
+  
+  // Pattern to match QSE document IDs like QSE-10.2-PROC-01, QSE-8.1-FORM-05, etc.
+  const qsePattern = /QSE-[\d.]+-(PROC|FORM|REG|TEMP|POL|PLAN)-\d+/gi;
+  const matches = body.match(qsePattern);
+  
+  if (!matches) return [];
+  
+  // Deduplicate
+  const unique = [...new Set(matches.map(m => m.toUpperCase()))];
+  
+  return unique.map(imsId => ({
+    label: imsId,
+    imsId: imsId,
+    path: `/qse/${imsId.toLowerCase()}`,
+  }));
+}
+
+/**
+ * Parse imsReferences array (legacy format) to IMSLink array
+ */
+function parseIMSReferencesArray(refs: string[] | null | undefined): IMSLink[] {
+  if (!refs || !Array.isArray(refs)) return [];
+  
+  return refs.map(imsId => ({
+    label: imsId,
+    imsId: imsId,
+    path: `/qse/${imsId.toLowerCase()}`,
+  }));
+}
+
+/**
+ * Get all IMS links from various sources on a section
+ */
+function getAllIMSLinks(section: any): IMSLink[] {
+  const links: IMSLink[] = [];
+  
+  // 1. From imsLinksJson (new format)
+  const jsonLinks = parseIMSLinks(section.imsLinksJson);
+  links.push(...jsonLinks);
+  
+  // 2. From imsReferences array (legacy format)
+  const arrayLinks = parseIMSReferencesArray(section.imsReferences);
+  links.push(...arrayLinks);
+  
+  // 3. Extract from body text
+  const bodyLinks = extractIMSReferencesFromBody(section.body);
+  links.push(...bodyLinks);
+  
+  // Deduplicate by imsId
+  const seen = new Set<string>();
+  return links.filter(link => {
+    const key = link.imsId.toUpperCase();
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
 
 // Status badge styling
 const STATUS_BADGE_VARIANTS: Record<
@@ -46,8 +110,6 @@ function ApprovalStatusBadge({ status }: { status?: ManagementPlanNode['approval
 function stripDuplicateHeading(html: string, sectionHeading?: string, headingNumber?: string): string {
   if (!html || !sectionHeading) return html;
   
-  // Build patterns to match the first h2 that contains the section heading
-  // Matches: <h2>1. Introduction</h2> or <h2>1 Introduction</h2> or just <h2>Introduction</h2>
   const escapedHeading = sectionHeading.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const numberPattern = headingNumber ? `(?:${headingNumber}\\.?\\s*)?` : '';
   
@@ -73,30 +135,30 @@ function HtmlContent({ html, className }: { html?: string | null; className?: st
   return (
     <div
       className={cn(
-        // Base prose styling
-        'prose prose-slate dark:prose-invert max-w-none',
-        // Better paragraph spacing
-        'prose-p:my-4 prose-p:leading-7',
-        // Heading hierarchy - subsections (h3) are smaller than body text emphasis
-        'prose-h2:hidden', // h2 in body is hidden since we render section heading separately
-        'prose-h3:text-base prose-h3:font-semibold prose-h3:mt-6 prose-h3:mb-2 prose-h3:text-foreground',
-        'prose-h4:text-sm prose-h4:font-medium prose-h4:mt-4 prose-h4:mb-2 prose-h4:text-muted-foreground',
-        // Lists with proper spacing
-        'prose-ul:my-4 prose-ul:pl-6',
-        'prose-ol:my-4 prose-ol:pl-6',
-        'prose-li:my-2 prose-li:leading-7',
-        // Strong text
-        'prose-strong:font-semibold prose-strong:text-foreground',
+        // Base text styling
+        'text-foreground text-[15px] leading-relaxed',
+        // Paragraph spacing - tighter
+        '[&_p]:mb-3 [&_p]:mt-0',
+        '[&_p:last-child]:mb-0',
+        // Hide duplicate h2s from body
+        '[&_h2]:hidden',
+        // Subsection headings (h3) - smaller than main section headings
+        '[&_h3]:text-lg [&_h3]:font-semibold [&_h3]:text-foreground [&_h3]:mt-6 [&_h3]:mb-3',
+        '[&_h4]:text-base [&_h4]:font-medium [&_h4]:text-foreground [&_h4]:mt-5 [&_h4]:mb-2',
+        // Lists
+        '[&_ul]:my-3 [&_ul]:pl-5 [&_ul]:list-disc',
+        '[&_ol]:my-3 [&_ol]:pl-5 [&_ol]:list-decimal',
+        '[&_li]:mb-1.5 [&_li]:leading-relaxed',
+        // Strong/bold
+        '[&_strong]:font-semibold',
         // Links
-        'prose-a:text-primary prose-a:no-underline hover:prose-a:underline',
-        // Table styling - professional document look
-        '[&_table]:w-full [&_table]:my-6 [&_table]:text-sm',
+        '[&_a]:text-primary [&_a]:underline [&_a:hover]:text-primary/80',
+        // Tables
+        '[&_table]:w-full [&_table]:my-4 [&_table]:text-sm',
         '[&_table]:border-collapse [&_table]:border [&_table]:border-border',
-        '[&_thead]:bg-muted',
-        '[&_th]:border [&_th]:border-border [&_th]:px-4 [&_th]:py-3 [&_th]:text-left [&_th]:font-semibold [&_th]:text-foreground',
-        '[&_td]:border [&_td]:border-border [&_td]:px-4 [&_td]:py-3 [&_td]:text-foreground [&_td]:align-top',
-        '[&_tbody_tr:nth-child(even)]:bg-muted/30',
-        '[&_tbody_tr:hover]:bg-muted/50',
+        '[&_thead]:bg-muted/50',
+        '[&_th]:border [&_th]:border-border [&_th]:px-3 [&_th]:py-2 [&_th]:text-left [&_th]:font-semibold',
+        '[&_td]:border [&_td]:border-border [&_td]:px-3 [&_td]:py-2 [&_td]:align-top',
         className,
       )}
       dangerouslySetInnerHTML={{ __html: cleanedHtml }}
@@ -104,54 +166,85 @@ function HtmlContent({ html, className }: { html?: string | null; className?: st
   );
 }
 
-function renderSectionContent(sections: PlanSectionWithChildren[]): JSX.Element | null {
+/**
+ * Determine heading level based on section depth
+ */
+function getSectionHeadingNumber(headingNumber?: string): number {
+  if (!headingNumber) return 1;
+  const parts = headingNumber.split('.');
+  return parts.length;
+}
+
+interface SectionRendererProps {
+  sections: PlanSectionWithChildren[];
+  depth?: number;
+}
+
+function SectionRenderer({ sections, depth = 0 }: SectionRendererProps) {
   if (!sections.length) return null;
 
   return (
-    <div className="divide-y divide-border/30">
-      {sections.map((section, index) => {
-        // Strip duplicate heading from body if it exists
+    <>
+      {sections.map((section) => {
         const cleanedBody = stripDuplicateHeading(
           section.body || '',
           section.heading,
           section.headingNumber
         );
+        
+        const headingLevel = getSectionHeadingNumber(section.headingNumber);
+        const imsLinks = getAllIMSLinks(section);
+
+        // Determine heading styles based on level
+        // Level 1 (e.g., "2"): Large, bold, uppercase
+        // Level 2 (e.g., "2.1"): Medium, bold
+        // Level 3+ (e.g., "2.1.1"): Smaller
+        const headingStyles = headingLevel === 1
+          ? 'text-xl font-bold text-foreground uppercase tracking-wide'
+          : headingLevel === 2
+          ? 'text-lg font-semibold text-foreground'
+          : 'text-base font-medium text-foreground';
+
+        const sectionSpacing = headingLevel === 1
+          ? 'mt-10 first:mt-0'
+          : headingLevel === 2
+          ? 'mt-6'
+          : 'mt-4';
 
         return (
-          <section 
-            key={section.id} 
-            className={cn(
-              'py-8',
-              index === 0 && 'pt-0', // No top padding on first section
-            )}
-          >
-            {/* Section heading - only show if we have heading info */}
+          <div key={section.id} className={sectionSpacing}>
+            {/* Section heading */}
             {(section.headingNumber || section.heading) && (
-<h2 className="text-lg font-bold text-foreground mb-4 pb-2 border-b border-border/40 uppercase tracking-wide">
-                 {section.headingNumber ? `${section.headingNumber}. ` : ''}
-                 {section.heading || ''}
-               </h2>
+              <h2 className={cn(headingStyles, 'mb-3')}>
+                {section.headingNumber ? `${section.headingNumber} ` : ''}
+                {section.heading || ''}
+              </h2>
             )}
             
             {/* Section body */}
             {cleanedBody?.trim() ? (
               <HtmlContent html={cleanedBody} />
             ) : (
-              <p className="text-muted-foreground italic py-4">
-                No content for this section.
-              </p>
+              !section.children.length && (
+                <p className="text-muted-foreground italic">
+                  No content for this section.
+                </p>
+              )
+            )}
+            
+            {/* IMS Procedure Links */}
+            {imsLinks.length > 0 && (
+              <IMSLinkRenderer links={imsLinks} />
             )}
             
             {/* Nested sections */}
             {section.children.length > 0 && (
-              <div className="mt-6 pl-4 border-l-2 border-border/40">
-                {renderSectionContent(section.children)}
-              </div>
+              <SectionRenderer sections={section.children} depth={depth + 1} />
             )}
-          </section>
+          </div>
         );
       })}
-    </div>
+    </>
   );
 }
 
@@ -171,11 +264,9 @@ export function PlanDocumentView({
   const router = useRouter();
   const [isEditing, setIsEditing] = useState(false);
 
-  // Derive a display title - use plan.title if it exists, otherwise fallback to type
   const displayTitle = plan.title || `${plan.type.replace('_', ' ')} Plan`;
 
   const handleSaved = () => {
-    // Refresh the page to show updated content
     router.refresh();
   };
 
@@ -195,9 +286,9 @@ export function PlanDocumentView({
   }
 
   return (
-    <div className="space-y-6">
+    <div className="max-w-4xl">
       {/* Document Header */}
-      <div className="flex items-start justify-between pb-6 border-b border-border">
+      <div className="flex items-start justify-between mb-8 pb-6 border-b border-border">
         <div className="space-y-2">
           <h1 className="text-3xl font-bold tracking-tight">{displayTitle}</h1>
           <div className="flex items-center gap-4 text-sm text-muted-foreground">
@@ -235,23 +326,19 @@ export function PlanDocumentView({
         </div>
       </div>
 
-      {/* Document Content */}
-      <Card className="shadow-sm">
-        <CardContent className="py-10 px-8 lg:px-16">
-          {sections.length > 0 ? (
-            <article className="max-w-4xl mx-auto">
-              {renderSectionContent(sections)}
-            </article>
-          ) : (
-            <p className="text-muted-foreground text-center py-12">
-              No content has been generated for this plan yet.
-            </p>
-          )}
-        </CardContent>
-      </Card>
+      {/* Document Content - clean display without card wrapper */}
+      {sections.length > 0 ? (
+        <article>
+          <SectionRenderer sections={sections} />
+        </article>
+      ) : (
+        <p className="text-muted-foreground text-center py-12">
+          No content has been generated for this plan yet.
+        </p>
+      )}
 
       {/* Back link */}
-      <div className="pt-4">
+      <div className="mt-12 pt-6 border-t border-border">
         <Link
           href={`/projects/${projectId}/management-plans`}
           className="text-sm text-muted-foreground hover:text-foreground hover:underline"

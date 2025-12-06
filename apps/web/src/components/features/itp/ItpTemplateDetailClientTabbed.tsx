@@ -7,6 +7,8 @@ import { Download, CheckCircle2, Upload, Send, X, Unlock, Bell, PlayCircle } fro
 import RevisionSelector from '@/components/features/itp/RevisionSelector'
 import RevisionComparison from '@/components/features/itp/RevisionComparison'
 import { EmbeddedTableRenderer, parseInlineTable } from '@/components/features/itp/EmbeddedTableRenderer'
+import { EmbeddedFigureRenderer } from '@/components/features/itp/EmbeddedFigureRenderer'
+import { SectionLinkRenderer, parseSectionLinks } from '@/components/features/itp/SectionLinkRenderer'
 import { toast } from 'sonner'
 
 /**
@@ -69,7 +71,7 @@ export default function ItpTemplateDetailClientTabbed({
   const [comparisonOpen, setComparisonOpen] = React.useState(false)
   const [submitting, setSubmitting] = React.useState(false)
   const [exporting, setExporting] = React.useState(false)
-  
+
   // Track approvals for each inspection point
   const [approvals, setApprovals] = React.useState<Record<string, InspectionPointApproval>>({})
 
@@ -95,7 +97,7 @@ export default function ItpTemplateDetailClientTabbed({
       ...prev,
       [pointId]: {
         ...prev[pointId],
-        ...(role === 'subcontractor' 
+        ...(role === 'subcontractor'
           ? { subcontractorChecked: true, subcontractorDate: now }
           : { engineerChecked: true, engineerDate: now }
         )
@@ -110,7 +112,7 @@ export default function ItpTemplateDetailClientTabbed({
       ...prev,
       [pointId]: {
         ...prev[pointId],
-        ...(role === 'subcontractor' 
+        ...(role === 'subcontractor'
           ? { subcontractorChecked: false, subcontractorDate: undefined }
           : { engineerChecked: false, engineerDate: undefined }
         )
@@ -265,7 +267,7 @@ export default function ItpTemplateDetailClientTabbed({
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-4">
             <div className="w-24 h-12 bg-[#1e3a8a] dark:bg-primary flex items-center justify-center text-white font-bold text-xs">
-              AI PROJECT<br/>ENGINEER
+              AI PROJECT<br />ENGINEER
             </div>
           </div>
           <div className="text-right">
@@ -304,8 +306,8 @@ export default function ItpTemplateDetailClientTabbed({
               Export
             </Button>
             {canSubmitForApproval && (
-              <Button 
-                size="sm" 
+              <Button
+                size="sm"
                 className="gap-2 bg-green-600 hover:bg-green-700"
                 onClick={handleSubmitForApproval}
                 disabled={submitting}
@@ -358,11 +360,10 @@ export default function ItpTemplateDetailClientTabbed({
                 }
 
                 return (
-                  <tr 
-                    key={pointId} 
-                    className={`border-b transition-colors text-xs ${
-                      index % 2 === 0 ? 'bg-white hover:bg-blue-50' : 'bg-gray-50 hover:bg-blue-50'
-                    }`}
+                  <tr
+                    key={pointId}
+                    className={`border-b transition-colors text-xs ${index % 2 === 0 ? 'bg-white hover:bg-blue-50' : 'bg-gray-50 hover:bg-blue-50'
+                      }`}
                   >
                     {/* Item Number */}
                     <td className="px-2 py-2 align-top font-medium">
@@ -389,7 +390,7 @@ export default function ItpTemplateDetailClientTabbed({
                             return parsed ? parsed.text : text;
                           })()}
                         </div>
-                        
+
                         {/* Embedded tables from JSON string (Neo4j stores as string) */}
                         {point.embeddedTablesJson && (() => {
                           try {
@@ -399,16 +400,26 @@ export default function ItpTemplateDetailClientTabbed({
                             return null;
                           }
                         })()}
-                        
+
                         {/* Fallback: Embedded tables from array (for backward compatibility) */}
                         {!point.embeddedTablesJson && point.embeddedTables && point.embeddedTables.length > 0 && (
                           <EmbeddedTableRenderer tables={point.embeddedTables} />
                         )}
-                        
+
                         {/* Parse inline tables from text if no structured tables */}
                         {!point.embeddedTablesJson && (!point.embeddedTables || point.embeddedTables.length === 0) && point.acceptanceCriteria && (() => {
                           const parsed = parseInlineTable(point.acceptanceCriteria);
                           return parsed?.tables ? <EmbeddedTableRenderer tables={parsed.tables} /> : null;
+                        })()}
+
+                        {/* Embedded figures from JSON string (MinIO URLs) */}
+                        {point.embeddedFiguresJson && (() => {
+                          try {
+                            const figures = JSON.parse(point.embeddedFiguresJson);
+                            return figures && figures.length > 0 ? <EmbeddedFigureRenderer figures={figures} /> : null;
+                          } catch {
+                            return null;
+                          }
                         })()}
                       </div>
                     </td>
@@ -416,7 +427,17 @@ export default function ItpTemplateDetailClientTabbed({
                     {/* Spec/Clause */}
                     <td className="px-2 py-2 align-top">
                       <div className="text-gray-900">{point.requirement || '-'}</div>
-                      {point.standardsRef && point.standardsRef.length > 0 && (
+                      {/* Section links - clickable references to source content */}
+                      {point.sectionLinksJson && (() => {
+                        const links = parseSectionLinks(point.sectionLinksJson);
+                        return links.length > 0 ? (
+                          <div className="mt-1">
+                            <SectionLinkRenderer links={links} />
+                          </div>
+                        ) : null;
+                      })()}
+                      {/* Fallback: show standardsRef as plain text if no section links */}
+                      {!point.sectionLinksJson && point.standardsRef && point.standardsRef.length > 0 && (
                         <div className="text-gray-500 mt-1 text-[10px]">
                           {point.standardsRef.slice(0, 2).join(', ')}
                           {point.standardsRef.length > 2 && '...'}
@@ -461,7 +482,7 @@ export default function ItpTemplateDetailClientTabbed({
                           <CheckCircle2 className="h-4 w-4 text-green-600" />
                           <span className="text-[10px] text-gray-500">{approval.subcontractorDate}</span>
                           {userRole === 'subcontractor' && (
-                            <button 
+                            <button
                               onClick={() => handleUncheck(pointId, 'subcontractor')}
                               className="text-gray-400 hover:text-red-500"
                               title="Uncheck"
@@ -471,8 +492,8 @@ export default function ItpTemplateDetailClientTabbed({
                           )}
                         </div>
                       ) : (
-                        <Checkbox 
-                          disabled={userRole !== 'subcontractor'} 
+                        <Checkbox
+                          disabled={userRole !== 'subcontractor'}
                           className="border-gray-400"
                           onCheckedChange={() => userRole === 'subcontractor' && handleCheck(pointId, 'subcontractor')}
                         />
@@ -486,7 +507,7 @@ export default function ItpTemplateDetailClientTabbed({
                           <CheckCircle2 className="h-4 w-4 text-green-600" />
                           <span className="text-[10px] text-gray-500">{approval.engineerDate}</span>
                           {userRole === 'site_engineer' && (
-                            <button 
+                            <button
                               onClick={() => handleUncheck(pointId, 'engineer')}
                               className="text-gray-400 hover:text-red-500"
                               title="Uncheck"
@@ -496,8 +517,8 @@ export default function ItpTemplateDetailClientTabbed({
                           )}
                         </div>
                       ) : (
-                        <Checkbox 
-                          disabled={userRole !== 'site_engineer'} 
+                        <Checkbox
+                          disabled={userRole !== 'site_engineer'}
                           className="border-gray-400"
                           onCheckedChange={() => userRole === 'site_engineer' && handleCheck(pointId, 'engineer')}
                         />
@@ -511,7 +532,7 @@ export default function ItpTemplateDetailClientTabbed({
                           <CheckCircle2 className="h-4 w-4 text-green-600" />
                           <span className="text-[10px] text-gray-500">{approval.qaDate}</span>
                           {canApprove && (
-                            <button 
+                            <button
                               onClick={() => handleUnapprove(pointId)}
                               className="text-gray-400 hover:text-red-500"
                               title="Remove approval"
@@ -521,9 +542,9 @@ export default function ItpTemplateDetailClientTabbed({
                           )}
                         </div>
                       ) : canApprove ? (
-                        <Button 
-                          size="sm" 
-                          variant="outline" 
+                        <Button
+                          size="sm"
+                          variant="outline"
                           className="h-6 text-[10px] px-2"
                           onClick={() => handleApprove(pointId)}
                         >
@@ -536,7 +557,7 @@ export default function ItpTemplateDetailClientTabbed({
 
                     {/* Attachments */}
                     <td className="px-2 py-2 align-top text-center">
-                      <button 
+                      <button
                         onClick={() => handleUpload(pointId)}
                         className="inline-flex items-center gap-1 text-gray-500 hover:text-blue-600"
                         title="Upload attachment"
@@ -566,18 +587,18 @@ export default function ItpTemplateDetailClientTabbed({
                                   Requested
                                 </Badge>
                                 <div className="flex gap-1">
-                                  <Button 
-                                    size="sm" 
-                                    variant="outline" 
+                                  <Button
+                                    size="sm"
+                                    variant="outline"
                                     className="h-5 text-[10px] px-2 gap-1"
                                     onClick={() => handleReleaseHoldPoint(pointId)}
                                   >
                                     <Unlock className="h-3 w-3" />
                                     Release
                                   </Button>
-                                  <Button 
-                                    size="sm" 
-                                    variant="ghost" 
+                                  <Button
+                                    size="sm"
+                                    variant="ghost"
                                     className="h-5 text-[10px] px-1 text-gray-400 hover:text-gray-600"
                                     onClick={() => handleCancelHoldPointRequest(pointId)}
                                   >
@@ -592,9 +613,9 @@ export default function ItpTemplateDetailClientTabbed({
                                 </Badge>
                                 <div className="flex items-center gap-1">
                                   <span className="text-[9px] text-gray-500">{approval.holdPointRequestedDate}</span>
-                                  <Button 
-                                    size="sm" 
-                                    variant="ghost" 
+                                  <Button
+                                    size="sm"
+                                    variant="ghost"
                                     className="h-4 w-4 p-0 text-gray-400 hover:text-gray-600"
                                     onClick={() => handleCancelHoldPointRequest(pointId)}
                                   >
@@ -605,9 +626,9 @@ export default function ItpTemplateDetailClientTabbed({
                             )
                           ) : (
                             // Not yet requested - show Request button
-                            <Button 
-                              size="sm" 
-                              variant="outline" 
+                            <Button
+                              size="sm"
+                              variant="outline"
                               className="h-6 text-[10px] px-2 gap-1"
                               onClick={() => handleRequestHoldPoint(pointId)}
                             >
@@ -632,18 +653,18 @@ export default function ItpTemplateDetailClientTabbed({
                                 Requested
                               </Badge>
                               <div className="flex gap-1">
-                                <Button 
-                                  size="sm" 
-                                  variant="outline" 
+                                <Button
+                                  size="sm"
+                                  variant="outline"
                                   className="h-5 text-[10px] px-2 gap-1"
                                   onClick={() => handleNotifyWitnessPoint(pointId)}
                                 >
                                   <Bell className="h-3 w-3" />
                                   Notify
                                 </Button>
-                                <Button 
-                                  size="sm" 
-                                  variant="ghost" 
+                                <Button
+                                  size="sm"
+                                  variant="ghost"
                                   className="h-5 text-[10px] px-1 text-gray-400 hover:text-gray-600"
                                   onClick={() => handleCancelWitnessPointRequest(pointId)}
                                 >
@@ -653,9 +674,9 @@ export default function ItpTemplateDetailClientTabbed({
                             </div>
                           ) : (
                             // Not yet requested - show Request button
-                            <Button 
-                              size="sm" 
-                              variant="outline" 
+                            <Button
+                              size="sm"
+                              variant="outline"
                               className="h-6 text-[10px] px-2 gap-1"
                               onClick={() => handleRequestWitnessPoint(pointId)}
                             >

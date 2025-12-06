@@ -22,37 +22,58 @@ function mapInspectionPointsToItpItems(points: InspectionPointNode[]) {
   const items: any[] = [];
   const sorted = [...points].sort((a, b) => (a.sequence ?? 0) - (b.sequence ?? 0));
 
-  // Filter out section-type entries and only process actual inspection points
-  const inspectionPoints = sorted.filter(point => point.type !== 'section');
-  
-  // Group points by section
-  const sectionOrder: string[] = [];
-  const sectionPoints: Record<string, InspectionPointNode[]> = {};
-  
-  inspectionPoints.forEach((point) => {
-    const sectionKey = point.section ? point.section.toLowerCase() : 'other';
-    if (!sectionPoints[sectionKey]) {
-      sectionPoints[sectionKey] = [];
-      sectionOrder.push(sectionKey);
+  // The data structure has section headers (with section field set) followed by items (with section NULL)
+  // We need to track the current section and assign items to it
+  const sections: { key: string; name: string; items: InspectionPointNode[] }[] = [];
+  let currentSection: { key: string; name: string; items: InspectionPointNode[] } | null = null;
+
+  sorted.forEach((point) => {
+    // Check if this is a section header
+    // Section headers have the section field set AND either:
+    // 1. No acceptance criteria (section headers don't have criteria)
+    // 2. Description closely matches the humanized section name
+    const hasSection = !!point.section;
+    const noAcceptanceCriteria = !point.acceptanceCriteria || point.acceptanceCriteria.trim() === '';
+    const descMatchesSection = point.description && point.section && 
+      (point.description.toLowerCase().replace(/[^a-z]/g, '').includes(point.section.toLowerCase().replace(/[^a-z]/g, '')) ||
+       point.section.toLowerCase().replace(/[^a-z]/g, '').includes(point.description.toLowerCase().replace(/[^a-z]/g, '')));
+    
+    const isLikelySectionHeader = hasSection && noAcceptanceCriteria && descMatchesSection;
+    
+    if (isLikelySectionHeader) {
+      // This is a section header - start a new section
+      currentSection = {
+        key: point.section!.toLowerCase(),
+        name: point.description || humanizeSection(point.section!),
+        items: []
+      };
+      sections.push(currentSection);
+    } else if (currentSection) {
+      // This is an item - add to current section
+      currentSection.items.push(point);
+    } else {
+      // No current section yet - create an "Other" section
+      currentSection = {
+        key: 'other',
+        name: 'Other',
+        items: [point]
+      };
+      sections.push(currentSection);
     }
-    sectionPoints[sectionKey].push(point);
   });
 
   // Build items with proper numbering: Section 1, 2, 3... Items 1.1, 1.2, 2.1, etc.
-  sectionOrder.forEach((sectionKey, sectionIndex) => {
+  sections.forEach((section, sectionIndex) => {
     const sectionNumber = sectionIndex + 1;
-    const pointsInSection = sectionPoints[sectionKey];
-    const firstPoint = pointsInSection[0];
-    const sectionName = firstPoint?.section ? humanizeSection(firstPoint.section) : 'Other';
     
     // Add section header
     items.push({
-      id: `section-${sectionKey.replace(/[^a-z0-9]+/g, '-')}`,
+      id: `section-${section.key.replace(/[^a-z0-9]+/g, '-')}`,
       itemNumber: `${sectionNumber}`,
       sequence: 0,
-      section: sectionName,
+      section: section.name,
       isSection: true,
-      description: sectionName,
+      description: section.name,
       acceptanceCriteria: '',
       requirement: '',
       testMethod: '',
@@ -63,18 +84,20 @@ function mapInspectionPointsToItpItems(points: InspectionPointNode[]) {
     });
 
     // Add items with sub-numbering
-    pointsInSection.forEach((point, itemIndex) => {
+    section.items.forEach((point, itemIndex) => {
       const itemNumber = `${sectionNumber}.${itemIndex + 1}`;
 
       items.push({
         id: point.id ?? `point-${sectionNumber}-${itemIndex}`,
         itemNumber,
         sequence: point.sequence,
-        section: sectionName,
+        section: section.name,
         isSection: false,
         description: point.description ?? '',
         acceptanceCriteria: point.acceptanceCriteria ?? '',
         embeddedTablesJson: (point as any).embeddedTablesJson ?? '',
+        embeddedFiguresJson: (point as any).embeddedFiguresJson ?? '',
+        sectionLinksJson: (point as any).sectionLinksJson ?? '',
         embeddedTables: (point as any).embeddedTables ?? [], // backward compatibility
         requirement: point.requirement ?? '',
         testMethod: point.testMethod ?? '',

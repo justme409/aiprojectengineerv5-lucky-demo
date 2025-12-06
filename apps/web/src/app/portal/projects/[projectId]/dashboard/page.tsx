@@ -83,6 +83,11 @@ export default async function ClientDashboardPage({ params }: PageProps) {
       href: `/portal/projects/${projectId}/pending-approvals`
     },
     {
+      title: 'Hold Points',
+      description: 'Review and release construction hold points',
+      href: `/portal/projects/${projectId}/hold-points`
+    },
+    {
       title: 'Non-Conformance Reports',
       description: 'Monitor NCR status and actions',
       href: `/portal/projects/${projectId}/ncrs`
